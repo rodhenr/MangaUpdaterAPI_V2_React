@@ -110,6 +110,10 @@
 }
 
 // Text
+.text-center {
+  text-align: center;
+}
+
 .text-primary {
   color: var(--text-dark);
 }
@@ -118,7 +122,7 @@
   color: var(--text-light);
 }
 
-// Align
+// Flex
 .flex-center {
   align-items: center;
   display: flex;
@@ -141,6 +145,15 @@
   justify-content: center;
 }
 
+.flex-1 {
+  flex: 1;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+// Gap
 .gap-0 {
   gap: 0;
 }
@@ -215,6 +228,21 @@
 
 .w-100 {
   width: 100%;
+}
+
+// Shadow
+.shadow-1 {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.shadow-2 {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.shadow-3 {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 // Checkbox
