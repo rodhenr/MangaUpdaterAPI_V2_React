@@ -1,0 +1,205 @@
+// Root
+:root {
+  --bg-light: #fefefe;
+  --bg-dark: #252525;
+  --danger: #d83a3a;
+  --danger-hover: #a72f2f;
+  --primary-light: #0e86d4;
+  --primary-light-hover: #0a6cb3;
+  --primary-dark: #303030;
+  --primary-dark-hover: #1c201d;
+  --secondary-light: #68bbe3;
+  --secondary-dark: #164bd4;
+  --success: #5eba3d;
+  --success-hover: #4d9a2f;
+  --text-light: #fff;
+  --text-dark: #22617c;
+}
+
+// Font
+.roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+// Cursor
+.cursor-pointer {
+  cursor: pointer;
+}
+
+// Border
+.radius-1 {
+  border-radius: 0.25rem;
+}
+
+.radius-2 {
+  border-radius: 0.5rem;
+}
+
+.round {
+  border-radius: 50%;
+}
+
+// Background
+.primary-light {
+  background-color: var(--primary-light);
+  color: var(--text-light);
+}
+
+.primary-light:hover {
+  background-color: var(--primary-light-hover);
+  transition: background-color 0.2s;
+}
+
+.primary-dark {
+  background-color: var(--primary-dark);
+  color: var(--text-light);
+}
+
+.primary-dark:hover {
+  background-color: var(--primary-dark-hover);
+  transition: background-color 0.2s;
+}
+
+.success {
+  background-color: var(--success);
+  color: var(--text-light);
+}
+
+.success:hover {
+  background-color: var(--success-hover);
+  transition: background-color 0.2s;
+}
+
+.danger {
+  background-color: var(--danger);
+  color: var(--text-light);
+}
+
+.danger:hover {
+  background-color: var(--danger-hover);
+  transition: background-color 0.2s;
+}
+
+.text-light {
+  background-color: var(--text-light);
+  color: var(--primary-dark);
+}
+
+.text-dark {
+  background-color: var(--text-dark);
+  color: var(--primary-light);
+}
+
+// Align
+.flex-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-0 {
+  gap: 0;
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+// Margin
+.m-0 {
+  margin: 0;
+}
+
+.m-1 {
+  margin: 0.25rem;
+}
+
+.m-2 {
+  margin: 0.5rem;
+}
+
+.m-3 {
+  margin: 0.75rem;
+}
+
+.m-4 {
+  margin: 1rem;
+}
+
+// Padding
+.p-0 {
+  padding: 0;
+}
+
+.p-1 {
+  padding: 0.25rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+// Checkbox
+.checkbox-container {
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-container input {
+  display: none;
+}
+
+.custom-checkbox {
+  border-radius: 50%;
+  height: 20px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+  width: 20px;
+}
+
+.checkmark {
+  border-radius: 50%;
+  display: none;
+  height: 8px;
+  width: 8px;
+}
+
+.checkbox-container input:checked + .custom-checkbox .checkmark {
+  display: block;
+}
