@@ -30,7 +30,7 @@ function CheckboxGroup({ background = "primary-dark", options }: Props) {
             />
             <span className={`custom-checkbox flex-center ${background}`}>
               {selectedOptions.includes(el) && (
-                <span className="checkmark text-light"></span>
+                <span className="checkmark bg-light"></span>
               )}
             </span>
             {el}

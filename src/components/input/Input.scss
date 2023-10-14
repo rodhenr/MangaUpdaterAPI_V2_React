@@ -1,0 +1,17 @@
+.input-main,
+input {
+  box-sizing: border-box;
+  //padding: 0.5rem 0;
+}
+
+input {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+svg {
+  padding: 0 0.75rem;
+}

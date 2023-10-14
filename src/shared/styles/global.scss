@@ -39,43 +39,56 @@
   border-radius: 50%;
 }
 
+// Border
+.border-1 {
+  border: 1px solid black;
+}
+
 // Background
-.primary-light {
+.primary-light,
+.primary-light::placeholder {
   background-color: var(--primary-light);
   color: var(--text-light);
 }
 
-.primary-light:hover {
+.primary-light:hover,
+.primary-light::placeholder:hover {
   background-color: var(--primary-light-hover);
   transition: background-color 0.2s;
 }
 
-.primary-dark {
+.primary-dark,
+.primary-dark::placeholder {
   background-color: var(--primary-dark);
   color: var(--text-light);
 }
 
-.primary-dark:hover {
+.primary-dark:hover,
+.primary-dark::placeholder:hover {
   background-color: var(--primary-dark-hover);
   transition: background-color 0.2s;
 }
 
-.success {
+.success,
+.success::placeholder {
   background-color: var(--success);
   color: var(--text-light);
 }
 
-.success:hover {
+.success:hover,
+.success::placeholder:hover {
   background-color: var(--success-hover);
   transition: background-color 0.2s;
 }
 
-.danger {
+.danger,
+.danger::placeholder {
   background-color: var(--danger);
   color: var(--text-light);
 }
 
-.danger:hover {
+.danger:hover,
+.danger::placeholder:hover {
   background-color: var(--danger-hover);
   transition: background-color 0.2s;
 }
@@ -84,14 +97,16 @@
   background-color: var(--danger);
 }
 
-.text-light {
+.bg-light,
+.bg-light::placeholder {
   background-color: var(--text-light);
   color: var(--primary-dark);
 }
 
-.text-dark {
+.bg-dark,
+.bg-dark::placeholder {
   background-color: var(--text-dark);
-  color: var(--primary-light);
+  color: var(--text-light);
 }
 
 // Text
