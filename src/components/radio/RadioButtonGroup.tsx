@@ -7,10 +7,11 @@ interface Option {
 }
 
 interface Props {
+  showLabel?: boolean;
   options: Option[];
 }
 
-function RadioButtonGroup({ options }: Props) {
+function RadioButtonGroup({ showLabel = true, options }: Props) {
   const [selectedOptions, setSelectedOptions] = useState<string>("");
 
   const handleCheckboxChange = (option: string) => {
@@ -20,17 +21,16 @@ function RadioButtonGroup({ options }: Props) {
   return (
     <div className="flex column gap-2">
       {options.map((el) => (
-        <div>
-          <label className="cursor-pointer roboto">
-            <input
-              type="radio"
-              value={el.text}
-              checked={selectedOptions === el.text}
-              onChange={() => handleCheckboxChange(el.text)}
-              className={`round ${el.variant}`}
-            />
-          </label>
-        </div>
+        <label className="radio-butto flex align-center gap-1 cursor-pointer roboto">
+          <input
+            type="radio"
+            value={el.text}
+            checked={selectedOptions === el.text}
+            onChange={() => handleCheckboxChange(el.text)}
+            className={`round ${el.variant}`}
+          />
+          {showLabel && el.text}
+        </label>
       ))}
     </div>
   );

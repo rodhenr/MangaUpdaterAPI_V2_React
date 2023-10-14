@@ -6,10 +6,8 @@ interface Props {
   options: string[];
 }
 
-function CheckboxGroup({ background, options }: Props) {
+function CheckboxGroup({ background = "primary-dark", options }: Props) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const backgroundColor = background ?? "primary-dark";
 
   const handleCheckboxChange = (option: string) => {
     if (selectedOptions?.includes(option)) {
@@ -30,7 +28,7 @@ function CheckboxGroup({ background, options }: Props) {
               checked={selectedOptions.includes(el)}
               onChange={() => handleCheckboxChange(el)}
             />
-            <span className={`custom-checkbox flex-center ${backgroundColor}`}>
+            <span className={`custom-checkbox flex-center ${background}`}>
               {selectedOptions.includes(el) && (
                 <span className="checkmark text-light"></span>
               )}
