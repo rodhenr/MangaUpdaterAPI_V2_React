@@ -24,7 +24,9 @@ function Avatar({
         <img src={imagePath ?? ""} alt="avatar" />
       ) : (
         <div
-          className="flex-center round primary-light cursor-pointer"
+          className={`flex-center round primary-light cursor-pointer ${
+            color == "text-primary" ? "bg-dark" : "bg-light"
+          }`}
           style={{ height: height, width: width }}
         >
           {userName.charAt(0)}
