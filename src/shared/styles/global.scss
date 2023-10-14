@@ -94,6 +94,15 @@
   color: var(--primary-light);
 }
 
+// Text
+.text-primary {
+  color: var(--text-dark);
+}
+
+.text-secondary {
+  color: var(--text-light);
+}
+
 // Align
 .flex-center {
   align-items: center;
