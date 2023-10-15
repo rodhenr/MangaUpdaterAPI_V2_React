@@ -1,6 +1,15 @@
 export interface ChapterInfo {
-  date: Date;
-  number: number;
-  source: string;
-  isRead: boolean;
+  ChapterId: number;
+  SourceId: number;
+  SourceName: string;
+  Date: Date;
+  Number: string;
+  Read: boolean;
+}
+
+export interface MangaDataList {
+  Id: number;
+  CoverUrl: string;
+  Name: string;
+  Chapters: ChapterInfo[];
 }

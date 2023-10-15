@@ -68,6 +68,14 @@
   border: 1px solid black;
 }
 
+.border-bottom-primary-light {
+  border-bottom: 2px solid var(--primary-light);
+}
+
+.border-bottom-primary-dark {
+  border-bottom: 2px solid var(--primary-dark);
+}
+
 // Background
 .primary-light,
 .primary-light::placeholder {
@@ -177,6 +185,10 @@
   justify-content: space-between;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 // Gap
 .gap-0 {
   gap: 0;
@@ -240,6 +252,22 @@
   padding: 1rem;
 }
 
+.pb-1 {
+  padding-bottom: 0.25rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
+.pb-3 {
+  padding-bottom: 0.75rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
 // Height
 .h-100 {
   height: 100%;
@@ -267,6 +295,11 @@
 .shadow-3 {
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+// Box-sizing
+.border-box {
+  box-sizing: border-box;
 }
 
 // Checkbox

@@ -1,5 +1,6 @@
 html,
 body {
+  box-sizing: border-box;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -13,4 +14,9 @@ h1 {
 
 #root {
   height: 100%;
+  overflow-y: scroll;
+}
+
+a {
+  text-decoration: none;
 }

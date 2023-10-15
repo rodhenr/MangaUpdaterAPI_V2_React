@@ -2,6 +2,14 @@ import { Outlet, Link } from "react-router-dom";
 import Avatar from "../components/avatar/Avatar";
 import "./Root.scss";
 import Button from "../components/button/Button";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faGear,
+  faSearch,
+  faBars,
+  faList,
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faGear, faSearch, faBars, faList);
 
 interface PageList {
   baseUrl: string;
@@ -44,7 +52,10 @@ function Root() {
           )}
         </div>
       </div>
-      <div>
+      <div
+        className="flex-1 w-100 roboto"
+        style={{ margin: "2rem auto", width: "60vw" }}
+      >
         <Outlet />
       </div>
     </>
