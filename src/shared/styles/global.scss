@@ -76,6 +76,14 @@
   border-bottom: 2px solid var(--primary-dark);
 }
 
+.border-left-1 {
+  border-left: 1px solid black;
+}
+
+.border-right-1 {
+  border-right: 1px solid black;
+}
+
 // Background
 .primary-light,
 .primary-light::placeholder {
@@ -152,6 +160,14 @@
 
 .text-secondary {
   color: var(--text-light);
+}
+
+.text-disabled {
+  color: #7b7b7b;
+}
+
+.break-word {
+  word-wrap: break-word;
 }
 
 // Flex
@@ -266,6 +282,22 @@
 
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pv-1 {
+  padding: 0.25rem 0;
+}
+
+.pv-2 {
+  padding: 0.5rem 0;
+}
+
+.pv-3 {
+  padding: 0.75rem 0;
+}
+
+.pv-4 {
+  padding: 1rem 0;
 }
 
 // Height

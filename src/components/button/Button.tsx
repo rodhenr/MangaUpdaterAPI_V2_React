@@ -8,7 +8,7 @@ interface Props {
   height?: number;
   icon?: string;
   text: string;
-  variant?: "primary-light" | "primary-dark" | "success" | "danger";
+  variant?: "primary-light" | "primary-dark" | "success" | "danger" | "bg-dark";
   width?: number;
 }
 

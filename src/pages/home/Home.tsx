@@ -1,12 +1,16 @@
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fakeData } from "../../api/fakeData/data";
 import Button from "../../components/button/Button";
 import PageHeader from "../../components/pageHeader/PageHeader";
-import { fakeData } from "../../api/fakeData/data";
-import CardWithInfo from "../../components/card/CardWithInfo";
+import ListView from "./components/ListView";
+import CardView from "./components/CardView";
 
 const isUserLogged = true;
 
 function Home() {
+  const [isCardView, setIsCardView] = useState<boolean>(true);
+
   const notLogged = (
     <div className="flex-center column gap-2">
       <p className="fsize-6">Login to start following mangas</p>
@@ -23,8 +27,20 @@ function Home() {
         <div className="flex space-between w-100">
           <p className="fsize-5">Updates</p>
           <div className="flex gap-3">
-            <FontAwesomeIcon icon="bars" className="fsize-5 cursor-pointer" />
-            <FontAwesomeIcon icon="list" className="fsize-5 cursor-pointer" />
+            <FontAwesomeIcon
+              icon="bars"
+              className={`fsize-5 ${
+                isCardView ? "text-disabled" : "cursor-pointer"
+              }`}
+              onClick={() => setIsCardView(true)}
+            />
+            <FontAwesomeIcon
+              icon="list"
+              className={`fsize-5 ${
+                isCardView ? "cursor-pointer" : "text-disabled"
+              }`}
+              onClick={() => setIsCardView(false)}
+            />
           </div>
         </div>
       </PageHeader>
@@ -38,19 +54,11 @@ function Home() {
       ) : (
         <>
           {pageHeader}
-          <div className="flex gap-4 space-between flex-wrap">
-            {fakeData.map((data) => {
-              return (
-                <CardWithInfo
-                  buttonVariant="primary-dark"
-                  name={data.Name}
-                  cover={data.CoverUrl}
-                  chapters={data.Chapters}
-                  width={275}
-                />
-              );
-            })}
-          </div>
+          {isCardView ? (
+            <CardView data={fakeData} />
+          ) : (
+            <ListView data={fakeData} />
+          )}
         </>
       )}
     </div>
