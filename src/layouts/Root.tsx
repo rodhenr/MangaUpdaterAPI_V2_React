@@ -1,34 +1,59 @@
+import { useState } from "react";
+import { createPortal } from "react-dom";
 import { Outlet, Link } from "react-router-dom";
-import Avatar from "../components/avatar/Avatar";
-import "./Root.scss";
-import Button from "../components/button/Button";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faGear,
   faSearch,
   faBars,
   faList,
+  faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faGear, faSearch, faBars, faList);
+library.add(faGear, faSearch, faBars, faList, faCircleXmark);
+
+import Avatar from "../components/avatar/Avatar";
+import Button from "../components/button/Button";
+import LoginModal from "../components/modal/LoginModal";
+import RegisterModal from "../components/modal/RegisterModal";
+
+import "./Root.scss";
 
 interface PageList {
   baseUrl: string;
   title: string;
 }
+
 const pages: PageList[] = [
   { baseUrl: "/", title: "Home" },
   { baseUrl: "/library", title: "Library" },
   { baseUrl: "/mylist", title: "My List" },
 ];
+
 const isUserLogged = false;
 
 function Root() {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] =
+    useState<boolean>(false);
+
+  const changeLoginModalState = () => {
+    if (isRegisterModalOpen) setIsRegisterModalOpen(false);
+
+    setIsLoginModalOpen(!isLoginModalOpen);
+  };
+
+  const changeRegisterModalState = () => {
+    if (isLoginModalOpen) setIsLoginModalOpen(false);
+
+    setIsRegisterModalOpen(!isRegisterModalOpen);
+  };
+
   return (
     <>
       <div className={`roboto primary-light`}>
         <div
           className={`root-main flex align-center space-between`}
-          style={{ height: 50, margin: "auto", width: "60vw" }}
+          style={{ height: 50, margin: "auto", width: "65vw" }}
         >
           <p>MANGA UPDATER</p>
           <div className="flex gap-4">
@@ -39,25 +64,45 @@ function Root() {
             ))}
           </div>
           {isUserLogged ? (
-            <Avatar color="text-secondary" userName="" height={60} width={60} />
+            <Avatar color="text-secondary" userName="Some username" />
           ) : (
             <div className="flex gap-2">
               <Button
-                onClick={() => null}
+                onClick={changeLoginModalState}
                 text="Login"
-                variant="primary-dark"
+                variant="secondary-dark"
+                width="100px"
               />
-              <Button onClick={() => null} text="Register" variant="danger" />
+              <Button
+                onClick={changeRegisterModalState}
+                text="Register"
+                variant="secondary-light"
+                width="100px"
+              />
             </div>
           )}
         </div>
       </div>
       <div
         className="flex-1 w-100 roboto"
-        style={{ margin: "2rem auto", width: "60vw" }}
+        style={{ margin: "2rem auto", width: "65vw" }}
       >
         <Outlet />
       </div>
+      {createPortal(
+        <LoginModal
+          closeModal={changeLoginModalState}
+          showModal={isLoginModalOpen}
+        />,
+        document.body
+      )}
+      {createPortal(
+        <RegisterModal
+          closeModal={changeRegisterModalState}
+          showModal={isRegisterModalOpen}
+        />,
+        document.body
+      )}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import Button from "../../../components/button/Button";
 import { MangaDataList } from "../../../shared/interfaces/chapters";
 import { formatDate } from "../../../utils/date";
+
 import "./ListView.scss";
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 function ListView({ data }: Props) {
   return (
     <div className="flex column space-between flex-wrap">
-      <div className="header flex space-between border-1 pv-2 primary-dark">
+      <div className="header flex space-between border-secondary-light-1 pv-2 secondary-dark">
         <p className="flex-1 text-center">Manga</p>
         <p className="column-width text-center">Date</p>
         <p className="column-width text-center">Chapter</p>
@@ -23,11 +24,11 @@ function ListView({ data }: Props) {
             <div
               className={`flex align-center space-between pv-1 ${
                 (dataIndex + chapterIndex) % 2 !== 0
-                  ? "primary-light border-1"
-                  : "bg-light border-left-1 border-right-1"
+                  ? "primary-light border-secondary-dark-1"
+                  : "bg-light border-secondary-dark-left-1 border-secondary-dark-right-1"
               }`}
             >
-              <p className="flex-1  text-center fsize-3">{d.Name}</p>
+              <p className="flex-1 text-center fsize-3 ph-1">{d.Name}</p>
               <p className="column-width text-center fsize-3">
                 {formatDate(chapter.Date)}
               </p>
@@ -36,22 +37,22 @@ function ListView({ data }: Props) {
               </p>
               <p className="flex-center column-width text-center fsize-3">
                 <Button
+                  fontSize="fsize-3"
+                  height="25px"
                   onClick={() => null}
                   text={chapter.SourceName}
-                  variant="bg-dark"
-                  height={25}
-                  width={80}
-                  fontSize="fsize-3"
+                  variant="primary-dark"
+                  width="100px"
                 />
               </p>
               <div className="flex-center column-width text-center">
                 <Button
+                  fontSize="fsize-3"
+                  height="25px"
                   onClick={() => null}
                   text={chapter.Read ? "Read" : "Not Read"}
                   variant={chapter.Read ? "success" : "danger"}
-                  height={25}
-                  width={80}
-                  fontSize="fsize-3"
+                  width="100px"
                 />
               </div>
             </div>

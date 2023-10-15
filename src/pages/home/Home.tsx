@@ -24,20 +24,24 @@ function Home() {
   const pageHeader = (
     <div className="w-100">
       <PageHeader>
-        <div className="flex space-between w-100">
+        <div className="flex space-between w-100 align-end">
           <p className="fsize-5">Updates</p>
           <div className="flex gap-3">
             <FontAwesomeIcon
               icon="bars"
               className={`fsize-5 ${
-                isCardView ? "text-disabled" : "cursor-pointer"
+                isCardView
+                  ? "text-disabled"
+                  : "cursor-pointer text-secondary-dark"
               }`}
               onClick={() => setIsCardView(true)}
             />
             <FontAwesomeIcon
               icon="list"
               className={`fsize-5 ${
-                isCardView ? "cursor-pointer" : "text-disabled"
+                isCardView
+                  ? "cursor-pointer text-secondary-dark"
+                  : "text-disabled"
               }`}
               onClick={() => setIsCardView(false)}
             />

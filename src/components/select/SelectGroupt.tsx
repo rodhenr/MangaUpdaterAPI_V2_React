@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react";
+
 import "./SelectGroup.scss";
 
 interface Props {
@@ -23,7 +24,7 @@ function SelectGroup({
   return (
     <select
       name={placeholder}
-      className="select-main text-primary radius-2 roboto"
+      className="select-main text-primary radius-2 roboto border-box"
       style={{ height: height, width: width }}
       value={selectedOption}
       onChange={handleSelectChange}

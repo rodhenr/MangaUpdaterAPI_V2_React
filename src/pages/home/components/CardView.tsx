@@ -7,7 +7,7 @@ interface Props {
 
 function CardView({ data }: Props) {
   return (
-    <div className="flex gap-4 space-between flex-wrap">
+    <div className="cardView-main flex space-between flex-wrap row-gap-3">
       {data.map((data) => {
         return (
           <CardWithInfo
@@ -15,7 +15,6 @@ function CardView({ data }: Props) {
             name={data.Name}
             cover={data.CoverUrl}
             chapters={data.Chapters}
-            width={275}
           />
         );
       })}

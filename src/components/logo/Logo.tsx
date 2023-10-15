@@ -1,4 +1,5 @@
 import LogoImage from "./../../assets/manga-updater-low-resolution-color-logo.svg";
+
 import "./Logo.scss";
 
 function Logo() {

@@ -1,11 +1,16 @@
 .cardWithInfo-main {
-  box-sizing: border-box;
+  max-width: 300px;
+  width: 300px;
+
+  @media (min-width: 1400px) {
+    max-width: 300px;
+    width: 300px;
+  }
 }
 
 img {
   border-radius: 0.5rem 0.5rem 0 0;
   max-height: 200px;
-  object-fit: cover;
   object-position: 0 0;
 }
 

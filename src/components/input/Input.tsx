@@ -1,54 +1,56 @@
+import { ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Input.scss";
-import { ChangeEvent, useState } from "react";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-interface Props {
-  height?: number;
+import {
+  InputTypes,
+  SizeProps,
+  Variant,
+} from "../../shared/interfaces/components";
+
+import "./Input.scss";
+
+interface Props extends SizeProps {
   icon?: string;
-  iconSide: "left" | "right";
-  onSubmit: () => void;
+  iconSide?: "left" | "right";
+  id: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  variant?:
-    | "primary-light"
-    | "primary-dark"
-    | "success"
-    | "danger"
-    | "bg-light"
-    | "bg-dark";
-  width?: number;
+  type?: InputTypes;
+  value: string;
+  variant?: Variant;
 }
 
 function Input({
-  height = 40,
+  height = "35px",
   icon,
-  iconSide,
-  onSubmit,
+  iconSide = "left",
+  id,
+  onChange,
   placeholder,
+  type = "text",
+  value,
   variant = "primary-light",
-  width = 200,
+  width = "100%",
 }: Props) {
-  const [inputValue, setInputValue] = useState<string>("");
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
-
   return (
     <div
-      className={`input-main flex align-center radius-2 ${variant}`}
+      className={`input-main flex align-center radius-1 ${variant} border-box`}
       style={{ height: height, width: width }}
     >
       {icon && iconSide == "left" && (
-        <FontAwesomeIcon icon={icon} className="h-100 w-icon" />
+        <FontAwesomeIcon icon={icon as IconProp} className="h-100 w-icon" />
       )}
       <input
-        className={`${variant} h-100 radius-2 w-100`}
-        value={inputValue}
-        onChange={handleInputChange}
+        className={`${variant} h-100 radius-1 w-100 p-2 border-box opacity-placeholder-1 border-box`}
+        id={id}
+        onChange={onChange}
         placeholder={placeholder}
+        type={type}
+        value={value}
       />
       {icon && iconSide == "right" && (
-        <FontAwesomeIcon icon={icon} className="h-100 w-icon" />
+        <FontAwesomeIcon icon={icon as IconProp} className="h-100 w-icon" />
       )}
     </div>
   );

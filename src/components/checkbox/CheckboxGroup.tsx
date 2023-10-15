@@ -1,8 +1,11 @@
 import { useState } from "react";
+
+import { Variant } from "../../shared/interfaces/components";
+
 import "./CheckboxGroup.scss";
 
 interface Props {
-  background?: "primary-light" | "primary-dark" | "success" | "danger";
+  background?: Variant;
   options: string[];
 }
 

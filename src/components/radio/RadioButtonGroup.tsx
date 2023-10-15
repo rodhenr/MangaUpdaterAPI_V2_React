@@ -1,9 +1,12 @@
 import { useState } from "react";
+
+import { Variant } from "../../shared/interfaces/components";
+
 import "./RadioButtonGroup.scss";
 
 interface Option {
   text: string;
-  variant: "primary-light" | "primary-dark" | "success" | "danger";
+  variant: Variant;
 }
 
 interface Props {

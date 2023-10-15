@@ -2,23 +2,21 @@ import "./Avatar.scss";
 
 interface Props {
   color: "text-primary" | "text-secondary";
-  height?: number;
   imagePath?: string;
   showUserName?: boolean;
+  size?: number;
   userName: string;
-  width?: number;
 }
 
 function Avatar({
   color,
-  height = 40,
   imagePath,
   showUserName = true,
+  size = 40,
   userName,
-  width = 40,
 }: Props) {
   return (
-    <div className="avatar-main flex-center gap-3 roboto">
+    <div className="avatar-main flex-center gap-3 roboto border-box">
       {showUserName && <p className={color}>{userName}</p>}
       {imagePath ? (
         <img src={imagePath ?? ""} alt="avatar" />
@@ -27,7 +25,7 @@ function Avatar({
           className={`flex-center round primary-light cursor-pointer ${
             color == "text-primary" ? "bg-dark" : "bg-light"
           }`}
-          style={{ height: height, width: width }}
+          style={{ height: size, width: size }}
         >
           {userName.charAt(0)}
         </div>
