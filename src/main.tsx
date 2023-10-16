@@ -7,6 +7,7 @@ import Library from "./pages/Library.tsx";
 import MyList from "./pages/MyList.tsx";
 import "./shared/styles/global.scss";
 import "./index.css";
+import ContextProvider from "./shared/context/ContextProvider.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ContextProvider>
+      <RouterProvider router={router} />
+    </ContextProvider>
   </React.StrictMode>
 );
