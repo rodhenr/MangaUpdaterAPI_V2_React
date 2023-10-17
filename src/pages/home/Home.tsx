@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { fakeData } from "../../api/fakeData/data";
 import Button from "../../components/button/Button";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import ListView from "./components/ListView";
 import CardView from "./components/CardView";
-
-const isUserLogged = true;
+import AuthContext from "../../shared/context/AuthContext";
 
 function Home() {
   const [isCardView, setIsCardView] = useState<boolean>(true);
+  const authContext = useContext(AuthContext);
 
   const notLogged = (
     <div className="flex-center column gap-2">
@@ -53,7 +54,7 @@ function Home() {
 
   return (
     <div className="flex column gap-4 h-100 w-100">
-      {!isUserLogged ? (
+      {!authContext.userInfo.token ? (
         <>{notLogged}</>
       ) : (
         <>

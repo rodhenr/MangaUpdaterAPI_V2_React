@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { Outlet, Link } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -17,6 +17,7 @@ import LoginModal from "../components/modal/LoginModal";
 import RegisterModal from "../components/modal/RegisterModal";
 
 import "./Root.scss";
+import AuthContext from "../shared/context/AuthContext";
 
 interface PageList {
   baseUrl: string;
@@ -29,12 +30,11 @@ const pages: PageList[] = [
   { baseUrl: "/mylist", title: "My List" },
 ];
 
-const isUserLogged = false;
-
 function Root() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] =
     useState<boolean>(false);
+  const authContext = useContext(AuthContext);
 
   const changeLoginModalState = () => {
     if (isRegisterModalOpen) setIsRegisterModalOpen(false);
@@ -63,8 +63,12 @@ function Root() {
               </div>
             ))}
           </div>
-          {isUserLogged ? (
-            <Avatar color="text-secondary" userName="Some username" />
+          {authContext.userInfo.token ? (
+              <Avatar
+                color="text-secondary"
+                imagePath={authContext.userInfo.avatar ?? ""}
+                userName={authContext.userInfo.username ?? ""}
+              />
           ) : (
             <div className="flex gap-2">
               <Button

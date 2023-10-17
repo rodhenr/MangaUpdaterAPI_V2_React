@@ -1,10 +1,13 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios, { AxiosResponse } from "axios";
 
 import Input from "../input/Input";
 import Button from "../button/Button";
 
 import "./LoginModal.scss";
+import { AuthResponse } from "../../shared/interfaces/auth";
+import AuthContext from "../../shared/context/AuthContext";
 
 interface Props {
   closeModal: () => void;
@@ -14,6 +17,7 @@ interface Props {
 function LoginModal({ closeModal, showModal = true }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const authContext = useContext(AuthContext);
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -23,7 +27,28 @@ function LoginModal({ closeModal, showModal = true }: Props) {
     setPassword(event.target.value);
   };
 
-  const handleLogin = () => {};
+  const handleLogin = async () => {
+    try {
+      const response: AxiosResponse<AuthResponse> = await axios.post(
+        "http://localhost:5030/api/auth/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
+
+      authContext.login({
+        avatar: response.data.userAvatar,
+        token: response.data.accessToken,
+        username: response.data.userName,
+      });
+      setEmail("");
+      setPassword("");
+      closeModal();
+    } catch {
+      //some error
+    }
+  };
 
   return (
     <div

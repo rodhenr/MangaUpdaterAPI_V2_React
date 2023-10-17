@@ -204,6 +204,12 @@
   transition: background-color 0.2s;
 }
 
+// Text Hover
+.text-hover-secondary-dark:hover {
+  color: var(--secondary-dark-hover);
+  transition: background-color 0.2s;
+}
+
 // Text
 .text-center {
   text-align: center;
