@@ -43,6 +43,10 @@
   font-size: 1rem;
 }
 
+.fsize-4-5 {
+  font-size: 1.25rem;
+}
+
 .fsize-5 {
   font-size: 1.5rem;
 }
@@ -266,6 +270,10 @@
   justify-content: center;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .flex-1 {
   flex: 1;
 }
@@ -347,6 +355,30 @@
 
 .m-4 {
   margin: 1rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-5 {
+  margin-top: 2rem;
+}
+
+.mt-6 {
+  margin-top: 3rem;
 }
 
 // Padding

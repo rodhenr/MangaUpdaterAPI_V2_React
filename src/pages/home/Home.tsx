@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 
+import { axios } from "../../lib/axios";
 import Button from "../../components/button/Button";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import ListView from "./components/ListView";
@@ -23,7 +23,7 @@ function Home() {
     queryKey: ["homeData"],
     queryFn: () =>
       axios
-        .get("http://localhost:5030/api/user/mangas", {
+        .get("/api/user/mangas", {
           headers: { Authorization: `Bearer ${userInfo?.token}` },
         })
         .then((res) => res.data)

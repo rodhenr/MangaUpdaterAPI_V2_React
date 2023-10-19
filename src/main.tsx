@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./layouts/Root.tsx";
 import Home from "./pages/home/Home.tsx";
-import Library from "./pages/Library.tsx";
+import Library from "./pages/library/Library.tsx";
 import MyList from "./pages/MyList.tsx";
 import "./shared/styles/global.scss";
 import "./index.css";

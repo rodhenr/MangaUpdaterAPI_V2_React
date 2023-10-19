@@ -1,2 +1,9 @@
 .card-main {
+  max-width: 100%;
+  width: 100%;
+
+  &:hover {
+    translate: -0.25rem -0.5rem;
+    transition: translate 0.3s;
+  }
 }

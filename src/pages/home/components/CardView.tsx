@@ -12,14 +12,15 @@ interface Props {
 function CardView({ data }: Props) {
   return (
     <div className="cardView-main grid gap-2">
-      {data.map((data) => {
+      {data.map((data: MangaDataList) => {
         return (
           <CardWithInfo
-            key={uuidv4()}
             buttonVariant="primary-dark"
-            name={data.name}
-            cover={data.coverUrl}
             chapters={data.chapters}
+            cover={data.coverUrl}
+            id={data.id}
+            key={uuidv4()}
+            name={data.name}
           />
         );
       })}

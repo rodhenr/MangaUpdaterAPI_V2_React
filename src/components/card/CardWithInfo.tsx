@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import Button from "../button/Button";
@@ -12,6 +13,7 @@ interface Props {
   buttonVariant: Variant;
   chapters: ChapterInfo[];
   cover: string;
+  id: number;
   name: string;
   variant?: Variant;
 }
@@ -20,9 +22,16 @@ function CardWithInfo({
   buttonVariant,
   chapters,
   cover,
+  id,
   name,
   variant = "primary-light",
 }: Props) {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`/manga/${id}`);
+  };
+
   return (
     <div
       className={`cardWithInfo-main flex-center gap-2 column roboto space-between radius-2 shadow-3 ${variant} border-box`}
@@ -35,7 +44,11 @@ function CardWithInfo({
         />
       </div>
       <div className="border-box flex column flex-1 gap-4 p-2 w-100">
-        <div className="flex-center text-center" style={{ height: 35 }}>
+        <div
+          className="flex-center text-center cursor-pointer"
+          style={{ height: 35 }}
+          onClick={handleNavigate}
+        >
           <h1 className="text-light">{truncateString(name, 48)}</h1>
         </div>
         <div className="flex column flex-1 gap-2 w-100">

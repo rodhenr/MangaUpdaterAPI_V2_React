@@ -35,7 +35,7 @@ function Input({
 }: Props) {
   return (
     <div
-      className={`input-main flex align-center radius-1 ${variant} border-box`}
+      className={`input-main flex align-center radius-1 ${variant} border-box p-2`}
       style={{ height: height, width: width }}
     >
       {icon && iconSide == "left" && (

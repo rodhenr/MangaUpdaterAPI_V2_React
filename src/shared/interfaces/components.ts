@@ -13,6 +13,17 @@ export interface SizeProps {
   width?: string;
 }
 
-export type InputTypes = "text" | "email" | "password" | "file" | "date";
+export type InputTypes =
+  | "text"
+  | "email"
+  | "password"
+  | "file"
+  | "date"
+  | "search";
 
-export type FontSize = "fsize-1" | "fsize-2" | "fsize-3" | "fsize-4" | "fsize-5";
+export type FontSize =
+  | "fsize-1"
+  | "fsize-2"
+  | "fsize-3"
+  | "fsize-4"
+  | "fsize-5";
