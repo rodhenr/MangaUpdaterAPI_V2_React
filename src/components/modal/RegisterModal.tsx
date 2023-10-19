@@ -60,9 +60,9 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
       </div>
       <div className="flex column gap-2">
         <div className="flex column">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="registerUsername">Username</label>
           <Input
-            id="username"
+            id="registerU"
             onChange={handleUsernameChange}
             placeholder="Enter your username"
             value={username}
@@ -70,9 +70,9 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
           />
         </div>
         <div className="flex column">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="registerEmail">Email</label>
           <Input
-            id="email"
+            id="registerEmail"
             onChange={handleEmailChange}
             placeholder="Enter your email"
             type="email"
@@ -81,9 +81,9 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
           />
         </div>
         <div className="flex column">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="registerPassword">Password</label>
           <Input
-            id="password"
+            id="registerPassword"
             onChange={handlePasswordChange}
             placeholder="Enter your password"
             type="password"
@@ -92,9 +92,9 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
           />
         </div>
         <div className="flex column">
-          <label htmlFor="confirmPassword">Confirm password</label>
+          <label htmlFor="confirmRegisterPassword">Confirm password</label>
           <Input
-            id="confirmPassword"
+            id="confirmRegisterPassword"
             onChange={handleConfirmationPasswordChange}
             placeholder="Enter your password"
             type="password"

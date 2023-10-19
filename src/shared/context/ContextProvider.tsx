@@ -1,14 +1,18 @@
 import { ReactNode, useState } from "react";
+import { AxiosResponse } from "axios";
 
+import { axios } from "../../lib/axios";
 import AuthContext from "./AuthContext";
 import ThemeContext from "./ThemeContext";
-import { ThemeMode, UserInfo } from "../interfaces/context";
+import { ThemeMode } from "../interfaces/context";
+import { AuthResponse, IDefaultUserInfo, ILogin } from "../interfaces/auth";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 interface Props {
   children: ReactNode;
 }
 
-const defaultUserInfo = {
+const defaultUserInfo: IDefaultUserInfo = {
   avatar: null,
   username: null,
   token: null,
@@ -16,17 +20,42 @@ const defaultUserInfo = {
 
 const ContextProvider = ({ children }: Props) => {
   const [theme, setTheme] = useState<ThemeMode>("dark");
-  const [userInfo, setUserInfo] = useState<UserInfo>(defaultUserInfo);
 
-  const loginHandle = (loginInfo: UserInfo) => setUserInfo(loginInfo);
-  const logoutHandle = () => setUserInfo(defaultUserInfo);
+  const [isDarkMode, setIsDarkMode] = useLocalStorage("darkTheme", true);
+  const [localStorageUserInfo, setLocalStorageUserInfo] = useLocalStorage(
+    "userInfo",
+    defaultUserInfo
+  );
+
+  const loginHandle = async (loginData: ILogin) => {
+    const response: AxiosResponse<AuthResponse> = await axios.post(
+      "/api/auth/login",
+      loginData
+    );
+
+    const responseInfo = {
+      avatar: response.data.userAvatar,
+      username: response.data.userName,
+      token: response.data.accessToken,
+    };
+
+    setLocalStorageUserInfo(responseInfo);
+  };
+
+  const logoutHandle = () => {
+    setLocalStorageUserInfo(defaultUserInfo);
+  };
 
   return (
     <ThemeContext.Provider
       value={{ themeMode: theme, toggleThemeMode: setTheme }}
     >
       <AuthContext.Provider
-        value={{ userInfo: userInfo, login: loginHandle, logout: logoutHandle }}
+        value={{
+          userInfo: localStorageUserInfo,
+          login: loginHandle,
+          logout: logoutHandle,
+        }}
       >
         {children}
       </AuthContext.Provider>

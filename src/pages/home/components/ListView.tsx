@@ -19,7 +19,7 @@ function ListView({ data }: Props) {
         <p className="column-width text-center">Status</p>
       </div>
       {data.map((d, dataIndex) =>
-        d.Chapters.map((chapter, chapterIndex) => {
+        d.chapters.map((chapter, chapterIndex) => {
           return (
             <div
               className={`flex align-center space-between pv-1 ${
@@ -28,19 +28,19 @@ function ListView({ data }: Props) {
                   : "bg-light border-secondary-dark-left-1 border-secondary-dark-right-1"
               }`}
             >
-              <p className="flex-1 text-center fsize-3 ph-1">{d.Name}</p>
+              <p className="flex-1 text-center fsize-3 ph-1">{d.name}</p>
               <p className="column-width text-center fsize-3">
-                {formatDate(chapter.Date)}
+                {formatDate(chapter.date)}
               </p>
               <p className="column-width text-center fsize-3">
-                Chapter {chapter.Number}
+                Chapter {chapter.number}
               </p>
               <p className="flex-center column-width text-center fsize-3">
                 <Button
                   fontSize="fsize-3"
                   height="25px"
                   onClick={() => null}
-                  text={chapter.SourceName}
+                  text={chapter.sourceName}
                   variant="primary-dark"
                   width="100px"
                 />
@@ -50,8 +50,8 @@ function ListView({ data }: Props) {
                   fontSize="fsize-3"
                   height="25px"
                   onClick={() => null}
-                  text={chapter.Read ? "Read" : "Not Read"}
-                  variant={chapter.Read ? "success" : "danger"}
+                  text={chapter.read ? "Read" : "Not Read"}
+                  variant={chapter.read ? "success" : "danger"}
                   width="100px"
                 />
               </div>

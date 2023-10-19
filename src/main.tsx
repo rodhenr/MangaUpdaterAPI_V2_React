@@ -8,6 +8,8 @@ import MyList from "./pages/MyList.tsx";
 import "./shared/styles/global.scss";
 import "./index.css";
 import ContextProvider from "./shared/context/ContextProvider.tsx";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./lib/query-client.ts";
 
 const router = createBrowserRouter([
   {
@@ -23,8 +25,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ContextProvider>
-      <RouterProvider router={router} />
-    </ContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <ContextProvider>
+        <RouterProvider router={router} />
+      </ContextProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

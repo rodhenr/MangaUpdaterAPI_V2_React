@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { Outlet, Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faGear,
@@ -58,17 +59,17 @@ function Root() {
           <p>MANGA UPDATER</p>
           <div className="flex gap-4">
             {pages.map((page) => (
-              <div className="fsize-5">
+              <div key={uuidv4()} className="fsize-5">
                 <Link to={`${page.baseUrl}`}>{page.title}</Link>
               </div>
             ))}
           </div>
           {authContext.userInfo.token ? (
-              <Avatar
-                color="text-secondary"
-                imagePath={authContext.userInfo.avatar ?? ""}
-                userName={authContext.userInfo.username ?? ""}
-              />
+            <Avatar
+              color="text-secondary"
+              imagePath={authContext.userInfo.avatar ?? ""}
+              userName={authContext.userInfo.username ?? ""}
+            />
           ) : (
             <div className="flex gap-2">
               <Button

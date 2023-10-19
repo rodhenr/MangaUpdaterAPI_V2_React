@@ -282,6 +282,15 @@
   flex-wrap: wrap;
 }
 
+// Grid
+.grid {
+  display: grid;
+}
+
+.grid-gap {
+  gap: 1;
+}
+
 // Gap
 .gap-0 {
   gap: 0;

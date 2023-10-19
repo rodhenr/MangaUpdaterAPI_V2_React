@@ -1,3 +1,5 @@
+import { ILogin } from "./auth";
+
 export type ThemeMode = "light" | "dark";
 
 export interface ThemeContextType {
@@ -13,6 +15,6 @@ export interface UserInfo {
 
 export interface AuthContextType {
   userInfo: UserInfo;
-  login: (loginInfo: UserInfo) => void;
+  login: (loginData: ILogin) => void;
   logout: () => void;
 }

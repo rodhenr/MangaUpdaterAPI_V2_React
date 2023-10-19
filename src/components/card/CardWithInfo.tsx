@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 import Button from "../button/Button";
 import { ChapterInfo } from "../../shared/interfaces/chapters";
 import { Variant } from "../../shared/interfaces/components";
@@ -38,23 +40,28 @@ function CardWithInfo({
         </div>
         <div className="flex column flex-1 gap-2 w-100">
           {chapters.map((ch) => (
-            <div className="flex gap-2 space-between align-center w-100">
+            <div
+              key={uuidv4()}
+              className="flex gap-2 space-between align-center w-100"
+            >
               <div className="flex-center flex-1 space-between">
-                <p className="fsize-3">{formatDate(ch.Date)}</p>
-                <p className="fsize-3">Chapter {ch.Number.toString()}</p>
+                <p className="fsize-3 text-center">{formatDate(ch.date)}</p>
+                <p className="fsize-3 text-center">
+                  Chapter {ch.number.toString()}
+                </p>
               </div>
               <div className="flex-center gap-2">
                 <Button
                   fontSize="fsize-3"
                   height="20px"
-                  text={ch.SourceName}
+                  text={ch.sourceName}
                   variant={buttonVariant}
                   width="95px"
                 />
                 <div
                   className="round cursor-pointer border-box"
                   style={{
-                    backgroundColor: ch.Read ? "green" : "red",
+                    backgroundColor: ch.read ? "green" : "red",
                     border: "1px solid #FFF",
                     height: 15,
                     width: 15,

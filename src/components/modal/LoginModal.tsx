@@ -1,13 +1,11 @@
 import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios, { AxiosResponse } from "axios";
 
 import Input from "../input/Input";
 import Button from "../button/Button";
+import AuthContext from "../../shared/context/AuthContext";
 
 import "./LoginModal.scss";
-import { AuthResponse } from "../../shared/interfaces/auth";
-import AuthContext from "../../shared/context/AuthContext";
 
 interface Props {
   closeModal: () => void;
@@ -29,19 +27,8 @@ function LoginModal({ closeModal, showModal = true }: Props) {
 
   const handleLogin = async () => {
     try {
-      const response: AxiosResponse<AuthResponse> = await axios.post(
-        "http://localhost:5030/api/auth/login",
-        {
-          email: email,
-          password: password,
-        }
-      );
+      authContext.login({ email, password });
 
-      authContext.login({
-        avatar: response.data.userAvatar,
-        token: response.data.accessToken,
-        username: response.data.userName,
-      });
       setEmail("");
       setPassword("");
       closeModal();
