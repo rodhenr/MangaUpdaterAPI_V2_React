@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import { ISelectState } from "../../shared/interfaces/components";
 
@@ -30,7 +31,7 @@ function SelectGroup({
       onChange={onChange}
     >
       {options.map((el) => (
-        <option value={el.value} hidden={el.isHidden}>
+        <option key={uuidv4()} value={el.value} hidden={el.isHidden}>
           {el.description}
         </option>
       ))}

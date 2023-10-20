@@ -67,6 +67,10 @@
   font-weight: 600;
 }
 
+.font-bold {
+  font-weight: bold;
+}
+
 // Cursor
 .cursor-pointer {
   cursor: pointer;
@@ -79,6 +83,10 @@
 
 .hover-opacity-2:hover {
   opacity: 0.75;
+}
+
+.hover-none:hover {
+  background: inherit;
 }
 
 // Border
@@ -190,7 +198,7 @@
   transition: background-color 0.2s;
 }
 
-.secondary-dark:hover {
+.secondary-dark-hover:hover {
   background-color: var(--secondary-dark-hover);
   color: var(--text-light);
   transition: background-color 0.2s;
@@ -202,7 +210,7 @@
   transition: background-color 0.2s;
 }
 
-.secondary-light:hover {
+.secondary-light-hover:hover {
   background-color: var(--secondary-light-hover);
   color: var(--text-light);
   transition: background-color 0.2s;
@@ -241,6 +249,10 @@
 
 .break-word {
   word-wrap: break-word;
+}
+
+.text-justify {
+  text-align: justify;
 }
 
 // Flex
@@ -318,6 +330,14 @@
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-5 {
+  gap: 2rem;
+}
+
+.gap-6 {
+  gap: 3rem;
 }
 
 .row-gap-1 {

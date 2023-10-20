@@ -173,10 +173,10 @@ function Library() {
           {data.map((manga: ICardData) => {
             return (
               <Card
+                key={uuidv4()}
                 color="text-primary"
                 id={manga.mangaId}
                 imagePath={manga.coverUrl}
-                key={uuidv4()}
                 text={manga.mangaName}
               />
             );

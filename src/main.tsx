@@ -1,15 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
+
+import { queryClient } from "./lib/query-client.ts";
+import ContextProvider from "./shared/context/ContextProvider.tsx";
 import Root from "./layouts/Root.tsx";
 import Home from "./pages/home/Home.tsx";
 import Library from "./pages/library/Library.tsx";
 import MyList from "./pages/MyList.tsx";
+import Manga from "./pages/manga/Manga.tsx";
+
 import "./shared/styles/global.scss";
 import "./index.css";
-import ContextProvider from "./shared/context/ContextProvider.tsx";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./lib/query-client.ts";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +22,7 @@ const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: "library", Component: Library },
       { path: "mylist", Component: MyList },
+      { path: "manga/:mangaId", Component: Manga },
     ],
   },
 ]);
