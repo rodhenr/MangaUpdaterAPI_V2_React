@@ -27,3 +27,9 @@ export type FontSize =
   | "fsize-3"
   | "fsize-4"
   | "fsize-5";
+
+export interface ISelectState {
+  description: string;
+  isHidden: boolean;
+  value: string;
+}

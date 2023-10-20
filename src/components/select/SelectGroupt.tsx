@@ -1,39 +1,38 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
+
+import { ISelectState } from "../../shared/interfaces/components";
 
 import "./SelectGroup.scss";
 
 interface Props {
-  height?: number;
-  options: string[];
+  height?: string;
+  onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  options: ISelectState[];
   placeholder: string;
-  width?: number;
+  value: string;
+  width?: string;
 }
 
 function SelectGroup({
-  height = 30,
+  height = "30px",
+  onChange,
   options,
   placeholder,
-  width = 150,
+  value,
+  width = "100%",
 }: Props) {
-  const [selectedOption, setSelectedOption] = useState<string>("");
-
-  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
-  };
-
   return (
     <select
       name={placeholder}
       className="select-main text-primary radius-2 roboto border-box"
       style={{ height: height, width: width }}
-      value={selectedOption}
-      onChange={handleSelectChange}
+      value={value}
+      onChange={onChange}
     >
-      <option value="" selected hidden>
-        {placeholder}
-      </option>
       {options.map((el) => (
-        <option value={el}>{el}</option>
+        <option value={el.value} hidden={el.isHidden}>
+          {el.description}
+        </option>
       ))}
     </select>
   );

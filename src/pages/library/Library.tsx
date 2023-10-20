@@ -12,19 +12,39 @@ import Card from "../../components/card/Card";
 import { ICardData } from "../../shared/interfaces/library";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Button from "../../components/button/Button";
+import Input from "../../components/input/Input";
+import SelectGroup from "../../components/select/SelectGroupt";
 
 import "./Library.scss";
-import Input from "../../components/input/Input";
 
 function Library() {
   const [search, setSearch] = useState<string>("");
+  const [orderById, setOrderById] = useState<string>("");
+  const [sourceId, setSourceId] = useState<string>("");
+  const [genreId, setGenreId] = useState<string>("");
+
   const authContext = useContext(AuthContext);
   const userInfo: StorageValue<IDefaultUserInfo> =
     useReadFromLocalStorage("userInfo");
 
+  const handleOrderByIdChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setOrderById(event.target.value);
+  };
+
+  const handleSourceChangIde = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSourceId(event.target.value);
+  };
+
+  const handleGenreChangIde = (event: ChangeEvent<HTMLSelectElement>) => {
+    setGenreId(event.target.value);
+  };
+
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
+
+  // TODO: Queries for each select box
+  // TODO: Pagination
 
   const { isPending, error, data } = useQuery({
     queryKey: ["libraryData"],
@@ -41,7 +61,6 @@ function Library() {
             console.log(error.response);
           }
         }),
-    enabled: userInfo?.token !== null && userInfo?.token !== "",
   });
 
   if (isPending) return "Loading...";
@@ -53,7 +72,7 @@ function Library() {
       <PageHeader>
         <p className="fsize-5">Library</p>
       </PageHeader>
-      <div>
+      <div className="flex space-between">
         <Input
           placeholder="Search for a manga"
           type="search"
@@ -65,6 +84,74 @@ function Library() {
           onChange={handleSearch}
           variant="bg-dark"
         />
+        <div className="flex gap-3">
+          <SelectGroup
+            onChange={handleOrderByIdChange}
+            placeholder="Order By"
+            options={[
+              {
+                description: "Order By",
+                value: "0",
+                isHidden: true,
+              },
+              {
+                description: "A-Z",
+                value: "1",
+                isHidden: false,
+              },
+              {
+                description: "Latest",
+                value: "2",
+                isHidden: false,
+              },
+            ]}
+            value={orderById}
+          />
+          <SelectGroup
+            onChange={handleSourceChangIde}
+            placeholder="Source"
+            options={[
+              {
+                description: "Source",
+                value: "0",
+                isHidden: true,
+              },
+              {
+                description: "MangaLivre",
+                value: "1",
+                isHidden: false,
+              },
+              {
+                description: "AsuraScans",
+                value: "2",
+                isHidden: false,
+              },
+            ]}
+            value={sourceId}
+          />
+          <SelectGroup
+            onChange={handleGenreChangIde}
+            placeholder="Genre"
+            options={[
+              {
+                description: "Genre",
+                value: "0",
+                isHidden: true,
+              },
+              {
+                description: "Comedy",
+                value: "1",
+                isHidden: false,
+              },
+              {
+                description: "Adventure",
+                value: "2",
+                isHidden: false,
+              },
+            ]}
+            value={genreId}
+          />
+        </div>
       </div>
     </div>
   );
