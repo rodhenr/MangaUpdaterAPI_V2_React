@@ -9,8 +9,10 @@ import {
   faBars,
   faList,
   faCircleXmark,
+  faBook,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faGear, faSearch, faBars, faList, faCircleXmark);
+library.add(faGear, faSearch, faBars, faList, faCircleXmark, faBook, faUsers);
 
 import Avatar from "../components/avatar/Avatar";
 import Button from "../components/button/Button";
