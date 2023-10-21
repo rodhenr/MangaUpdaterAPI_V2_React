@@ -33,3 +33,8 @@ export interface ISelectState {
   isHidden: boolean;
   value: string;
 }
+
+export interface IPageList {
+  baseUrl: string;
+  title: string;
+}

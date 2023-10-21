@@ -1,11 +1,15 @@
 import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useMutation } from "@tanstack/react-query";
 
+import { axios } from "../../lib/axios";
 import Input from "../input/Input";
 import Button from "../button/Button";
 import AuthContext from "../../shared/context/AuthContext";
+import { AuthResponse, ILogin } from "../../shared/interfaces/auth";
 
 import "./LoginModal.scss";
+import { queryClient } from "../../lib/query-client";
 
 interface Props {
   closeModal: () => void;
@@ -15,6 +19,7 @@ interface Props {
 function LoginModal({ closeModal, showModal = true }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const authContext = useContext(AuthContext);
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -25,14 +30,33 @@ function LoginModal({ closeModal, showModal = true }: Props) {
     setPassword(event.target.value);
   };
 
+  const loginMutation = useMutation({
+    mutationFn: (loginData: ILogin) => {
+      return axios.post<AuthResponse>("/api/auth/login", loginData);
+    },
+  });
+
   const handleLogin = async () => {
     try {
-      authContext.login({ email, password });
+      setLoading(true);
+
+      const response = await loginMutation.mutateAsync({ email, password });
+
+      const responseInfo = {
+        avatar: response.data.userAvatar,
+        username: response.data.userName,
+        token: response.data.accessToken,
+      };
+
+      authContext.login(responseInfo);
+      queryClient.invalidateQueries({ queryKey: ["homeData", "mangaData"] });
 
       setEmail("");
       setPassword("");
+      setLoading(false);
       closeModal();
     } catch {
+      setLoading(false);
       //some error
     }
   };
@@ -47,7 +71,7 @@ function LoginModal({ closeModal, showModal = true }: Props) {
         position: "absolute",
         top: "50%",
         transform: "translate(-50%,-50%)",
-        width: 600,
+        width: 500,
       }}
     >
       <div className="flex align-center space-between">
@@ -90,11 +114,20 @@ function LoginModal({ closeModal, showModal = true }: Props) {
         <span className="cursor-pointer">Forget your password?</span>
       </div>
       <div className="flex-center w-100">
-        <Button
-          onClick={handleLogin}
-          text="Sign in"
-          variant="secondary-light"
-        />
+        {!loading ? (
+          <Button
+            onClick={handleLogin}
+            text="Sign in"
+            useHover={true}
+            variant="secondary-light"
+          />
+        ) : (
+          "carregando..."
+        )}
+      </div>
+      <div className="flex-center gap-3 ">
+        <p>Don't have an account?</p>
+        <p>Register</p>
       </div>
     </div>
   );

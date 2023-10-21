@@ -134,8 +134,12 @@
   color: var(--text-light);
 }
 
-.primary-light:hover,
 .primary-light::placeholder:hover {
+  background-color: var(--primary-light-hover);
+  transition: background-color 0.2s;
+}
+
+.primary-light-hover:hover {
   background-color: var(--primary-light-hover);
   transition: background-color 0.2s;
 }
@@ -146,8 +150,12 @@
   color: var(--text-light);
 }
 
-.primary-dark:hover,
 .primary-dark::placeholder:hover {
+  background-color: var(--primary-dark-hover);
+  transition: background-color 0.2s;
+}
+
+.primary-dark-hover:hover {
   background-color: var(--primary-dark-hover);
   transition: background-color 0.2s;
 }
@@ -158,8 +166,12 @@
   color: var(--text-light);
 }
 
-.success:hover,
 .success::placeholder:hover {
+  background-color: var(--success-hover);
+  transition: background-color 0.2s;
+}
+
+.success-hover:hover {
   background-color: var(--success-hover);
   transition: background-color 0.2s;
 }
@@ -170,8 +182,12 @@
   color: var(--text-light);
 }
 
-.danger:hover,
 .danger::placeholder:hover {
+  background-color: var(--danger-hover);
+  transition: background-color 0.2s;
+}
+
+.danger-hover:hover {
   background-color: var(--danger-hover);
   transition: background-color 0.2s;
 }

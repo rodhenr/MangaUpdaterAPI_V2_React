@@ -7,14 +7,14 @@ export interface ThemeContextType {
   toggleThemeMode: React.Dispatch<React.SetStateAction<ThemeMode>>;
 }
 
-export interface UserInfo {
+export interface IUserInfo {
   avatar: string | null;
   username: string | null;
   token: string | null;
 }
 
 export interface AuthContextType {
-  userInfo: UserInfo;
-  login: (loginData: ILogin) => void;
+  userInfo: IUserInfo;
+  login: (loginInfo: IUserInfo) => void;
   logout: () => void;
 }

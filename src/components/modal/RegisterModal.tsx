@@ -47,7 +47,7 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
         position: "absolute",
         top: "50%",
         transform: "translate(-50%,-50%)",
-        width: 600,
+        width: 500,
       }}
     >
       <div className="flex align-center space-between">
@@ -58,8 +58,8 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
           onClick={closeModal}
         />
       </div>
-      <div className="flex column gap-2">
-        <div className="flex column">
+      <div className="flex column gap-3">
+        <div className="flex column gap-1">
           <label htmlFor="registerUsername">Username</label>
           <Input
             id="registerU"
@@ -69,7 +69,7 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
             variant="bg-light"
           />
         </div>
-        <div className="flex column">
+        <div className="flex column gap-1">
           <label htmlFor="registerEmail">Email</label>
           <Input
             id="registerEmail"
@@ -80,7 +80,7 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
             variant="bg-light"
           />
         </div>
-        <div className="flex column">
+        <div className="flex column gap-1">
           <label htmlFor="registerPassword">Password</label>
           <Input
             id="registerPassword"
@@ -91,7 +91,7 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
             variant="bg-light"
           />
         </div>
-        <div className="flex column">
+        <div className="flex column gap-1">
           <label htmlFor="confirmRegisterPassword">Confirm password</label>
           <Input
             id="confirmRegisterPassword"
@@ -107,6 +107,7 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
         <Button
           onClick={handleRegister}
           text="Register"
+          useHover={true}
           variant="secondary-light"
         />
       </div>

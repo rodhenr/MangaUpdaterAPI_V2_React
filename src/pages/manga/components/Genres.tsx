@@ -1,4 +1,7 @@
+import { v4 as uuidv4 } from "uuid";
+
 import Button from "../../../components/button/Button";
+
 import "../Manga.scss";
 
 interface Props {
@@ -12,6 +15,7 @@ function Genres({ genres }: Props) {
         <Button
           fontSize="fsize-3"
           height="20px"
+          key={uuidv4()}
           text={genre}
           width="fit-content"
         />

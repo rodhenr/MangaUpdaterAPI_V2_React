@@ -1,11 +1,10 @@
 import { ReactNode, useState } from "react";
-import { AxiosResponse } from "axios";
 
-import { axios } from "../../lib/axios";
 import AuthContext from "./AuthContext";
+import { queryClient } from "../../lib/query-client";
 import ThemeContext from "./ThemeContext";
-import { ThemeMode } from "../interfaces/context";
-import { AuthResponse, IDefaultUserInfo, ILogin } from "../interfaces/auth";
+import { IUserInfo, ThemeMode } from "../interfaces/context";
+import { IDefaultUserInfo } from "../interfaces/auth";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
 interface Props {
@@ -21,29 +20,21 @@ const defaultUserInfo: IDefaultUserInfo = {
 const ContextProvider = ({ children }: Props) => {
   const [theme, setTheme] = useState<ThemeMode>("dark");
 
-  const [isDarkMode, setIsDarkMode] = useLocalStorage("darkTheme", true);
+  //const [isDarkMode, setIsDarkMode] = useLocalStorage("darkTheme", true);
   const [localStorageUserInfo, setLocalStorageUserInfo] = useLocalStorage(
     "userInfo",
     defaultUserInfo
   );
 
-  const loginHandle = async (loginData: ILogin) => {
-    const response: AxiosResponse<AuthResponse> = await axios.post(
-      "/api/auth/login",
-      loginData
-    );
-
-    const responseInfo = {
-      avatar: response.data.userAvatar,
-      username: response.data.userName,
-      token: response.data.accessToken,
-    };
-
-    setLocalStorageUserInfo(responseInfo);
+  const handleUserLogin = (loginInfo: IUserInfo) => {
+    setLocalStorageUserInfo(loginInfo);
+    window.location.reload();
   };
 
   const logoutHandle = () => {
     setLocalStorageUserInfo(defaultUserInfo);
+    queryClient.invalidateQueries({ queryKey: ["homeData", "mangaData"] });
+    window.location.reload();
   };
 
   return (
@@ -53,7 +44,7 @@ const ContextProvider = ({ children }: Props) => {
       <AuthContext.Provider
         value={{
           userInfo: localStorageUserInfo,
-          login: loginHandle,
+          login: handleUserLogin,
           logout: logoutHandle,
         }}
       >

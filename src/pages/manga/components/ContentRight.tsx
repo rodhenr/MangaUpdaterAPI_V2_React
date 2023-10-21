@@ -11,6 +11,7 @@ interface Props {
   author: string;
   chapters: IMangaChapter[];
   genres: string[];
+  mangaId: number;
   name: string;
   synopsis: string;
 }
@@ -21,6 +22,7 @@ function ContentRight({
   author,
   chapters,
   genres,
+  mangaId,
   name,
   synopsis,
 }: Props) {
@@ -42,7 +44,7 @@ function ContentRight({
         <Genres genres={genres} />
       </div>
       <Synopsis text={synopsis} />
-      <ChapterList chapters={chapters} />
+      <ChapterList chapters={chapters} mangaId={mangaId} />
     </div>
   );
 }

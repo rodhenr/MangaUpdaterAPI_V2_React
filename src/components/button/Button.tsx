@@ -15,6 +15,7 @@ interface Props extends SizeProps {
   iconWidth?: string;
   onClick?: () => void;
   text: string;
+  useHover?: boolean;
   variant?: Variant;
 }
 
@@ -25,12 +26,15 @@ function Button({
   iconWidth = "20px",
   onClick = () => null,
   text,
+  useHover = false,
   variant = "primary-light",
   width = "100%",
 }: Props) {
   return (
     <div
-      className={`button-main ${variant} radius-1 flex-center cursor-pointer roboto border-box text-center`}
+      className={`button-main ${variant} ${
+        useHover ? `${variant}-hover` : ""
+      } radius-1 flex-center cursor-pointer roboto border-box text-center`}
       onClick={onClick}
       style={{ height: height, width: width }}
     >

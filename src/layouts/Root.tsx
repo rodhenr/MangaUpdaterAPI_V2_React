@@ -1,7 +1,6 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
-import { Outlet, Link, useLocation } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import { Outlet } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faGear,
@@ -14,41 +13,25 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 library.add(faGear, faSearch, faBars, faList, faCircleXmark, faBook, faUsers);
 
-import Avatar from "../components/avatar/Avatar";
-import Button from "../components/button/Button";
 import LoginModal from "../components/modal/LoginModal";
 import RegisterModal from "../components/modal/RegisterModal";
+import PageGroup from "./components/PageGroup";
+import AuthGroup from "./components/AuthGroup";
 
 import "./Root.scss";
-import AuthContext from "../shared/context/AuthContext";
-
-interface PageList {
-  baseUrl: string;
-  title: string;
-}
-
-const pages: PageList[] = [
-  { baseUrl: "/", title: "Home" },
-  { baseUrl: "/library", title: "Library" },
-  { baseUrl: "/mylist", title: "My List" },
-];
 
 function Root() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] =
     useState<boolean>(false);
-  const authContext = useContext(AuthContext);
-  const { pathname } = useLocation();
 
   const changeLoginModalState = () => {
     if (isRegisterModalOpen) setIsRegisterModalOpen(false);
-
     setIsLoginModalOpen(!isLoginModalOpen);
   };
 
   const changeRegisterModalState = () => {
     if (isLoginModalOpen) setIsLoginModalOpen(false);
-
     setIsRegisterModalOpen(!isRegisterModalOpen);
   };
 
@@ -59,45 +42,12 @@ function Root() {
           className={`root-main flex align-center space-between`}
           style={{ height: 50, margin: "auto", width: "65vw" }}
         >
-          <p>MANGA UPDATER</p>
-          <div className="flex gap-4">
-            {pages.map((page) => (
-              <div key={uuidv4()} className="fsize-5">
-                <Link
-                  to={`${page.baseUrl}`}
-                  className={
-                    pathname === page.baseUrl
-                      ? "text-secondary-light"
-                      : "text-secondary"
-                  }
-                >
-                  {page.title}
-                </Link>
-              </div>
-            ))}
-          </div>
-          {authContext.userInfo.token ? (
-            <Avatar
-              color="text-secondary"
-              imagePath={authContext.userInfo.avatar ?? ""}
-              userName={authContext.userInfo.username ?? ""}
-            />
-          ) : (
-            <div className="flex gap-2">
-              <Button
-                onClick={changeLoginModalState}
-                text="Login"
-                variant="secondary-dark"
-                width="100px"
-              />
-              <Button
-                onClick={changeRegisterModalState}
-                text="Register"
-                variant="secondary-light"
-                width="100px"
-              />
-            </div>
-          )}
+          <h2>MANGA UPDATER</h2>
+          <PageGroup />
+          <AuthGroup
+            changeLoginModalState={changeLoginModalState}
+            changeRegisterModalState={changeRegisterModalState}
+          />
         </div>
       </div>
       <div

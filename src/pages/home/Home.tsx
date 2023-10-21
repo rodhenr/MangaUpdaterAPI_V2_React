@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { axios } from "../../lib/axios";
-import Button from "../../components/button/Button";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import ListView from "./components/ListView";
 import CardView from "./components/CardView";
@@ -38,12 +37,8 @@ function Home() {
   });
 
   const notLogged = (
-    <div className="flex-center column gap-2">
+    <div className="flex-center column gap-2 mt-6">
       <p className="fsize-6">Login to start following mangas</p>
-      <div className="flex-center gap-2">
-        <Button onClick={() => null} text="Login" variant="primary-dark" />
-        <Button onClick={() => null} text="Register" variant="danger" />
-      </div>
     </div>
   );
 
@@ -77,25 +72,26 @@ function Home() {
     </div>
   );
 
-  if (isPending) return "Loading...";
+  if (isPending && userInfo?.token !== null && userInfo?.token !== "")
+    return "Loading...";
 
   if (error) return "error...";
 
   return (
     <div className="flex column gap-4 h-100 w-100">
+      {pageHeader}
       {!authContext.userInfo.token ? (
         <>{notLogged}</>
       ) : (
         <>
-          {pageHeader}
-          {data.length > 0 ? (
+          {data && data.length > 0 ? (
             isCardView ? (
               <CardView data={data} />
             ) : (
               <ListView data={data} />
             )
           ) : (
-            <div>So empty here...</div>
+            <div>You are not following any manga</div>
           )}
         </>
       )}

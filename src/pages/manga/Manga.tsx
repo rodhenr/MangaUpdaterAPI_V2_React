@@ -23,7 +23,7 @@ function Manga() {
   const { mangaId } = useParams();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["homeData"],
+    queryKey: ["mangaData"],
     queryFn: () =>
       axios
         .get<IMangaData>(`/api/manga/${mangaId}`, {
@@ -49,6 +49,7 @@ function Manga() {
         <ContentLeft
           coverUrl={data.coverUrl}
           isUserFollowing={data.isUserFollowing}
+          mangaId={data.mangaId}
           sources={data.sources}
           type={data.type}
         />
@@ -58,6 +59,7 @@ function Manga() {
           author={data.author}
           chapters={data.chapters}
           genres={data.genres}
+          mangaId={data.mangaId}
           name={data.name}
           synopsis={data.synopsis}
         />

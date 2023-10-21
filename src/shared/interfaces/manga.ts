@@ -1,4 +1,5 @@
 export interface IMangaData {
+  mangaId: number;
   coverUrl: string;
   name: string;
   alternativeName: string;
