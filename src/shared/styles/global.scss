@@ -228,19 +228,19 @@
 }
 
 .text-primary {
-  color: var(--text-dark);
+  color: var(--text-dark) !important;
 }
 
 .text-secondary {
-  color: var(--text-light);
+  color: var(--text-light) !important;
 }
 
 .text-secondary-dark {
-  color: var(--secondary-dark);
+  color: var(--secondary-dark) !important;
 }
 
 .text-secondary-light {
-  color: var(--secondary-light);
+  color: var(--secondary-light) !important;
 }
 
 .text-disabled {

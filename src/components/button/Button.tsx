@@ -12,6 +12,7 @@ import "./Button.scss";
 interface Props extends SizeProps {
   fontSize?: FontSize;
   icon?: string;
+  iconWidth?: string;
   onClick?: () => void;
   text: string;
   variant?: Variant;
@@ -21,6 +22,7 @@ function Button({
   fontSize = "fsize-4",
   height = "30px",
   icon,
+  iconWidth = "20px",
   onClick = () => null,
   text,
   variant = "primary-light",
@@ -36,7 +38,11 @@ function Button({
       {icon && (
         <div className="flex-center gap-2 h-100">
           <div className="bg-light h-100 opacity-2" style={{ width: 1 }}></div>
-          <FontAwesomeIcon icon={icon as IconProp} className="h-100 w-icon" />
+          <FontAwesomeIcon
+            icon={icon as IconProp}
+            className="h-100 p-1"
+            style={{ width: iconWidth }}
+          />
         </div>
       )}
     </div>

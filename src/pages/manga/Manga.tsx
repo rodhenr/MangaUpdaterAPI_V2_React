@@ -57,6 +57,7 @@ function Manga() {
           artist={data.author}
           author={data.author}
           chapters={data.chapters}
+          genres={data.genres}
           name={data.name}
           synopsis={data.synopsis}
         />

@@ -35,6 +35,12 @@ function SeeAlso() {
           color="text-primary"
           id={5}
         />
+        <Card
+          imagePath="https://64.media.tumblr.com/0bef5d2f8a22101a6e831ee8163b5aa5/6beedf0b421cf769-59/s1280x1920/4af301abfffc2f4b18b99f268b3a0a7e071b899a.jpg"
+          text="Manga Sample 6"
+          color="text-primary"
+          id={6}
+        />
       </div>
     </div>
   );

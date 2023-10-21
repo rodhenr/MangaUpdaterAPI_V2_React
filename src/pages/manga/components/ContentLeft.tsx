@@ -23,7 +23,8 @@ function ContentLeft({ coverUrl, isUserFollowing, sources, type }: Props) {
           style={{ maxHeight: 450 }}
         />
         <Button
-          height="35px"
+          fontSize="fsize-5"
+          height="50px"
           icon="gear"
           text={isUserFollowing ? "Following" : "Follow"}
           variant={isUserFollowing ? "success" : "danger"}

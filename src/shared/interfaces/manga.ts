@@ -7,9 +7,9 @@ export interface IMangaData {
   type: string;
   myAnimeListId: number;
   isUserFollowing: boolean;
-  sources: IMangaSource[] | [];
-  genres: string[] | [];
-  chapters: IMangaChapter[] | [];
+  sources: IMangaSource[];
+  genres: string[];
+  chapters: IMangaChapter[];
 }
 
 export interface IMangaChapter {

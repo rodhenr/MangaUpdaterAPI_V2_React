@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { createPortal } from "react-dom";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -38,6 +38,7 @@ function Root() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] =
     useState<boolean>(false);
   const authContext = useContext(AuthContext);
+  const { pathname } = useLocation();
 
   const changeLoginModalState = () => {
     if (isRegisterModalOpen) setIsRegisterModalOpen(false);
@@ -62,7 +63,16 @@ function Root() {
           <div className="flex gap-4">
             {pages.map((page) => (
               <div key={uuidv4()} className="fsize-5">
-                <Link to={`${page.baseUrl}`}>{page.title}</Link>
+                <Link
+                  to={`${page.baseUrl}`}
+                  className={
+                    pathname === page.baseUrl
+                      ? "text-secondary-light"
+                      : "text-secondary"
+                  }
+                >
+                  {page.title}
+                </Link>
               </div>
             ))}
           </div>
