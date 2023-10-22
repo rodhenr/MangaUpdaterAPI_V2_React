@@ -20,7 +20,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "sass": "^1.69.3",
-    "styled-components": "^6.1.0",
+    "styled-components": "^5.3.3",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

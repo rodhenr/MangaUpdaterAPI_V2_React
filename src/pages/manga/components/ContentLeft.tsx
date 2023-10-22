@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { axios } from "../../../lib/axios";
@@ -10,6 +10,8 @@ import Sources from "./Sources";
 import "../Manga.scss";
 import AuthContext from "../../../shared/context/AuthContext";
 import { queryClient } from "../../../lib/query-client";
+import EditSourcesModal from "../../../components/modal/EditSourcesModal";
+import { createPortal } from "react-dom";
 
 interface Props {
   coverUrl: string;
@@ -27,15 +29,18 @@ function ContentLeft({
   type,
 }: Props) {
   const { userInfo } = useContext(AuthContext);
+  const [showEditSourceModal, setShowEditSourceModal] =
+    useState<boolean>(false);
 
   const followMutation = useMutation({
     mutationFn: () => {
-      return axios.post(`/api/user/mangas/${mangaId}`, [1], {
+      return axios.post(`/api/user/mangas/${mangaId}`, [], {
         headers: { Authorization: `Bearer ${userInfo?.token}` },
       });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+      queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
     },
   });
 
@@ -47,12 +52,13 @@ function ContentLeft({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+      queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
     },
   });
 
   return (
     <div className="left-side flex column gap-4">
-      <div className="flex column gap-1">
+      <div className="flex column gap-2">
         <img
           className="radius-2"
           src={coverUrl}
@@ -61,12 +67,15 @@ function ContentLeft({
         />
         <Button
           fontSize="fsize-5"
-          height="50px"
-          icon="gear"
+          height="40px"
+          icon={isUserFollowing ? "gear" : null}
           onClick={() =>
             isUserFollowing
               ? unfollowMutation.mutate()
               : followMutation.mutate()
+          }
+          onClickIcon={
+            isUserFollowing ? () => setShowEditSourceModal(true) : () => null
           }
           text={isUserFollowing ? "Following" : "Follow"}
           variant={isUserFollowing ? "success" : "danger"}
@@ -77,6 +86,14 @@ function ContentLeft({
         <Info description={type} header="Type" icon={"book"} />
         <Info description={"0"} header="Users Tracking" icon={"users"} />
       </div>
+      {createPortal(
+        <EditSourcesModal
+          mangaId={mangaId}
+          onClose={() => setShowEditSourceModal(false)}
+          showModal={showEditSourceModal}
+        />,
+        document.body
+      )}
     </div>
   );
 }

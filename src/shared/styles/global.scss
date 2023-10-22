@@ -16,6 +16,32 @@
   --success-hover: #4d9a2f;
   --text-light: #fff;
   --text-dark: #22617c;
+  --text-disabled: #7b7b7b;
+  --modal-back: #4444448e;
+}
+
+// Position
+.absolute {
+  position: absolute;
+}
+
+.absolute-align {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.relative {
+  position: relative;
+}
+
+// Z-Index
+.zIndex-100 {
+  z-index: 100;
+}
+
+.zIndex-1000 {
+  z-index: 1000;
 }
 
 // Font
@@ -232,6 +258,14 @@
   transition: background-color 0.2s;
 }
 
+.bg-disabled {
+  background-color: var(--text-disabled);
+}
+
+.bg-modal-back {
+  background-color: var(--modal-back);
+}
+
 // Text Hover
 .text-hover-secondary-dark:hover {
   color: var(--secondary-dark-hover);
@@ -260,7 +294,7 @@
 }
 
 .text-disabled {
-  color: #7b7b7b;
+  color: var(--text-disabled);
 }
 
 .break-word {

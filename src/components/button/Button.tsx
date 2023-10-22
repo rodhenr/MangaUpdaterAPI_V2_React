@@ -10,21 +10,25 @@ import {
 import "./Button.scss";
 
 interface Props extends SizeProps {
+  disabled?: boolean;
   fontSize?: FontSize;
-  icon?: string;
+  icon?: string | null;
   iconWidth?: string;
   onClick?: () => void;
+  onClickIcon?: () => void;
   text: string;
   useHover?: boolean;
   variant?: Variant;
 }
 
 function Button({
+  disabled = false,
   fontSize = "fsize-4",
   height = "30px",
-  icon,
+  icon = null,
   iconWidth = "20px",
   onClick = () => null,
+  onClickIcon = () => null,
   text,
   useHover = false,
   variant = "primary-light",
@@ -34,13 +38,16 @@ function Button({
     <div
       className={`button-main ${variant} ${
         useHover ? `${variant}-hover` : ""
-      } radius-1 flex-center cursor-pointer roboto border-box text-center`}
-      onClick={onClick}
+      } radius-1 flex-center roboto border-box text-center ${
+        !disabled && "cursor-pointer"
+      }`}
       style={{ height: height, width: width }}
     >
-      <p className={`flex-center w-100 h-100 ${fontSize}`}>{text}</p>
+      <p className={`flex-center w-100 h-100 ${fontSize}`} onClick={onClick}>
+        {text}
+      </p>
       {icon && (
-        <div className="flex-center gap-2 h-100">
+        <div className="flex-center gap-2 h-100" onClick={onClickIcon}>
           <div className="bg-light h-100 opacity-2" style={{ width: 1 }}></div>
           <FontAwesomeIcon
             icon={icon as IconProp}
