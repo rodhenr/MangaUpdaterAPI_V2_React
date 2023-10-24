@@ -34,20 +34,24 @@ function Button({
   variant = "primary-light",
   width = "100%",
 }: Props) {
+  console.log(text, variant);
   return (
     <div
-      className={`button-main ${variant} ${
+      className={`${variant} ${
         useHover ? `${variant}-hover` : ""
       } radius-1 flex-center roboto border-box text-center ${
         !disabled && "cursor-pointer"
       }`}
       style={{ height: height, width: width }}
     >
-      <p className={`flex-center w-100 h-100 ${fontSize}`} onClick={onClick}>
+      <p
+        className={`flex-center w-100 h-100 ${fontSize} p-2`}
+        onClick={onClick}
+      >
         {text}
       </p>
       {icon && (
-        <div className="flex-center gap-2 h-100" onClick={onClickIcon}>
+        <div className="flex-center gap-2 h-100 p-2" onClick={onClickIcon}>
           <div className="bg-light h-100 opacity-2" style={{ width: 1 }}></div>
           <FontAwesomeIcon
             icon={icon as IconProp}

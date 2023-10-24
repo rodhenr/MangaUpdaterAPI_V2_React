@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { createPortal } from "react-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
@@ -10,6 +11,7 @@ import AuthContext from "../../shared/context/AuthContext";
 import { IUserSource } from "../../shared/interfaces/source";
 
 import "./EditSourcesModal.scss";
+import Alert from "../alert/Alert";
 
 interface Props {
   mangaId: number;
@@ -20,6 +22,7 @@ interface Props {
 function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
   const authContext = useContext(AuthContext);
   const [sourcesToFollow, setSourcesToFollow] = useState<number[]>([]);
+  const [showDialog, setShowDialog] = useState<boolean>(false);
 
   const { isPending, error, data } = useQuery({
     queryKey: ["sourceData", mangaId],
@@ -68,6 +71,13 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
 
   if (error) return "error...";
 
+  const handleUpdateSource = () => {
+    data && data.length > 0 && editSourcesMutation.mutate();
+    setShowDialog(true);
+
+    onClose();
+  };
+
   return (
     <div
       className="align-center justify-center h-100 w-100 zIndex-100 roboto bg-modal-back absolute absolute-align border-box"
@@ -81,7 +91,7 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
         }}
       >
         <div className="flex align-center space-between">
-          <h1 className="poppins fweight-2 fsize-5">Edit Sources</h1>
+          <h1 className="poppins fweight-2 fsize-5">Add/Remove Sources</h1>
           <FontAwesomeIcon
             className="fsize-5 cursor-pointer hover-opacity-1"
             icon="circle-xmark"
@@ -119,11 +129,7 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
               <div className="flex gap-4">
                 <Button
                   disabled={data.length > 0 ? false : true}
-                  onClick={
-                    data.length > 0
-                      ? () => editSourcesMutation.mutate()
-                      : () => null
-                  }
+                  onClick={() => handleUpdateSource()}
                   text="Update"
                   useHover={true}
                   variant={data.length > 0 ? "success" : "bg-disabled"}
@@ -141,6 +147,16 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
           )}
         </div>
       </div>
+      {showDialog &&
+        createPortal(
+          <Alert
+            message="Sources updated"
+            onClose={() => setShowDialog(false)}
+            width={"350px"}
+            variant="bg-dark"
+          />,
+          document.getElementById("manga-page")!
+        )}
     </div>
   );
 }

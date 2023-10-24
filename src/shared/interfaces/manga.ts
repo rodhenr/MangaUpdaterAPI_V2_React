@@ -19,6 +19,7 @@ export interface IMangaChapter {
   sourceName: string;
   date: string;
   number: string;
+  IsUserAllowedToRead: boolean;
   read: boolean;
 }
 

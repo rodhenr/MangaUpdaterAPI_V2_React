@@ -1,17 +1,17 @@
 import { useContext, useState } from "react";
+import { createPortal } from "react-dom";
 import { useMutation } from "@tanstack/react-query";
 
+import { queryClient } from "../../../lib/query-client";
 import { axios } from "../../../lib/axios";
 import Button from "../../../components/button/Button";
 import Info from "../../../components/info/Info";
 import { IMangaSource } from "../../../shared/interfaces/manga";
 import Sources from "./Sources";
+import AuthContext from "../../../shared/context/AuthContext";
+import EditSourcesModal from "../../../components/modal/EditSourcesModal";
 
 import "../Manga.scss";
-import AuthContext from "../../../shared/context/AuthContext";
-import { queryClient } from "../../../lib/query-client";
-import EditSourcesModal from "../../../components/modal/EditSourcesModal";
-import { createPortal } from "react-dom";
 
 interface Props {
   coverUrl: string;
@@ -56,6 +56,16 @@ function ContentLeft({
     },
   });
 
+  const handleFollow = () => {
+    if (isUserFollowing) {
+      unfollowMutation.mutate();
+      return;
+    }
+
+    followMutation.mutate();
+    setShowEditSourceModal(true);
+  };
+
   return (
     <div className="left-side flex column gap-4">
       <div className="flex column gap-2">
@@ -69,11 +79,7 @@ function ContentLeft({
           fontSize="fsize-5"
           height="40px"
           icon={isUserFollowing ? "gear" : null}
-          onClick={() =>
-            isUserFollowing
-              ? unfollowMutation.mutate()
-              : followMutation.mutate()
-          }
+          onClick={() => handleFollow()}
           onClickIcon={
             isUserFollowing ? () => setShowEditSourceModal(true) : () => null
           }

@@ -44,7 +44,10 @@ function Manga() {
   if (error) return "error...";
 
   return data ? (
-    <div className="manga-main flex column gap-4 border-box relative">
+    <div
+      className="manga-main flex column gap-4 border-box relative"
+      id="manga-page"
+    >
       <div className="top flex gap-4">
         <ContentLeft
           coverUrl={data.coverUrl}
