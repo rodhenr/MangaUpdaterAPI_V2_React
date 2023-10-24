@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { v4 as uuidv4 } from "uuid";
 
 import { axios } from "../../../lib/axios";
 import { queryClient } from "../../../lib/query-client";
@@ -11,7 +10,6 @@ import Button from "../../../components/button/Button";
 
 import "../Manga.scss";
 import AuthContext from "../../../shared/context/AuthContext";
-import { chapterMessage, chapterVariant } from "../../../utils/chapter";
 
 interface Props {
   chapters: IMangaChapter[];
@@ -42,8 +40,6 @@ function ChapterList({ chapters, mangaId }: Props) {
     },
   });
 
-  console.log(chapters);
-
   const columns: TableColumn<IMangaChapter>[] = [
     {
       name: "Date",
@@ -63,13 +59,13 @@ function ChapterList({ chapters, mangaId }: Props) {
       name: "Status",
       cell: (row) => (
         <Button
-          disabled={!row.IsUserAllowedToRead}
+          disabled={!row.isUserAllowedToRead}
           fontSize="fsize-3"
           height="20px"
           onClick={
-            row.IsUserAllowedToRead
-              ? () =>
-                  chapterMutation.mutateAsync({
+            row.isUserAllowedToRead
+              ? async () =>
+                  await chapterMutation.mutateAsync({
                     chapterId: row.chapterId,
                     mangaId: mangaId,
                     sourceId: row.sourceId,
@@ -77,14 +73,14 @@ function ChapterList({ chapters, mangaId }: Props) {
               : () => {}
           }
           text={
-            !row.IsUserAllowedToRead
+            !row.isUserAllowedToRead
               ? "Not following"
               : row.read
               ? "Read"
               : "Not Read"
           }
           variant={
-            !row.IsUserAllowedToRead
+            !row.isUserAllowedToRead
               ? "bg-disabled"
               : row.read
               ? "success"

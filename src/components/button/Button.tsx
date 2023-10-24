@@ -34,7 +34,6 @@ function Button({
   variant = "primary-light",
   width = "100%",
 }: Props) {
-  console.log(text, variant);
   return (
     <div
       className={`${variant} ${
