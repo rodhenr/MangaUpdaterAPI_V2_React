@@ -59,7 +59,6 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
-      console.log("success");
     },
   });
 

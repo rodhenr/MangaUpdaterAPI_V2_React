@@ -2,8 +2,9 @@ import Synopsis from "./Synopsis";
 import ChapterList from "./ChapterList";
 import { IMangaChapter } from "../../../shared/interfaces/manga";
 
-import "../Manga.scss";
 import Genres from "./Genres";
+
+import "../Manga.scss";
 
 interface Props {
   alternativeName: string;

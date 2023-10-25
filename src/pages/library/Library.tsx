@@ -1,4 +1,5 @@
 import { useContext, useState, ChangeEvent } from "react";
+import { createPortal } from "react-dom";
 import { useQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 
@@ -16,12 +17,14 @@ import Input from "../../components/input/Input";
 import SelectGroup from "../../components/select/SelectGroupt";
 
 import "./Library.scss";
+import AddMangaModal from "../../components/modal/AddMangaModal";
 
 function Library() {
   const [search, setSearch] = useState<string>("");
   const [orderById, setOrderById] = useState<string>("");
   const [sourceId, setSourceId] = useState<string>("");
   const [genreId, setGenreId] = useState<string>("");
+  const [modalAddManga, setModalAddManga] = useState<boolean>(false);
 
   const authContext = useContext(AuthContext);
   const userInfo: StorageValue<IDefaultUserInfo> =
@@ -62,6 +65,10 @@ function Library() {
           }
         }),
   });
+
+  const handleChangeAddMangaModal = () => {
+    setModalAddManga((prev) => !prev);
+  };
 
   if (isPending) return "Loading...";
 
@@ -163,8 +170,9 @@ function Library() {
         <div className="flex space-between">
           <p className="fsize-4-5">Showing {data.length} results</p>
           <Button
-            text="Register new"
             fontSize="fsize-3"
+            onClick={() => handleChangeAddMangaModal()}
+            text="Register new"
             width="100px"
             variant="bg-dark"
           />
@@ -183,6 +191,11 @@ function Library() {
           })}
         </div>
       </div>
+      {modalAddManga &&
+        createPortal(
+          <AddMangaModal onClose={() => setModalAddManga(false)} />,
+          document.body
+        )}
     </div>
   );
 }
