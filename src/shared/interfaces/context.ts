@@ -1,5 +1,3 @@
-import { ILogin } from "./auth";
-
 export type ThemeMode = "light" | "dark";
 
 export interface ThemeContextType {
@@ -11,6 +9,7 @@ export interface IUserInfo {
   avatar: string | null;
   username: string | null;
   token: string | null;
+  refreshToken: string | null;
 }
 
 export interface AuthContextType {

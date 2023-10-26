@@ -1,15 +1,14 @@
-import { useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
 import DataTable, { TableColumn } from "react-data-table-component";
 
-import { axios } from "../../../lib/axios";
 import { queryClient } from "../../../lib/query-client";
-import { IMangaChapter } from "../../../shared/interfaces/manga";
+import AxiosClient from "../../../lib/axios";
+
 import { formatDate } from "../../../utils/date";
+import { IMangaChapter } from "../../../shared/interfaces/manga";
 import Button from "../../../components/button/Button";
 
 import "../Manga.scss";
-import AuthContext from "../../../shared/context/AuthContext";
 
 interface Props {
   chapters: IMangaChapter[];
@@ -23,16 +22,13 @@ interface IMutationData {
 }
 
 function ChapterList({ chapters, mangaId }: Props) {
-  const { userInfo } = useContext(AuthContext);
+  const axios = AxiosClient();
 
   const chapterMutation = useMutation({
     mutationFn: ({ chapterId, mangaId, sourceId }: IMutationData) => {
       return axios.patch(
         `api/user/mangas/${mangaId}/sources/${sourceId}?chapterId=${chapterId}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${userInfo?.token}` },
-        }
+        {}
       );
     },
     onSuccess: () => {
@@ -63,7 +59,7 @@ function ChapterList({ chapters, mangaId }: Props) {
           fontSize="fsize-3"
           height="20px"
           onClick={
-            row.isUserAllowedToRead
+            row.isUserAllowedToRead && !row.read
               ? async () =>
                   await chapterMutation.mutateAsync({
                     chapterId: row.chapterId,

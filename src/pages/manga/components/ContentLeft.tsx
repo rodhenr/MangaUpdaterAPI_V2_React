@@ -1,15 +1,15 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useMutation } from "@tanstack/react-query";
 
 import { queryClient } from "../../../lib/query-client";
-import { axios } from "../../../lib/axios";
+import AxiosClient from "../../../lib/axios";
+
+import { IMangaSource } from "../../../shared/interfaces/manga";
 import Button from "../../../components/button/Button";
 import Info from "../../../components/info/Info";
-import { IMangaSource } from "../../../shared/interfaces/manga";
-import Sources from "./Sources";
-import AuthContext from "../../../shared/context/AuthContext";
 import EditSourcesModal from "../../../components/modal/EditSourcesModal";
+import Sources from "./Sources";
 
 import "../Manga.scss";
 
@@ -28,15 +28,13 @@ function ContentLeft({
   sources,
   type,
 }: Props) {
-  const { userInfo } = useContext(AuthContext);
   const [showEditSourceModal, setShowEditSourceModal] =
     useState<boolean>(false);
+  const axios = AxiosClient();
 
   const followMutation = useMutation({
     mutationFn: () => {
-      return axios.post(`/api/user/mangas/${mangaId}`, [], {
-        headers: { Authorization: `Bearer ${userInfo?.token}` },
-      });
+      return axios.post(`/api/user/mangas/${mangaId}`, []);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
@@ -46,9 +44,7 @@ function ContentLeft({
 
   const unfollowMutation = useMutation({
     mutationFn: () => {
-      return axios.delete(`/api/user/mangas/${mangaId}`, {
-        headers: { Authorization: `Bearer ${userInfo?.token}` },
-      });
+      return axios.delete(`/api/user/mangas/${mangaId}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
@@ -84,6 +80,7 @@ function ContentLeft({
             isUserFollowing ? () => setShowEditSourceModal(true) : () => null
           }
           text={isUserFollowing ? "Following" : "Follow"}
+          useHover={true}
           variant={isUserFollowing ? "success" : "danger"}
         />
       </div>

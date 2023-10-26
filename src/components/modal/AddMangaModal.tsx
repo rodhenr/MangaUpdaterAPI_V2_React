@@ -1,12 +1,12 @@
-import { useState, ChangeEvent, useContext } from "react";
+import { useState, ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMutation } from "@tanstack/react-query";
 
 import { queryClient } from "../../lib/query-client";
-import { axios } from "../../lib/axios";
+import AxiosClient from "../../lib/axios";
+
 import Input from "../input/Input";
 import Button from "../button/Button";
-import AuthContext from "../../shared/context/AuthContext";
 
 import "./AddMangaModal.scss";
 
@@ -16,28 +16,17 @@ interface Props {
 
 function AddMangaModal({ onClose }: Props) {
   const [malId, setMalId] = useState<string>("");
-
-  const authContext = useContext(AuthContext);
+  const axios = AxiosClient();
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMalId(event.target.value);
   };
 
   const addMangaMutation = useMutation({
-    mutationFn: () =>
-      axios.post(
-        `/api/manga/?malId=${malId}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${authContext.userInfo?.token}` },
-        }
-      ),
+    mutationFn: () => axios.post(`/api/manga/?malId=${malId}`, {}),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["libraryData"] });
       onClose();
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
 

@@ -2,14 +2,16 @@ import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMutation } from "@tanstack/react-query";
 
-import { axios } from "../../lib/axios";
-import Input from "../input/Input";
-import Button from "../button/Button";
+import AxiosClient from "../../lib/axios";
+import { queryClient } from "../../lib/query-client";
+
+import { IUserInfo } from "../../shared/interfaces/context";
 import AuthContext from "../../shared/context/AuthContext";
 import { AuthResponse, ILogin } from "../../shared/interfaces/auth";
+import Input from "../input/Input";
+import Button from "../button/Button";
 
 import "./LoginModal.scss";
-import { queryClient } from "../../lib/query-client";
 
 interface Props {
   closeModal: () => void;
@@ -21,6 +23,7 @@ function LoginModal({ closeModal, showModal = true }: Props) {
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const authContext = useContext(AuthContext);
+  const axios = AxiosClient();
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -32,7 +35,11 @@ function LoginModal({ closeModal, showModal = true }: Props) {
 
   const loginMutation = useMutation({
     mutationFn: (loginData: ILogin) => {
+      console.log(loginData);
       return axios.post<AuthResponse>("/api/auth/login", loginData);
+    },
+    onError: (error) => {
+      console.log(error);
     },
   });
 
@@ -42,10 +49,11 @@ function LoginModal({ closeModal, showModal = true }: Props) {
 
       const response = await loginMutation.mutateAsync({ email, password });
 
-      const responseInfo = {
+      const responseInfo: IUserInfo = {
         avatar: response.data.userAvatar,
         username: response.data.userName,
         token: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
       };
 
       authContext.login(responseInfo);

@@ -39,3 +39,17 @@ export interface IPageList {
   baseUrl: string;
   title: string;
 }
+
+export type IPadding =
+  | ""
+  | "p-1"
+  | "p-2"
+  | "p-3"
+  | "p-4"
+  | "p-5"
+  | "ph-1"
+  | "ph-2"
+  | "ph-3"
+  | "pv-1"
+  | "pv-2"
+  | "pv-3";

@@ -1,39 +1,25 @@
 import { useState, useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { axios } from "../../lib/axios";
+import AxiosClient from "../../lib/axios";
+
+import { MangaDataList } from "../../shared/interfaces/chapters";
+import AuthContext from "../../shared/context/AuthContext";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import ListView from "./components/ListView";
 import CardView from "./components/CardView";
-import AuthContext from "../../shared/context/AuthContext";
-import { useQuery } from "@tanstack/react-query";
-import useReadFromLocalStorage, {
-  StorageValue,
-} from "../../hooks/useReadFromLocalStorage";
-import { IDefaultUserInfo } from "../../shared/interfaces/auth";
 
 function Home() {
   const [isCardView, setIsCardView] = useState<boolean>(true);
-  const authContext = useContext(AuthContext);
-  const userInfo: StorageValue<IDefaultUserInfo> =
-    useReadFromLocalStorage("userInfo");
+  const { userInfo } = useContext(AuthContext);
+  const axios = AxiosClient();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["homeData"],
     queryFn: () =>
-      axios
-        .get("/api/user/mangas", {
-          headers: { Authorization: `Bearer ${userInfo?.token}` },
-        })
-        .then((res) => res.data)
-        .catch((error) => {
-          if (error.response.status === 401) {
-            authContext.logout();
-          } else {
-            console.log(error.response);
-          }
-        }),
-    enabled: userInfo?.token !== null && userInfo?.token !== "",
+      axios.get<MangaDataList[]>("/api/user/mangas").then((res) => res.data),
+    enabled: !!userInfo?.token,
   });
 
   const notLogged = (
@@ -80,7 +66,7 @@ function Home() {
   return (
     <div className="flex column gap-4 h-100 w-100">
       {pageHeader}
-      {!authContext.userInfo.token ? (
+      {!userInfo.token ? (
         <>{notLogged}</>
       ) : (
         <>

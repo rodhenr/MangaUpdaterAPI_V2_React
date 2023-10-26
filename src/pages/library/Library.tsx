@@ -1,23 +1,19 @@
-import { useContext, useState, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { createPortal } from "react-dom";
 import { useQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 
-import { axios } from "../../lib/axios";
-import AuthContext from "../../shared/context/AuthContext";
-import { IDefaultUserInfo } from "../../shared/interfaces/auth";
-import useReadFromLocalStorage, {
-  StorageValue,
-} from "../../hooks/useReadFromLocalStorage";
-import Card from "../../components/card/Card";
+import AxiosClient from "../../lib/axios";
+
 import { ICardData } from "../../shared/interfaces/library";
+import Card from "../../components/card/Card";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import SelectGroup from "../../components/select/SelectGroupt";
+import AddMangaModal from "../../components/modal/AddMangaModal";
 
 import "./Library.scss";
-import AddMangaModal from "../../components/modal/AddMangaModal";
 
 function Library() {
   const [search, setSearch] = useState<string>("");
@@ -25,10 +21,7 @@ function Library() {
   const [sourceId, setSourceId] = useState<string>("");
   const [genreId, setGenreId] = useState<string>("");
   const [modalAddManga, setModalAddManga] = useState<boolean>(false);
-
-  const authContext = useContext(AuthContext);
-  const userInfo: StorageValue<IDefaultUserInfo> =
-    useReadFromLocalStorage("userInfo");
+  const axios = AxiosClient();
 
   const handleOrderByIdChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setOrderById(event.target.value);
@@ -46,24 +39,9 @@ function Library() {
     setSearch(event.target.value);
   };
 
-  // TODO: Queries for each select box
-  // TODO: Pagination
-
   const { isPending, error, data } = useQuery({
     queryKey: ["libraryData"],
-    queryFn: () =>
-      axios
-        .get("http://localhost:5030/api/manga", {
-          headers: { Authorization: `Bearer ${userInfo?.token}` },
-        })
-        .then((res) => res.data)
-        .catch((error) => {
-          if (error.response.status === 401) {
-            authContext.logout();
-          } else {
-            console.log(error.response);
-          }
-        }),
+    queryFn: () => axios.get<ICardData[]>("/api/manga").then((res) => res.data),
   });
 
   const handleChangeAddMangaModal = () => {

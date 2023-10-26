@@ -51,15 +51,12 @@ function CardWithInfo({
         >
           <h1 className="text-light">{truncateString(name, 48)}</h1>
         </div>
-        <div className="flex column flex-1 gap-2 w-100">
+        <div className="flex column flex-1 gap-2">
           {chapters.map((ch) => (
-            <div
-              key={uuidv4()}
-              className="flex gap-2 space-between align-center w-100"
-            >
-              <div className="flex-center flex-1 space-between">
-                <p className="fsize-3 text-center">{formatDate(ch.date)}</p>
-                <p className="fsize-3 text-center">
+            <div key={uuidv4()} className="flex gap-1">
+              <div className="flex-center flex-1 ">
+                <p className="fsize-3">{formatDate(ch.date)}</p>
+                <p className="fsize-3 text-center flex-1">
                   Chapter {ch.number.toString()}
                 </p>
               </div>
@@ -69,10 +66,10 @@ function CardWithInfo({
                   height="20px"
                   text={ch.sourceName}
                   variant={buttonVariant}
-                  width="95px"
+                  width="fit-content"
                 />
                 <div
-                  className="round cursor-pointer border-box"
+                  className="round border-box"
                   style={{
                     backgroundColor: ch.read ? "green" : "red",
                     border: "1px solid #FFF",

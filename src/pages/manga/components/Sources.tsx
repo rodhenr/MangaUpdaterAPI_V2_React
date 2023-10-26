@@ -17,6 +17,7 @@ function Sources({ sources }: Props) {
               fontSize="fsize-3"
               height="20px"
               key={uuidv4()}
+              mouseover={false}
               text={source.name}
               width="fit-content"
               variant="bg-dark"

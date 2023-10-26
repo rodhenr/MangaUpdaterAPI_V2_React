@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import { truncateString } from "../../utils/string";
+
 import "./Card.scss";
 
 interface Props {
@@ -37,7 +39,9 @@ function Card({
         className="w-100 radius-2 shadow-3 object-cover"
         style={{ height: height, maxHeight: height }}
       />
-      <p className={`flex-1 text-center fsize-3 roboto ${color}`}>{text}</p>
+      <p className={`flex-1 text-center fsize-4 roboto ${color}`}>
+        {truncateString(text, 40)}
+      </p>
     </div>
   );
 }

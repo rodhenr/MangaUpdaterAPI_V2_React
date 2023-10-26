@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import Button from "../../../components/button/Button";
 import { MangaDataList } from "../../../shared/interfaces/chapters";
 import { formatDate } from "../../../utils/date";
@@ -9,6 +11,12 @@ interface Props {
 }
 
 function ListView({ data }: Props) {
+  const navigate = useNavigate();
+
+  const handleNavigate = (id: number) => {
+    navigate(`/manga/${id}`);
+  };
+
   return (
     <div className="flex column space-between flex-wrap">
       <div className="header flex space-between border-secondary-light-1 pv-2 secondary-dark">
@@ -28,7 +36,14 @@ function ListView({ data }: Props) {
                   : "bg-light border-secondary-dark-left-1 border-secondary-dark-right-1"
               }`}
             >
-              <p className="flex-1 text-center fsize-3 ph-1">{d.name}</p>
+              <div className="flex-1 text-center ph-1 ">
+                <span
+                  className="fsize-3 cursor-pointer"
+                  onClick={() => handleNavigate(d.id)}
+                >
+                  {d.name}
+                </span>
+              </div>
               <p className="column-width text-center fsize-3">
                 {formatDate(chapter.date)}
               </p>
@@ -39,6 +54,7 @@ function ListView({ data }: Props) {
                 <Button
                   fontSize="fsize-3"
                   height="25px"
+                  mouseover={false}
                   onClick={() => null}
                   text={chapter.sourceName}
                   variant="primary-dark"
@@ -49,6 +65,7 @@ function ListView({ data }: Props) {
                 <Button
                   fontSize="fsize-3"
                   height="25px"
+                  mouseover={false}
                   onClick={() => null}
                   text={chapter.read ? "Read" : "Not Read"}
                   variant={chapter.read ? "success" : "danger"}

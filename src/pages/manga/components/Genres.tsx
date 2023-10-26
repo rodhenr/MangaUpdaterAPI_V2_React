@@ -16,6 +16,7 @@ function Genres({ genres }: Props) {
           fontSize="fsize-3"
           height="20px"
           key={uuidv4()}
+          mouseover={false}
           text={genre}
           width="fit-content"
         />

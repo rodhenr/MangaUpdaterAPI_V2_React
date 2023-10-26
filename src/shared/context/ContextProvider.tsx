@@ -15,6 +15,7 @@ const defaultUserInfo: IDefaultUserInfo = {
   avatar: null,
   username: null,
   token: null,
+  refreshToken: null,
 };
 
 const ContextProvider = ({ children }: Props) => {

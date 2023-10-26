@@ -3,6 +3,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 import {
   FontSize,
+  IPadding,
   SizeProps,
   Variant,
 } from "../../shared/interfaces/components";
@@ -14,8 +15,10 @@ interface Props extends SizeProps {
   fontSize?: FontSize;
   icon?: string | null;
   iconWidth?: string;
+  mouseover?: boolean;
   onClick?: () => void;
   onClickIcon?: () => void;
+  padding?: IPadding;
   text: string;
   useHover?: boolean;
   variant?: Variant;
@@ -27,8 +30,10 @@ function Button({
   height = "30px",
   icon = null,
   iconWidth = "20px",
+  mouseover = true,
   onClick = () => null,
   onClickIcon = () => null,
+  padding = "ph-2",
   text,
   useHover = false,
   variant = "primary-light",
@@ -39,18 +44,23 @@ function Button({
       className={`${variant} ${
         useHover ? `${variant}-hover` : ""
       } radius-1 flex-center roboto border-box text-center ${
-        !disabled && "cursor-pointer"
-      }`}
+        disabled ? "" : !mouseover ? "" : "cursor-pointer"
+      } ${!icon && padding}`}
       style={{ height: height, width: width }}
     >
       <p
-        className={`flex-center w-100 h-100 ${fontSize} p-2`}
+        className={`flex-center w-100 h-100 ${fontSize} ${
+          icon && "p-2"
+        }  border-box`}
         onClick={onClick}
       >
         {text}
       </p>
       {icon && (
-        <div className="flex-center gap-2 h-100 p-2" onClick={onClickIcon}>
+        <div
+          className="flex-center gap-2 h-100 p-2 border-box"
+          onClick={onClickIcon}
+        >
           <div className="bg-light h-100 opacity-2" style={{ width: 1 }}></div>
           <FontAwesomeIcon
             icon={icon as IconProp}

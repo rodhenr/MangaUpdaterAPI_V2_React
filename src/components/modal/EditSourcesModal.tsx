@@ -5,13 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
 
 import { queryClient } from "../../lib/query-client";
-import { axios } from "../../lib/axios";
-import Button from "../button/Button";
+import AxiosClient from "../../lib/axios";
+
 import AuthContext from "../../shared/context/AuthContext";
 import { IUserSource } from "../../shared/interfaces/source";
+import Button from "../button/Button";
+import Alert from "../alert/Alert";
 
 import "./EditSourcesModal.scss";
-import Alert from "../alert/Alert";
 
 interface Props {
   mangaId: number;
@@ -20,42 +21,28 @@ interface Props {
 }
 
 function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
-  const authContext = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   const [sourcesToFollow, setSourcesToFollow] = useState<number[]>([]);
   const [showDialog, setShowDialog] = useState<boolean>(false);
+  const axios = AxiosClient();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["sourceData", mangaId],
     queryFn: () =>
-      axios
-        .get<IUserSource[]>(`/api/manga/${mangaId}/sources`, {
-          headers: { Authorization: `Bearer ${authContext.userInfo?.token}` },
-        })
-        .then((res) => {
-          const sourcesIds = res.data
-            .filter((i) => i.isFollowing)
-            .map((r) => r.sourceId);
-          setSourcesToFollow(sourcesIds);
+      axios.get<IUserSource[]>(`/api/manga/${mangaId}/sources`).then((res) => {
+        const sourcesIds = res.data
+          .filter((i) => i.isFollowing)
+          .map((r) => r.sourceId);
+        setSourcesToFollow(sourcesIds);
 
-          return res.data;
-        })
-        .catch((error) => {
-          if (error.response.status === 401) {
-            authContext.logout();
-          } else {
-            console.log(error.response);
-          }
-        }),
-    enabled:
-      authContext.userInfo?.token !== null &&
-      authContext.userInfo?.token !== "",
+        return res.data;
+      }),
+    enabled: !!userInfo.token,
   });
 
   const editSourcesMutation = useMutation({
     mutationFn: () =>
-      axios.post(`/api/user/mangas/${mangaId}`, sourcesToFollow, {
-        headers: { Authorization: `Bearer ${authContext.userInfo?.token}` },
-      }),
+      axios.post(`/api/user/mangas/${mangaId}`, sourcesToFollow),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
