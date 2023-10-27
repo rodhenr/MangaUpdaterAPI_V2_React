@@ -29,7 +29,6 @@ const ContextProvider = ({ children }: Props) => {
 
   const handleUserLogin = (loginInfo: IUserInfo) => {
     setLocalStorageUserInfo(loginInfo);
-    window.location.reload();
   };
 
   const logoutHandle = () => {

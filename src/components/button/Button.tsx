@@ -7,6 +7,7 @@ import {
   SizeProps,
   Variant,
 } from "../../shared/interfaces/components";
+import HorizontalLoading from "../loading/HorizontalLoading";
 
 import "./Button.scss";
 
@@ -15,6 +16,7 @@ interface Props extends SizeProps {
   fontSize?: FontSize;
   icon?: string | null;
   iconWidth?: string;
+  loading?: boolean;
   mouseover?: boolean;
   onClick?: () => void;
   onClickIcon?: () => void;
@@ -30,6 +32,7 @@ function Button({
   height = "30px",
   icon = null,
   iconWidth = "20px",
+  loading = false,
   mouseover = true,
   onClick = () => null,
   onClickIcon = () => null,
@@ -48,26 +51,37 @@ function Button({
       } ${!icon && padding}`}
       style={{ height: height, width: width }}
     >
-      <p
-        className={`flex-center w-100 h-100 ${fontSize} ${
-          icon && "p-2"
-        }  border-box`}
-        onClick={onClick}
-      >
-        {text}
-      </p>
-      {icon && (
-        <div
-          className="flex-center gap-2 h-100 p-2 border-box"
-          onClick={onClickIcon}
-        >
-          <div className="bg-light h-100 opacity-2" style={{ width: 1 }}></div>
-          <FontAwesomeIcon
-            icon={icon as IconProp}
-            className="h-100 p-1"
-            style={{ width: iconWidth }}
-          />
+      {loading ? (
+        <div className="flex-center fsize-3">
+          <HorizontalLoading />
         </div>
+      ) : (
+        <>
+          <p
+            className={`flex-center w-100 h-100 ${fontSize} ${
+              icon && "p-2"
+            }  border-box`}
+            onClick={onClick}
+          >
+            {text}
+          </p>
+          {icon && (
+            <div
+              className="flex-center gap-2 h-100 p-2 border-box"
+              onClick={onClickIcon}
+            >
+              <div
+                className="bg-light h-100 opacity-2"
+                style={{ width: 1 }}
+              ></div>
+              <FontAwesomeIcon
+                icon={icon as IconProp}
+                className="h-100 p-1"
+                style={{ width: iconWidth }}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   );

@@ -1,11 +1,12 @@
 import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMutation } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import AxiosClient from "../../lib/axios";
 import { queryClient } from "../../lib/query-client";
 
-import { IUserInfo } from "../../shared/interfaces/context";
 import AuthContext from "../../shared/context/AuthContext";
 import { AuthResponse, ILogin } from "../../shared/interfaces/auth";
 import Input from "../input/Input";
@@ -21,9 +22,15 @@ interface Props {
 function LoginModal({ closeModal, showModal = true }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const authContext = useContext(AuthContext);
   const axios = AxiosClient();
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/");
+  };
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -33,41 +40,36 @@ function LoginModal({ closeModal, showModal = true }: Props) {
     setPassword(event.target.value);
   };
 
-  const loginMutation = useMutation({
-    mutationFn: (loginData: ILogin) => {
-      console.log(loginData);
-      return axios.post<AuthResponse>("/api/auth/login", loginData);
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (loginData: ILogin) => {
+      return await axios.post<AuthResponse>("/api/auth/login", loginData);
+    },
+    onSuccess: (response) => {
+      authContext.login({
+        avatar: response.data.userAvatar,
+        username: response.data.userName,
+        token: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
+      });
+
+      queryClient.invalidateQueries({ queryKey: ["homeData"] });
+      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+      params?.mangaId &&
+        queryClient.invalidateQueries({
+          queryKey: ["sourceData", params.mangaId],
+        });
+      queryClient.invalidateQueries({ queryKey: ["libraryData"] });
+
+      setEmail("");
+      setPassword("");
+      closeModal();
+
+      handleNavigate();
     },
     onError: (error) => {
       console.log(error);
     },
   });
-
-  const handleLogin = async () => {
-    try {
-      setLoading(true);
-
-      const response = await loginMutation.mutateAsync({ email, password });
-
-      const responseInfo: IUserInfo = {
-        avatar: response.data.userAvatar,
-        username: response.data.userName,
-        token: response.data.accessToken,
-        refreshToken: response.data.refreshToken,
-      };
-
-      authContext.login(responseInfo);
-      queryClient.invalidateQueries({ queryKey: ["homeData", "mangaData"] });
-
-      setEmail("");
-      setPassword("");
-      setLoading(false);
-      closeModal();
-    } catch {
-      setLoading(false);
-      //some error
-    }
-  };
 
   return (
     <div
@@ -122,16 +124,13 @@ function LoginModal({ closeModal, showModal = true }: Props) {
         <span className="cursor-pointer">Forget your password?</span>
       </div>
       <div className="flex-center w-100">
-        {!loading ? (
-          <Button
-            onClick={handleLogin}
-            text="Sign in"
-            useHover={true}
-            variant="secondary-light"
-          />
-        ) : (
-          "carregando..."
-        )}
+        <Button
+          onClick={() => mutate({ email, password })}
+          loading={isPending ? true : false}
+          text="Sign in"
+          useHover={true}
+          variant="secondary-light"
+        />
       </div>
       <div className="flex-center gap-3 ">
         <p>Don't have an account?</p>

@@ -9,6 +9,7 @@ import AuthContext from "../../shared/context/AuthContext";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import ListView from "./components/ListView";
 import CardView from "./components/CardView";
+import SpinLoading from "../../components/loading/SpinLoading";
 
 function Home() {
   const [isCardView, setIsCardView] = useState<boolean>(true);
@@ -58,9 +59,6 @@ function Home() {
     </div>
   );
 
-  if (isPending && userInfo?.token !== null && userInfo?.token !== "")
-    return "Loading...";
-
   if (error) return "error...";
 
   return (
@@ -68,6 +66,11 @@ function Home() {
       {pageHeader}
       {!userInfo.token ? (
         <>{notLogged}</>
+      ) : isPending ? (
+        <div className="flex-center column gap-4 h-100 w-100">
+          <SpinLoading />
+          <p className="fsize-5">Loading...</p>
+        </div>
       ) : (
         <>
           {data && data.length > 0 ? (

@@ -40,28 +40,32 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
     enabled: !!userInfo.token,
   });
 
-  const editSourcesMutation = useMutation({
-    mutationFn: () =>
-      axios.post(`/api/user/mangas/${mangaId}`, sourcesToFollow),
+  const { mutate, isPending: mutatePending } = useMutation({
+    mutationFn: async () => {
+      return await axios.post(`/api/user/mangas/${mangaId}`, sourcesToFollow);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+
+      setShowDialog(true);
+
+      onClose();
     },
   });
 
   const handleSourceChange = (sourceId: number) => {
-    !sourcesToFollow.includes(sourceId)
-      ? setSourcesToFollow((prev) => [...prev, sourceId])
-      : setSourcesToFollow((prev) => prev.filter((i) => i !== sourceId));
+    if (!mutatePending) {
+      !sourcesToFollow.includes(sourceId)
+        ? setSourcesToFollow((prev) => [...prev, sourceId])
+        : setSourcesToFollow((prev) => prev.filter((i) => i !== sourceId));
+    }
   };
 
   if (error) return "error...";
 
   const handleUpdateSource = () => {
-    data && data.length > 0 && editSourcesMutation.mutate();
-    setShowDialog(true);
-
-    onClose();
+    data && data.length > 0 && mutate();
   };
 
   return (
@@ -114,17 +118,19 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
               </div>
               <div className="flex gap-4">
                 <Button
-                  disabled={data.length > 0 ? false : true}
+                  disabled={data.length > 0 && !mutatePending ? false : true}
+                  loading={mutatePending ? true : false}
                   onClick={() => handleUpdateSource()}
                   text="Update"
                   useHover={true}
                   variant={data.length > 0 ? "success" : "bg-disabled"}
                 />
                 <Button
-                  text="Cancel"
+                  disabled={mutatePending ? true : false}
                   onClick={onClose}
+                  text="Cancel"
                   useHover={true}
-                  variant="danger"
+                  variant={!mutatePending ? "danger" : "bg-disabled"}
                 />
               </div>
             </>

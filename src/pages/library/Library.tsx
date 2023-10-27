@@ -12,43 +12,49 @@ import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import SelectGroup from "../../components/select/SelectGroupt";
 import AddMangaModal from "../../components/modal/AddMangaModal";
+import SpinLoading from "../../components/loading/SpinLoading";
 
 import "./Library.scss";
 
+interface IState {
+  orderById: string;
+  sourceId: string;
+  genreId: string;
+}
+
 function Library() {
   const [search, setSearch] = useState<string>("");
-  const [orderById, setOrderById] = useState<string>("");
-  const [sourceId, setSourceId] = useState<string>("");
-  const [genreId, setGenreId] = useState<string>("");
   const [modalAddManga, setModalAddManga] = useState<boolean>(false);
+  const [filters, setFilters] = useState<IState>({
+    orderById: "",
+    sourceId: "",
+    genreId: "",
+  });
   const axios = AxiosClient();
 
-  const handleOrderByIdChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setOrderById(event.target.value);
-  };
+  const handleFiltersChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = event.target;
 
-  const handleSourceChangIde = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSourceId(event.target.value);
-  };
+    setFilters((prev) => {
+      const filtersCopy = { ...prev };
+      filtersCopy[name as keyof IState] = value;
 
-  const handleGenreChangIde = (event: ChangeEvent<HTMLSelectElement>) => {
-    setGenreId(event.target.value);
+      return filtersCopy;
+    });
   };
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
 
-  const { isPending, error, data } = useQuery({
-    queryKey: ["libraryData"],
-    queryFn: () => axios.get<ICardData[]>("/api/manga").then((res) => res.data),
-  });
-
   const handleChangeAddMangaModal = () => {
     setModalAddManga((prev) => !prev);
   };
 
-  if (isPending) return "Loading...";
+  const { isPending, error, data } = useQuery({
+    queryKey: ["libraryData"],
+    queryFn: () => axios.get<ICardData[]>("/api/manga").then((res) => res.data),
+  });
 
   if (error) return "error...";
 
@@ -71,7 +77,7 @@ function Library() {
         />
         <div className="flex gap-3">
           <SelectGroup
-            onChange={handleOrderByIdChange}
+            onChange={handleFiltersChange}
             placeholder="Order By"
             options={[
               {
@@ -90,10 +96,10 @@ function Library() {
                 isHidden: false,
               },
             ]}
-            value={orderById}
+            value={filters.orderById}
           />
           <SelectGroup
-            onChange={handleSourceChangIde}
+            onChange={handleFiltersChange}
             placeholder="Source"
             options={[
               {
@@ -112,10 +118,10 @@ function Library() {
                 isHidden: false,
               },
             ]}
-            value={sourceId}
+            value={filters.sourceId}
           />
           <SelectGroup
-            onChange={handleGenreChangIde}
+            onChange={handleFiltersChange}
             placeholder="Genre"
             options={[
               {
@@ -134,7 +140,7 @@ function Library() {
                 isHidden: false,
               },
             ]}
-            value={genreId}
+            value={filters.genreId}
           />
         </div>
       </div>
@@ -144,31 +150,38 @@ function Library() {
   return (
     <div>
       {pageHeader}
-      <div className="flex column content roboto mt-5 gap-4">
-        <div className="flex space-between">
-          <p className="fsize-4-5">Showing {data.length} results</p>
-          <Button
-            fontSize="fsize-3"
-            onClick={() => handleChangeAddMangaModal()}
-            text="Register new"
-            width="100px"
-            variant="bg-dark"
-          />
+      {isPending ? (
+        <div className="flex-center column gap-4 h-100 w-100">
+          <SpinLoading />
+          <p className="fsize-5">Loading...</p>
         </div>
-        <div className="library-main grid">
-          {data.map((manga: ICardData) => {
-            return (
-              <Card
-                key={uuidv4()}
-                color="text-primary"
-                id={manga.mangaId}
-                imagePath={manga.coverUrl}
-                text={manga.mangaName}
-              />
-            );
-          })}
+      ) : (
+        <div className="flex column content roboto mt-5 gap-4">
+          <div className="flex space-between">
+            <p className="fsize-4-5">Showing {data.length} results</p>
+            <Button
+              fontSize="fsize-3"
+              onClick={() => handleChangeAddMangaModal()}
+              text="Register new"
+              width="100px"
+              variant="bg-dark"
+            />
+          </div>
+          <div className="library-main grid">
+            {data.map((manga: ICardData) => {
+              return (
+                <Card
+                  key={uuidv4()}
+                  color="text-primary"
+                  id={manga.mangaId}
+                  imagePath={manga.coverUrl}
+                  text={manga.mangaName}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
       {modalAddManga &&
         createPortal(
           <AddMangaModal onClose={() => setModalAddManga(false)} />,
