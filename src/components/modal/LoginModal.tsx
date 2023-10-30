@@ -1,18 +1,14 @@
-import { useState, ChangeEvent, useContext } from "react";
+import { useState, ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMutation } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import AxiosClient from "../../lib/axios";
-import { queryClient } from "../../lib/query-client";
+import { useLoginMutation } from "../../api/mutations/user/Auth";
 
-import AuthContext from "../../shared/context/AuthContext";
-import { AuthResponse, ILogin } from "../../shared/interfaces/auth";
 import Input from "../input/Input";
 import Button from "../button/Button";
 
 import "./LoginModal.scss";
+import { ILogin } from "../../shared/interfaces/auth";
 
 interface Props {
   closeModal: () => void;
@@ -20,56 +16,41 @@ interface Props {
 }
 
 function LoginModal({ closeModal, showModal = true }: Props) {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const authContext = useContext(AuthContext);
-  const axios = AxiosClient();
-
-  const params = useParams();
+  const [loginData, setLoginData] = useState<ILogin>({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
+  const loginMutation = useLoginMutation();
 
   const handleNavigate = () => {
     navigate("/");
   };
 
-  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleLoginDataChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setLoginData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
+  const handleLogin = async () => {
+    try {
+      await loginMutation.mutateAsync(loginData);
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (loginData: ILogin) => {
-      return await axios.post<AuthResponse>("/api/auth/login", loginData);
-    },
-    onSuccess: (response) => {
-      authContext.login({
-        avatar: response.data.userAvatar,
-        username: response.data.userName,
-        token: response.data.accessToken,
-        refreshToken: response.data.refreshToken,
+      setLoginData({
+        email: "",
+        password: "",
       });
 
-      queryClient.invalidateQueries({ queryKey: ["homeData"] });
-      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
-      params?.mangaId &&
-        queryClient.invalidateQueries({
-          queryKey: ["sourceData", params.mangaId],
-        });
-      queryClient.invalidateQueries({ queryKey: ["libraryData"] });
-
-      setEmail("");
-      setPassword("");
       closeModal();
-
       handleNavigate();
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div
@@ -97,10 +78,10 @@ function LoginModal({ closeModal, showModal = true }: Props) {
           <label htmlFor="email">Email</label>
           <Input
             id="email"
-            onChange={handleEmailChange}
+            onChange={handleLoginDataChange}
             placeholder="Enter your email"
             type="email"
-            value={email}
+            value={loginData.email}
             variant="bg-light"
           />
         </div>
@@ -108,10 +89,10 @@ function LoginModal({ closeModal, showModal = true }: Props) {
           <label htmlFor="password">Password</label>
           <Input
             id="password"
-            onChange={handlePasswordChange}
+            onChange={handleLoginDataChange}
             placeholder="Enter your password"
             type="password"
-            value={password}
+            value={loginData.password}
             variant="bg-light"
           />
         </div>
@@ -125,8 +106,8 @@ function LoginModal({ closeModal, showModal = true }: Props) {
       </div>
       <div className="flex-center w-100">
         <Button
-          onClick={() => mutate({ email, password })}
-          loading={isPending ? true : false}
+          onClick={() => handleLogin()}
+          loading={loginMutation.isPending ? true : false}
           text="Sign in"
           useHover={true}
           variant="secondary-light"

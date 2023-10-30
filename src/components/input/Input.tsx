@@ -44,6 +44,7 @@ function Input({
       <input
         className={`${variant} h-100 radius-1 w-100 p-2 border-box opacity-placeholder-1 border-box`}
         id={id}
+        name={id}
         onChange={onChange}
         placeholder={placeholder}
         type={type}
