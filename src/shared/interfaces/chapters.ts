@@ -13,3 +13,9 @@ export interface MangaDataList {
   name: string;
   chapters: ChapterInfo[];
 }
+
+export interface IMutationData {
+  chapterId: number;
+  mangaId: number;
+  sourceId: number;
+}

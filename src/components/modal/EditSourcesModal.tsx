@@ -1,16 +1,13 @@
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
 
-import { queryClient } from "../../lib/query-client";
-import AxiosClient from "../../lib/axios";
+import { useFollowSourcesMutation } from "../../api/mutations/manga/MangaMutations";
+import { useGetSourcesQuery } from "../../api/queries/manga/MangaQueries";
 
-import AuthContext from "../../shared/context/AuthContext";
-import { IUserSource } from "../../shared/interfaces/source";
-import Button from "../button/Button";
 import Alert from "../alert/Alert";
+import Button from "../button/Button";
 
 import "./EditSourcesModal.scss";
 
@@ -21,52 +18,40 @@ interface Props {
 }
 
 function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
-  const { userInfo } = useContext(AuthContext);
   const [sourcesToFollow, setSourcesToFollow] = useState<number[]>([]);
   const [showDialog, setShowDialog] = useState<boolean>(false);
-  const axios = AxiosClient();
 
-  const { isPending, error, data } = useQuery({
-    queryKey: ["sourceData", mangaId],
-    queryFn: () =>
-      axios.get<IUserSource[]>(`/api/manga/${mangaId}/sources`).then((res) => {
-        const sourcesIds = res.data
-          .filter((i) => i.isFollowing)
-          .map((r) => r.sourceId);
-        setSourcesToFollow(sourcesIds);
+  const { data, error, isPending } = useGetSourcesQuery(mangaId);
+  const followSourcesMutation = useFollowSourcesMutation();
 
-        return res.data;
-      }),
-    enabled: !!userInfo.token,
-  });
+  useEffect(() => {
+    if (data) {
+      const sourcesIds = data
+        .filter((i) => i.isFollowing)
+        .map((r) => r.sourceId);
 
-  const { mutate, isPending: mutatePending } = useMutation({
-    mutationFn: async () => {
-      return await axios.post(`/api/user/mangas/${mangaId}`, sourcesToFollow);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
-      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
-
-      setShowDialog(true);
-
-      onClose();
-    },
-  });
+      setSourcesToFollow(sourcesIds);
+    }
+  }, [data]);
 
   const handleSourceChange = (sourceId: number) => {
-    if (!mutatePending) {
+    if (!followSourcesMutation.isPending) {
       !sourcesToFollow.includes(sourceId)
         ? setSourcesToFollow((prev) => [...prev, sourceId])
         : setSourcesToFollow((prev) => prev.filter((i) => i !== sourceId));
     }
   };
 
-  if (error) return "error...";
+  const handleMutation = async () => {
+    if (data && data.length > 0) {
+      await followSourcesMutation.mutateAsync({ mangaId, sourcesToFollow });
 
-  const handleUpdateSource = () => {
-    data && data.length > 0 && mutate();
+      setShowDialog(true);
+      onClose();
+    }
   };
+
+  if (error) return "error...";
 
   return (
     <div
@@ -118,19 +103,25 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
               </div>
               <div className="flex gap-4">
                 <Button
-                  disabled={data.length > 0 && !mutatePending ? false : true}
-                  loading={mutatePending ? true : false}
-                  onClick={() => handleUpdateSource()}
+                  disabled={
+                    data.length > 0 && !followSourcesMutation.isPending
+                      ? false
+                      : true
+                  }
+                  loading={followSourcesMutation.isPending ? true : false}
+                  onClick={() => handleMutation()}
                   text="Update"
                   useHover={true}
                   variant={data.length > 0 ? "success" : "bg-disabled"}
                 />
                 <Button
-                  disabled={mutatePending ? true : false}
+                  disabled={followSourcesMutation.isPending ? true : false}
                   onClick={onClose}
                   text="Cancel"
                   useHover={true}
-                  variant={!mutatePending ? "danger" : "bg-disabled"}
+                  variant={
+                    !followSourcesMutation.isPending ? "danger" : "bg-disabled"
+                  }
                 />
               </div>
             </>

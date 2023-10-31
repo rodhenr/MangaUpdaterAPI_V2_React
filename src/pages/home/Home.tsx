@@ -1,27 +1,17 @@
 import { useState, useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import AxiosClient from "../../lib/axios";
-
-import { MangaDataList } from "../../shared/interfaces/chapters";
 import AuthContext from "../../shared/context/AuthContext";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import ListView from "./components/ListView";
 import CardView from "./components/CardView";
 import SpinLoading from "../../components/loading/SpinLoading";
+import { useGetHomeMangasQuery } from "../../api/queries/manga/MangaQueries";
 
 function Home() {
   const [isCardView, setIsCardView] = useState<boolean>(true);
   const { userInfo } = useContext(AuthContext);
-  const axios = AxiosClient();
-
-  const { isPending, error, data } = useQuery({
-    queryKey: ["homeData"],
-    queryFn: () =>
-      axios.get<MangaDataList[]>("/api/user/mangas").then((res) => res.data),
-    enabled: !!userInfo?.token,
-  });
+  const { data, error, isPending } = useGetHomeMangasQuery();
 
   const notLogged = (
     <div className="flex-center column gap-2 mt-6">

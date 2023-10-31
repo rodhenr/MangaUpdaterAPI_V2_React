@@ -1,8 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
 import DataTable, { TableColumn } from "react-data-table-component";
 
-import { queryClient } from "../../../lib/query-client";
-import AxiosClient from "../../../lib/axios";
+import { useChapterReadStateMutation } from "../../../api/mutations/manga/MangaMutations";
 
 import { formatDate } from "../../../utils/date";
 import { IMangaChapter } from "../../../shared/interfaces/manga";
@@ -15,26 +13,23 @@ interface Props {
   mangaId: number;
 }
 
-interface IMutationData {
-  chapterId: number;
-  mangaId: number;
-  sourceId: number;
-}
-
 function ChapterList({ chapters, mangaId }: Props) {
-  const axios = AxiosClient();
+  const chapterMutation = useChapterReadStateMutation();
 
-  const chapterMutation = useMutation({
-    mutationFn: ({ chapterId, mangaId, sourceId }: IMutationData) => {
-      return axios.patch(
-        `api/user/mangas/${mangaId}/sources/${sourceId}?chapterId=${chapterId}`,
-        {}
-      );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
-    },
-  });
+  const handleChapterMutation = async (
+    isUserAllowedToRead: boolean,
+    read: boolean,
+    chapterId: number,
+    sourceId: number
+  ) => {
+    if (isUserAllowedToRead && !read) {
+      await chapterMutation.mutateAsync({
+        chapterId: chapterId,
+        mangaId: mangaId,
+        sourceId: sourceId,
+      });
+    }
+  };
 
   const columns: TableColumn<IMangaChapter>[] = [
     {
@@ -58,15 +53,13 @@ function ChapterList({ chapters, mangaId }: Props) {
           disabled={!row.isUserAllowedToRead}
           fontSize="fsize-3"
           height="20px"
-          onClick={
-            row.isUserAllowedToRead && !row.read
-              ? async () =>
-                  await chapterMutation.mutateAsync({
-                    chapterId: row.chapterId,
-                    mangaId: mangaId,
-                    sourceId: row.sourceId,
-                  })
-              : () => {}
+          onClick={() =>
+            handleChapterMutation(
+              row.isUserAllowedToRead,
+              row.read,
+              row.chapterId,
+              row.sourceId
+            )
           }
           text={
             !row.isUserAllowedToRead

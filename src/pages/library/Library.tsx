@@ -1,9 +1,8 @@
 import { useState, ChangeEvent } from "react";
 import { createPortal } from "react-dom";
-import { useQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 
-import AxiosClient from "../../lib/axios";
+import { useGetMangasQuery } from "../../api/queries/manga/MangaQueries";
 
 import { ICardData } from "../../shared/interfaces/library";
 import Card from "../../components/card/Card";
@@ -30,7 +29,7 @@ function Library() {
     sourceId: "",
     genreId: "",
   });
-  const axios = AxiosClient();
+  const { data, error, isPending } = useGetMangasQuery();
 
   const handleFiltersChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -50,11 +49,6 @@ function Library() {
   const handleChangeAddMangaModal = () => {
     setModalAddManga((prev) => !prev);
   };
-
-  const { isPending, error, data } = useQuery({
-    queryKey: ["libraryData"],
-    queryFn: () => axios.get<ICardData[]>("/api/manga").then((res) => res.data),
-  });
 
   if (error) return "error...";
 

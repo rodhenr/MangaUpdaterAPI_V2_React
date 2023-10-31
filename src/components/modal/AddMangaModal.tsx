@@ -1,9 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMutation } from "@tanstack/react-query";
 
-import { queryClient } from "../../lib/query-client";
-import AxiosClient from "../../lib/axios";
+import { useAddMangaMutation } from "../../api/mutations/manga/MangaMutations";
 
 import Input from "../input/Input";
 import Button from "../button/Button";
@@ -16,19 +14,16 @@ interface Props {
 
 function AddMangaModal({ onClose }: Props) {
   const [malId, setMalId] = useState<string>("");
-  const axios = AxiosClient();
+  const addMangaMutation = useAddMangaMutation();
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMalId(event.target.value);
   };
 
-  const addMangaMutation = useMutation({
-    mutationFn: () => axios.post(`/api/manga/?malId=${malId}`, {}),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["libraryData"] });
-      onClose();
-    },
-  });
+  const handleMutation = async () => {
+    await addMangaMutation.mutateAsync(malId);
+    onClose();
+  };
 
   return (
     <div className="absolute absolute-align flex-center roboto zIndex-100 bg-modal-back h-100 w-100">
@@ -56,7 +51,7 @@ function AddMangaModal({ onClose }: Props) {
         <div className="flex justify-center">
           <Button
             fontSize="fsize-3"
-            onClick={() => addMangaMutation.mutate()}
+            onClick={async () => await handleMutation()}
             text="Add manga"
             useHover={true}
             variant="primary-light"

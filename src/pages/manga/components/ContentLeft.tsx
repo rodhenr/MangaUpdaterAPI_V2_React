@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { useMutation } from "@tanstack/react-query";
-
-import { queryClient } from "../../../lib/query-client";
-import AxiosClient from "../../../lib/axios";
 
 import { IMangaSource } from "../../../shared/interfaces/manga";
 import Button from "../../../components/button/Button";
 import Info from "../../../components/info/Info";
 import EditSourcesModal from "../../../components/modal/EditSourcesModal";
 import Sources from "./Sources";
+import {
+  useFollowMangaMutation,
+  useUnfollowMangaMutation,
+} from "../../../api/mutations/manga/MangaMutations";
 
 import "../Manga.scss";
 
@@ -30,35 +30,11 @@ function ContentLeft({
 }: Props) {
   const [showEditSourceModal, setShowEditSourceModal] =
     useState<boolean>(false);
-  const axios = AxiosClient();
+  const followMutation = useFollowMangaMutation();
+  const unfollowMutation = useUnfollowMangaMutation();
 
-  const followMutation = useMutation({
-    mutationFn: () => {
-      return axios.post(`/api/user/mangas/${mangaId}`, []);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
-      queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
-    },
-  });
-
-  const unfollowMutation = useMutation({
-    mutationFn: () => {
-      return axios.delete(`/api/user/mangas/${mangaId}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
-      queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
-    },
-  });
-
-  const handleFollow = () => {
-    if (isUserFollowing) {
-      unfollowMutation.mutate();
-      return;
-    }
-
-    followMutation.mutate();
+  const handleUnfollow = () => {
+    followMutation.mutate(mangaId);
     setShowEditSourceModal(true);
   };
 
@@ -75,7 +51,11 @@ function ContentLeft({
           fontSize="fsize-5"
           height="40px"
           icon={isUserFollowing ? "gear" : null}
-          onClick={() => handleFollow()}
+          onClick={
+            isUserFollowing
+              ? () => handleUnfollow()
+              : () => unfollowMutation.mutate(mangaId)
+          }
           onClickIcon={
             isUserFollowing ? () => setShowEditSourceModal(true) : () => null
           }

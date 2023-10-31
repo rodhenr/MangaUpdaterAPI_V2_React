@@ -1,10 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import AxiosClient from "../../lib/axios";
+import { useGetMangaQuery } from "../../api/queries/manga/MangaQueries";
 
-import { IMangaData } from "../../shared/interfaces/manga";
 import SeeAlso from "./components/SeeAlso";
 import ContentLeft from "./components/ContentLeft";
 import ContentRight from "./components/ContentRight";
@@ -14,13 +12,7 @@ import "./Manga.scss";
 
 function Manga() {
   const { mangaId } = useParams();
-  const axios = AxiosClient();
-
-  const { isPending, error, data } = useQuery({
-    queryKey: ["mangaData"],
-    queryFn: () =>
-      axios.get<IMangaData>(`/api/manga/${mangaId}`).then((res) => res.data),
-  });
+  const { data, error, isPending } = useGetMangaQuery(mangaId);
 
   if (error) return "error...";
 
