@@ -6,7 +6,7 @@ import { IUserSource } from "../../../shared/interfaces/source";
 import { useContext } from "react";
 import AuthContext from "../../../shared/context/AuthContext";
 import { IMangaData } from "../../../shared/interfaces/manga";
-import { ICardData } from "../../../shared/interfaces/library";
+import { ICardData, IFilters } from "../../../shared/interfaces/library";
 import { MangaDataList } from "../../../shared/interfaces/chapters";
 
 export const useGetSourcesQuery = (mangaId: number) => {
@@ -34,12 +34,22 @@ export const useGetMangaQuery = (mangaId: string | undefined) => {
   });
 };
 
-export const useGetMangasQuery = () => {
+export const useGetMangasQuery = (page: number, filters: IFilters) => {
   const axios = AxiosClient();
 
   return useQuery({
     queryKey: ["libraryData"],
-    queryFn: () => axios.get<ICardData[]>("/api/manga").then((res) => res.data),
+    queryFn: () =>
+      axios
+        .get<ICardData[]>("/api/manga", {
+          params: {
+            page,
+            orderBy: filters.orderById === "" ? null : filters.orderById,
+            sourceId: filters.sourceId === "" ? null : filters.sourceId,
+            genreId: filters.genreId === "" ? null : filters.genreId,
+          },
+        })
+        .then((res) => res.data),
   });
 };
 

@@ -4,42 +4,35 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useGetMangasQuery } from "../../api/queries/manga/MangaQueries";
 
-import { ICardData } from "../../shared/interfaces/library";
+import { ICardData, IFilters } from "../../shared/interfaces/library";
 import Card from "../../components/card/Card";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
-import SelectGroup from "../../components/select/SelectGroupt";
 import AddMangaModal from "../../components/modal/AddMangaModal";
 import SpinLoading from "../../components/loading/SpinLoading";
+import Filters from "./components/Filters";
 
 import "./Library.scss";
-
-interface IState {
-  orderById: string;
-  sourceId: string;
-  genreId: string;
-}
 
 function Library() {
   const [search, setSearch] = useState<string>("");
   const [modalAddManga, setModalAddManga] = useState<boolean>(false);
-  const [filters, setFilters] = useState<IState>({
+  const [filters, setFilters] = useState<IFilters>({
     orderById: "",
     sourceId: "",
     genreId: "",
   });
-  const { data, error, isPending } = useGetMangasQuery();
+
+  const { data, error, isPending } = useGetMangasQuery(1, filters);
 
   const handleFiltersChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
 
-    setFilters((prev) => {
-      const filtersCopy = { ...prev };
-      filtersCopy[name as keyof IState] = value;
-
-      return filtersCopy;
-    });
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -69,74 +62,7 @@ function Library() {
           onChange={handleSearch}
           variant="bg-dark"
         />
-        <div className="flex gap-3">
-          <SelectGroup
-            onChange={handleFiltersChange}
-            placeholder="Order By"
-            options={[
-              {
-                description: "Order By",
-                value: "0",
-                isHidden: true,
-              },
-              {
-                description: "A-Z",
-                value: "1",
-                isHidden: false,
-              },
-              {
-                description: "Latest",
-                value: "2",
-                isHidden: false,
-              },
-            ]}
-            value={filters.orderById}
-          />
-          <SelectGroup
-            onChange={handleFiltersChange}
-            placeholder="Source"
-            options={[
-              {
-                description: "Source",
-                value: "0",
-                isHidden: true,
-              },
-              {
-                description: "MangaLivre",
-                value: "1",
-                isHidden: false,
-              },
-              {
-                description: "AsuraScans",
-                value: "2",
-                isHidden: false,
-              },
-            ]}
-            value={filters.sourceId}
-          />
-          <SelectGroup
-            onChange={handleFiltersChange}
-            placeholder="Genre"
-            options={[
-              {
-                description: "Genre",
-                value: "0",
-                isHidden: true,
-              },
-              {
-                description: "Comedy",
-                value: "1",
-                isHidden: false,
-              },
-              {
-                description: "Adventure",
-                value: "2",
-                isHidden: false,
-              },
-            ]}
-            value={filters.genreId}
-          />
-        </div>
+        <Filters onChange={handleFiltersChange} filters={filters} />
       </div>
     </div>
   );

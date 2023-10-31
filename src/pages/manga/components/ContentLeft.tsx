@@ -33,8 +33,10 @@ function ContentLeft({
   const followMutation = useFollowMangaMutation();
   const unfollowMutation = useUnfollowMangaMutation();
 
-  const handleUnfollow = () => {
+  const handleFollowMutation = () => {
+    console.log("here");
     followMutation.mutate(mangaId);
+
     setShowEditSourceModal(true);
   };
 
@@ -53,8 +55,8 @@ function ContentLeft({
           icon={isUserFollowing ? "gear" : null}
           onClick={
             isUserFollowing
-              ? () => handleUnfollow()
-              : () => unfollowMutation.mutate(mangaId)
+              ? () => unfollowMutation.mutate(mangaId)
+              : () => handleFollowMutation()
           }
           onClickIcon={
             isUserFollowing ? () => setShowEditSourceModal(true) : () => null

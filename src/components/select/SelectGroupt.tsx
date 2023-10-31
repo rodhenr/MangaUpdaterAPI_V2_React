@@ -7,24 +7,24 @@ import "./SelectGroup.scss";
 
 interface Props {
   height?: string;
+  name: string;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   options: ISelectState[];
-  placeholder: string;
   value: string;
   width?: string;
 }
 
 function SelectGroup({
   height = "30px",
+  name,
   onChange,
   options,
-  placeholder,
   value,
   width = "100%",
 }: Props) {
   return (
     <select
-      name={placeholder}
+      name={name}
       className="select-main text-primary radius-2 roboto border-box"
       style={{ height: height, width: width }}
       value={value}
