@@ -6,7 +6,7 @@ import { IUserSource } from "../../../shared/interfaces/source";
 import { useContext } from "react";
 import AuthContext from "../../../shared/context/AuthContext";
 import { IMangaData } from "../../../shared/interfaces/manga";
-import { ICardData, IFilters } from "../../../shared/interfaces/library";
+import { IFilters, IMangasData } from "../../../shared/interfaces/library";
 import { MangaDataList } from "../../../shared/interfaces/chapters";
 
 export const useGetSourcesQuery = (mangaId: number) => {
@@ -38,10 +38,10 @@ export const useGetMangasQuery = (page: number, filters: IFilters) => {
   const axios = AxiosClient();
 
   return useQuery({
-    queryKey: ["libraryData"],
+    queryKey: ["libraryData", page, filters],
     queryFn: () =>
       axios
-        .get<ICardData[]>("/api/manga", {
+        .get<IMangasData>("/api/manga", {
           params: {
             page,
             orderBy: filters.orderById === "" ? null : filters.orderById,

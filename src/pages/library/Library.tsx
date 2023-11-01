@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import { useGetMangasQuery } from "../../api/queries/manga/MangaQueries";
+import { queryClient } from "../../lib/query-client";
 
 import { ICardData, IFilters } from "../../shared/interfaces/library";
 import Card from "../../components/card/Card";
@@ -33,6 +34,8 @@ function Library() {
       ...prev,
       [name]: value,
     }));
+
+    queryClient.invalidateQueries({ queryKey: ["libraryData", 1, filters] });
   };
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +65,11 @@ function Library() {
           onChange={handleSearch}
           variant="bg-dark"
         />
-        <Filters onChange={handleFiltersChange} filters={filters} />
+        <Filters
+          onChange={handleFiltersChange}
+          filters={filters}
+          genres={data?.genres ?? []}
+        />
       </div>
     </div>
   );
@@ -78,7 +85,7 @@ function Library() {
       ) : (
         <div className="flex column content roboto mt-5 gap-4">
           <div className="flex space-between">
-            <p className="fsize-4-5">Showing {data.length} results</p>
+            <p className="fsize-4-5">Showing {data.mangas.length} results</p>
             <Button
               fontSize="fsize-3"
               onClick={() => handleChangeAddMangaModal()}
@@ -88,7 +95,7 @@ function Library() {
             />
           </div>
           <div className="library-main grid">
-            {data.map((manga: ICardData) => {
+            {data.mangas.map((manga: ICardData) => {
               return (
                 <Card
                   key={uuidv4()}

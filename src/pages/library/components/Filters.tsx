@@ -1,36 +1,45 @@
 import { ChangeEvent } from "react";
 
 import SelectGroup from "../../../components/select/SelectGroupt";
-import { IFilters } from "../../../shared/interfaces/library";
+import { IFilters, IGenre } from "../../../shared/interfaces/library";
+import { ISelectState } from "../../../shared/interfaces/components";
 
 interface Props {
   filters: IFilters;
+  genres: IGenre[];
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-function Filters({ filters, onChange }: Props) {
+function Filters({ filters, genres, onChange }: Props) {
+  const genreList: ISelectState[] = genres.map((genre: IGenre) => ({
+    description: genre.name,
+    value: String(genre.id),
+    isHidden: false,
+  }));
+
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-4">
       <SelectGroup
         name={"orderById"}
         onChange={onChange}
         options={[
           {
-            description: "Order By",
-            value: "0",
-            isHidden: true,
+            description: "",
+            value: "",
+            isHidden: false,
           },
           {
             description: "A-Z",
-            value: "1",
+            value: "alphabet",
             isHidden: false,
           },
           {
             description: "Latest",
-            value: "2",
+            value: "latest",
             isHidden: false,
           },
         ]}
+        placeholder="Order By"
         value={filters.orderById}
       />
       <SelectGroup
@@ -38,9 +47,9 @@ function Filters({ filters, onChange }: Props) {
         onChange={onChange}
         options={[
           {
-            description: "Source",
-            value: "0",
-            isHidden: true,
+            description: "",
+            value: "",
+            isHidden: false,
           },
           {
             description: "MangaLivre",
@@ -53,6 +62,7 @@ function Filters({ filters, onChange }: Props) {
             isHidden: false,
           },
         ]}
+        placeholder="Sources"
         value={filters.sourceId}
       />
       <SelectGroup
@@ -60,21 +70,13 @@ function Filters({ filters, onChange }: Props) {
         onChange={onChange}
         options={[
           {
-            description: "Genre",
-            value: "0",
-            isHidden: true,
-          },
-          {
-            description: "Comedy",
-            value: "1",
+            description: "",
+            value: "",
             isHidden: false,
           },
-          {
-            description: "Adventure",
-            value: "2",
-            isHidden: false,
-          },
+          ...genreList,
         ]}
+        placeholder="Genres"
         value={filters.genreId}
       />
     </div>
