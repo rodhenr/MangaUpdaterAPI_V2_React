@@ -1,6 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import { createPortal } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { useGetMangasQuery } from "../../api/queries/manga/MangaQueries";
 import { queryClient } from "../../lib/query-client";
@@ -15,8 +16,10 @@ import SpinLoading from "../../components/loading/SpinLoading";
 import Filters from "./components/Filters";
 
 import "./Library.scss";
+import Pagination from "./components/Pagination";
 
 function Library() {
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [modalAddManga, setModalAddManga] = useState<boolean>(false);
   const [filters, setFilters] = useState<IFilters>({
@@ -25,7 +28,7 @@ function Library() {
     genreId: "",
   });
 
-  const { data, error, isPending } = useGetMangasQuery(1, filters);
+  const { data, error, isPending } = useGetMangasQuery(currentPage, filters);
 
   const handleFiltersChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -35,7 +38,7 @@ function Library() {
       [name]: value,
     }));
 
-    queryClient.invalidateQueries({ queryKey: ["libraryData", 1, filters] });
+    queryClient.invalidateQueries({ queryKey: ["libraryData"] });
   };
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +47,12 @@ function Library() {
 
   const handleChangeAddMangaModal = () => {
     setModalAddManga((prev) => !prev);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+
+    queryClient.invalidateQueries({ queryKey: ["libraryData"] });
   };
 
   if (error) return "error...";
@@ -68,7 +77,7 @@ function Library() {
         <Filters
           onChange={handleFiltersChange}
           filters={filters}
-          genres={data?.genres ?? []}
+          genres={data?.data.genres ?? []}
         />
       </div>
     </div>
@@ -85,7 +94,9 @@ function Library() {
       ) : (
         <div className="flex column content roboto mt-5 gap-4">
           <div className="flex space-between">
-            <p className="fsize-4-5">Showing {data.mangas.length} results</p>
+            <p className="fsize-4-5">
+              Showing {data.data.mangas.length} results
+            </p>
             <Button
               fontSize="fsize-3"
               onClick={() => handleChangeAddMangaModal()}
@@ -95,7 +106,7 @@ function Library() {
             />
           </div>
           <div className="library-main grid">
-            {data.mangas.map((manga: ICardData) => {
+            {data.data.mangas.map((manga: ICardData) => {
               return (
                 <Card
                   key={uuidv4()}
@@ -107,6 +118,11 @@ function Library() {
               );
             })}
           </div>
+          <Pagination
+            currentPage={data.currentPage}
+            onPageChange={handlePageChange}
+            totalPages={data.totalPages}
+          />
         </div>
       )}
       {modalAddManga &&
@@ -114,6 +130,7 @@ function Library() {
           <AddMangaModal onClose={() => setModalAddManga(false)} />,
           document.body
         )}
+      <ReactQueryDevtools initialIsOpen={false} />
     </div>
   );
 }

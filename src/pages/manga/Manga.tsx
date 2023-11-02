@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { useGetMangaQuery } from "../../api/queries/manga/MangaQueries";
 
@@ -48,7 +47,6 @@ function Manga() {
         </div>
         <SeeAlso />
       </div>
-      <ReactQueryDevtools initialIsOpen={false} />
     </>
   ) : (
     <div>No data found</div>

@@ -1,3 +1,10 @@
+export interface IMangasResponse {
+  currentPage: number;
+  pageSize: number;
+  totalPages: number;
+  data: IMangasData;
+}
+
 export interface IMangasData {
   mangas: ICardData[];
   genres: IGenre[];

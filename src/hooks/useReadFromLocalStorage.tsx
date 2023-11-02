@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 
-export type StorageValue<T> = T | null;
-
-export default function useReadFromLocalStorage<T>(
-  key: string
-): StorageValue<T> {
-  const readValue = (): StorageValue<T> => {
+export default function useReadFromLocalStorage<T>(key: string): T | null {
+  const readValue = (): T | null => {
     const localStorageValue = localStorage.getItem(key);
 
     return localStorageValue
@@ -13,7 +9,7 @@ export default function useReadFromLocalStorage<T>(
       : null;
   };
 
-  const [value, setValue] = useState<StorageValue<T>>(readValue());
+  const [value, setValue] = useState<T | null>(readValue());
 
   useEffect(() => {
     setValue(readValue());

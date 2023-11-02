@@ -1,48 +1,67 @@
 import { useContext } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 import AuthContext from "../shared/context/AuthContext";
-import { IUserInfo } from "../shared/interfaces/context";
+import { AuthResponse } from "../shared/interfaces/auth";
 
 const AxiosClient = () => {
-  const { login, logout, userInfo } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
 
-  const AxiosClient = axios.create({
+  const AxiosInstance = axios.create({
     baseURL: "http://localhost:5030",
     headers: {
       "Content-Type": "application/json",
     },
   });
 
-  AxiosClient.interceptors.request.use((request) => {
-    if (userInfo.token)
-      request.headers.Authorization = `Bearer ${userInfo.token}`;
+  AxiosInstance.interceptors.request.use((request) => {
+    if (!request.headers?.Authorization && authContext.userInfo.token)
+      request.headers.Authorization = `Bearer ${authContext.userInfo.token}`;
 
     return request;
   });
 
-  AxiosClient.interceptors.response.use(
-    (response) => {
-      return response;
-    },
+  AxiosInstance.interceptors.response.use(
+    (response: AxiosResponse) => response,
     async (error) => {
-      if (error.response.status === 401) {
-        const response = await axios.post<IUserInfo>("/refresh-token", {
-          refreshToken: userInfo.refreshToken,
-        });
+      if (
+        error.response?.status === 401 &&
+        !error.config?.headers["NO_RETRY_HEADER"] &&
+        authContext.userInfo.refreshToken
+      ) {
+        const config = error?.config;
 
-        login(response.data);
+        try {
+          const result = await axios.post<AuthResponse>(
+            "http://localhost:5030/api/auth/refresh",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${authContext.userInfo.refreshToken}`,
+              },
+            }
+          );
 
-        return axios(error.request);
+          authContext.login({
+            avatar: result.data.userAvatar,
+            token: result.data.accessToken,
+            refreshToken: result.data.refreshToken,
+            username: result.data.userName,
+          });
+
+          config.headers.Authorization = `Bearer ${result.data.accessToken}`;
+        } catch (err) {
+          authContext.logout();
+        }
+
+        config.headers["NO_RETRY_HEADER"] = "true";
+        return AxiosInstance(config);
       }
-
-      // Add logout
-
       return Promise.reject(error);
     }
   );
 
-  return AxiosClient;
+  return AxiosInstance;
 };
 
 export default AxiosClient;

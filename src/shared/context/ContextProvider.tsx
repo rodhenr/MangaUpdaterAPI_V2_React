@@ -1,39 +1,47 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import AuthContext from "./AuthContext";
 import { queryClient } from "../../lib/query-client";
 import ThemeContext from "./ThemeContext";
 import { IUserInfo, ThemeMode } from "../interfaces/context";
-import { IDefaultUserInfo } from "../interfaces/auth";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import useReadFromLocalStorage from "../../hooks/useReadFromLocalStorage";
 
 interface Props {
   children: ReactNode;
 }
 
-const defaultUserInfo: IDefaultUserInfo = {
-  avatar: null,
-  username: null,
-  token: null,
-  refreshToken: null,
-};
-
 const ContextProvider = ({ children }: Props) => {
-  const [theme, setTheme] = useState<ThemeMode>("dark");
+  const defaultUserInfo = useReadFromLocalStorage<IUserInfo>("userInfo") ?? {
+    avatar: null,
+    username: null,
+    token: null,
+    refreshToken: null,
+  };
 
+  const [theme, setTheme] = useState<ThemeMode>("dark");
   //const [isDarkMode, setIsDarkMode] = useLocalStorage("darkTheme", true);
   const [localStorageUserInfo, setLocalStorageUserInfo] = useLocalStorage(
     "userInfo",
     defaultUserInfo
   );
 
+  useEffect(() => {}, [localStorageUserInfo]);
+
   const handleUserLogin = (loginInfo: IUserInfo) => {
     setLocalStorageUserInfo(loginInfo);
   };
 
   const logoutHandle = () => {
-    setLocalStorageUserInfo(defaultUserInfo);
-    queryClient.invalidateQueries({ queryKey: ["homeData", "mangaData"] });
+    setLocalStorageUserInfo({
+      avatar: null,
+      username: null,
+      token: null,
+      refreshToken: null,
+    });
+
+    queryClient.invalidateQueries();
+
     window.location.reload();
   };
 

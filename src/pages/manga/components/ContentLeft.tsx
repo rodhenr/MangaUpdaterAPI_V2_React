@@ -34,7 +34,6 @@ function ContentLeft({
   const unfollowMutation = useUnfollowMangaMutation();
 
   const handleFollowMutation = () => {
-    console.log("here");
     followMutation.mutate(mangaId);
 
     setShowEditSourceModal(true);
