@@ -26,3 +26,7 @@ export interface IGenre {
   id: number;
   name: string;
 }
+
+export interface ILibraryQueryParams extends IFilters {
+  input: string;
+}

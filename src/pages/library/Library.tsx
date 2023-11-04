@@ -28,7 +28,10 @@ function Library() {
     genreId: "",
   });
 
-  const { data, error, isPending } = useGetMangasQuery(currentPage, filters);
+  const { data, error, isPending } = useGetMangasQuery(currentPage, {
+    ...filters,
+    input: search,
+  });
 
   const handleFiltersChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;

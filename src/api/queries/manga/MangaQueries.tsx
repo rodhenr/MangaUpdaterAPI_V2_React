@@ -6,7 +6,10 @@ import { IUserSource } from "../../../shared/interfaces/source";
 import { useContext } from "react";
 import AuthContext from "../../../shared/context/AuthContext";
 import { IMangaData } from "../../../shared/interfaces/manga";
-import { IFilters, IMangasResponse } from "../../../shared/interfaces/library";
+import {
+  ILibraryQueryParams,
+  IMangasResponse,
+} from "../../../shared/interfaces/library";
 import { MangaDataList } from "../../../shared/interfaces/chapters";
 
 export const useGetSourcesQuery = (mangaId: number) => {
@@ -34,19 +37,24 @@ export const useGetMangaQuery = (mangaId: string | undefined) => {
   });
 };
 
-export const useGetMangasQuery = (page: number, filters: IFilters) => {
+export const useGetMangasQuery = (
+  page: number,
+  params: ILibraryQueryParams
+) => {
   const axios = AxiosClient();
 
   return useQuery({
-    queryKey: ["libraryData", page, filters],
+    queryKey: ["libraryData", page, params],
     queryFn: () =>
       axios
         .get<IMangasResponse>("/api/manga", {
           params: {
             page,
-            orderBy: filters.orderById === "" ? null : filters.orderById,
-            sourceId: filters.sourceId === "" ? null : filters.sourceId,
-            genreId: filters.genreId === "" ? null : filters.genreId,
+            orderBy: params.orderById === "" ? null : params.orderById,
+            sourceId: params.sourceId === "" ? null : params.sourceId,
+            genreId: params.genreId === "" ? null : params.genreId,
+            pageSize: 18,
+            input: params.input === "" ? null : params.input,
           },
         })
         .then((res) => res.data),

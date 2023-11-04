@@ -33,7 +33,7 @@ function Pagination({ currentPage, onPageChange, totalPages }: Props) {
         <div
           key={uuidv4()}
           className={`cursor-pointer fsize-5 ${
-            currentPage === page && "primary-light"
+            currentPage === page && "primary-light primary-light-hover"
           } p-2`}
           onClick={() => onPageChange(page)}
         >
