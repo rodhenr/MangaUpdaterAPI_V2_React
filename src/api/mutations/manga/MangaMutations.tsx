@@ -5,6 +5,8 @@ import AxiosClient from "../../../lib/axios";
 import { queryClient } from "../../../lib/query-client";
 
 import { IMutationData } from "../../../shared/interfaces/chapters";
+import { useContext } from "react";
+import LoadingContext from "../../../shared/context/LoadingContext";
 
 interface IFollowSourcesVariables {
   mangaId: number;
@@ -13,41 +15,55 @@ interface IFollowSourcesVariables {
 
 export const useFollowMangaMutation = () => {
   const axios = AxiosClient();
+  const { changeLoadingState } = useContext(LoadingContext);
 
   return useMutation({
     mutationFn: (mangaId: number) =>
       axios.post(`/api/user/mangas/${mangaId}`, []),
+    onMutate: () => changeLoadingState(),
     onSuccess: (_: AxiosResponse<void>, mangaId: number) => {
+      changeLoadingState();
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
       queryClient.invalidateQueries({
         queryKey: ["sourceData", mangaId],
       });
     },
+    onError: () => changeLoadingState(),
   });
 };
 
 export const useUnfollowMangaMutation = () => {
   const axios = AxiosClient();
+  const { changeLoadingState } = useContext(LoadingContext);
 
   return useMutation({
     mutationFn: (mangaId: number) =>
       axios.delete(`/api/user/mangas/${mangaId}`),
+    onMutate: () => changeLoadingState(),
     onSuccess: (_: AxiosResponse<void>, mangaId: number) => {
+      changeLoadingState();
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
       queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
     },
+    onError: () => changeLoadingState(),
   });
 };
 
 export const useChapterReadStateMutation = () => {
   const axios = AxiosClient();
+  const { changeLoadingState } = useContext(LoadingContext);
 
   return useMutation({
     mutationFn: ({ chapterId, mangaId, sourceId }: IMutationData) =>
       axios.patch(
         `api/user/mangas/${mangaId}/sources/${sourceId}?chapterId=${chapterId}`
       ),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["mangaData"] }),
+    onMutate: () => changeLoadingState(),
+    onSuccess: () => {
+      changeLoadingState();
+      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+    },
+    onError: () => changeLoadingState(),
   });
 };
 

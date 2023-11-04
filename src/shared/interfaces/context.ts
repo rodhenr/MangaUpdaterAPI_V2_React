@@ -17,3 +17,8 @@ export interface AuthContextType {
   login: (loginInfo: IUserInfo) => void;
   logout: () => void;
 }
+
+export interface LoadingContextType {
+  isLoading: boolean;
+  changeLoadingState: () => void;
+}

@@ -1,11 +1,15 @@
 import { ReactNode, useEffect, useState } from "react";
 
-import AuthContext from "./AuthContext";
 import { queryClient } from "../../lib/query-client";
+
+import AuthContext from "./AuthContext";
 import ThemeContext from "./ThemeContext";
+
 import { IUserInfo, ThemeMode } from "../interfaces/context";
+
 import useLocalStorage from "../../hooks/useLocalStorage";
 import useReadFromLocalStorage from "../../hooks/useReadFromLocalStorage";
+import LoadingContext from "./LoadingContext";
 
 interface Props {
   children: ReactNode;
@@ -26,6 +30,8 @@ const ContextProvider = ({ children }: Props) => {
     defaultUserInfo
   );
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {}, [localStorageUserInfo]);
 
   const handleUserLogin = (loginInfo: IUserInfo) => {
@@ -45,20 +51,31 @@ const ContextProvider = ({ children }: Props) => {
     window.location.reload();
   };
 
+  const handleLoadingStateChange = () => {
+    setLoading((prev) => !prev);
+  };
+
   return (
-    <ThemeContext.Provider
-      value={{ themeMode: theme, toggleThemeMode: setTheme }}
+    <LoadingContext.Provider
+      value={{
+        isLoading: loading,
+        changeLoadingState: handleLoadingStateChange,
+      }}
     >
-      <AuthContext.Provider
-        value={{
-          userInfo: localStorageUserInfo,
-          login: handleUserLogin,
-          logout: logoutHandle,
-        }}
+      <ThemeContext.Provider
+        value={{ themeMode: theme, toggleThemeMode: setTheme }}
       >
-        {children}
-      </AuthContext.Provider>
-    </ThemeContext.Provider>
+        <AuthContext.Provider
+          value={{
+            userInfo: localStorageUserInfo,
+            login: handleUserLogin,
+            logout: logoutHandle,
+          }}
+        >
+          {children}
+        </AuthContext.Provider>
+      </ThemeContext.Provider>
+    </LoadingContext.Provider>
   );
 };
 

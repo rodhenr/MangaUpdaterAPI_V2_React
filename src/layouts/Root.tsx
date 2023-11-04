@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { Outlet } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -13,17 +13,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 library.add(faGear, faSearch, faBars, faList, faCircleXmark, faBook, faUsers);
 
+import LoadingContext from "../shared/context/LoadingContext";
+
 import LoginModal from "../components/modal/LoginModal";
 import RegisterModal from "../components/modal/RegisterModal";
 import PageGroup from "./components/PageGroup";
 import AuthGroup from "./components/AuthGroup";
 
 import "./Root.scss";
+import SpinLoading from "../components/loading/SpinLoading";
 
 function Root() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] =
     useState<boolean>(false);
+  const { isLoading } = useContext(LoadingContext);
 
   const changeLoginModalState = () => {
     if (isRegisterModalOpen) setIsRegisterModalOpen(false);
@@ -69,6 +73,11 @@ function Root() {
           showModal={isRegisterModalOpen}
         />,
         document.body
+      )}
+      {isLoading && (
+        <div className="absolute flex-center bg-modal-back h-100 w-100">
+          <SpinLoading />
+        </div>
       )}
     </>
   );
