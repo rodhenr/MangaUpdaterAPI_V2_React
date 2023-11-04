@@ -1,3 +1,5 @@
+import { ICardData } from "./library";
+
 export interface IMangaData {
   mangaId: number;
   coverUrl: string;
@@ -27,4 +29,9 @@ export interface IMangaSource {
   id: number;
   name: string;
   baseUrl: string;
+}
+
+export interface IMangaResponse {
+  data: IMangaData;
+  highlightedMangas: ICardData[];
 }

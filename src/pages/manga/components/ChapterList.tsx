@@ -1,4 +1,7 @@
-import DataTable, { TableColumn } from "react-data-table-component";
+import DataTable, {
+  TableColumn,
+  createTheme,
+} from "react-data-table-component";
 
 import { useChapterReadStateMutation } from "../../../api/mutations/manga/MangaMutations";
 
@@ -30,6 +33,28 @@ function ChapterList({ chapters, mangaId }: Props) {
       });
     }
   };
+
+  createTheme("light", {
+    text: {
+      primary: "#fefefe",
+      secondary: "#fefefe",
+    },
+    background: {
+      default: "#0e86d4",
+    },
+    context: {
+      background: "#cb4b16",
+      text: "#fefefe",
+    },
+    divider: {
+      default: "#fefefe",
+    },
+    action: {
+      button: "rgba(0,0,0,.54)",
+      hover: "rgba(0,0,0,.08)",
+      disabled: "rgba(0,0,0,.12)",
+    },
+  });
 
   const columns: TableColumn<IMangaChapter>[] = [
     {
@@ -88,7 +113,7 @@ function ChapterList({ chapters, mangaId }: Props) {
       data={chapters}
       highlightOnHover
       pagination
-      striped
+      theme="light"
     />
   );
 }

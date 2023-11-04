@@ -45,7 +45,9 @@ function ContentRight({
         <Genres genres={genres} />
       </div>
       <Synopsis text={synopsis} />
-      <ChapterList chapters={chapters} mangaId={mangaId} />
+      <div className="flex column">
+        <ChapterList chapters={chapters} mangaId={mangaId} />
+      </div>
     </div>
   );
 }

@@ -28,24 +28,24 @@ function Manga() {
       >
         <div className="top flex gap-4">
           <ContentLeft
-            coverUrl={data.coverUrl}
-            isUserFollowing={data.isUserFollowing}
-            mangaId={data.mangaId}
-            sources={data.sources}
-            type={data.type}
+            coverUrl={data.data.coverUrl}
+            isUserFollowing={data.data.isUserFollowing}
+            mangaId={data.data.mangaId}
+            sources={data.data.sources}
+            type={data.data.type}
           />
           <ContentRight
-            alternativeName={data.alternativeName}
-            artist={data.author}
-            author={data.author}
-            chapters={data.chapters}
-            genres={data.genres}
-            mangaId={data.mangaId}
-            name={data.name}
-            synopsis={data.synopsis}
+            alternativeName={data.data.alternativeName}
+            artist={data.data.author}
+            author={data.data.author}
+            chapters={data.data.chapters}
+            genres={data.data.genres}
+            mangaId={data.data.mangaId}
+            name={data.data.name}
+            synopsis={data.data.synopsis}
           />
         </div>
-        <SeeAlso />
+        <SeeAlso data={data.highlightedMangas} />
       </div>
     </>
   ) : (

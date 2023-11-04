@@ -5,7 +5,7 @@ import AxiosClient from "../../../lib/axios";
 import { IUserSource } from "../../../shared/interfaces/source";
 import { useContext } from "react";
 import AuthContext from "../../../shared/context/AuthContext";
-import { IMangaData } from "../../../shared/interfaces/manga";
+import { IMangaResponse } from "../../../shared/interfaces/manga";
 import {
   ILibraryQueryParams,
   IMangasResponse,
@@ -32,7 +32,9 @@ export const useGetMangaQuery = (mangaId: string | undefined) => {
   return useQuery({
     queryKey: ["mangaData"],
     queryFn: () =>
-      axios.get<IMangaData>(`/api/manga/${mangaId}`).then((res) => res.data),
+      axios
+        .get<IMangaResponse>(`/api/manga/${mangaId}`)
+        .then((res) => res.data),
     enabled: !!mangaId,
   });
 };
