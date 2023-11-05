@@ -1,8 +1,9 @@
 import { useContext } from "react";
 
+import AuthContext from "../../shared/context/AuthContext";
+
 import Avatar from "../../components/avatar/Avatar";
 import Button from "../../components/button/Button";
-import AuthContext from "../../shared/context/AuthContext";
 
 interface Props {
   changeLoginModalState: () => void;
@@ -26,13 +27,13 @@ function AuthGroup({ changeLoginModalState, changeRegisterModalState }: Props) {
             onClick={changeLoginModalState}
             text="Login"
             useHover={true}
-            variant="secondary-dark"
+            variant="secondary-light"
             width="100px"
           />
           <Button
             onClick={changeRegisterModalState}
             text="Register"
-            variant="secondary-light"
+            variant="primary-light"
             useHover={true}
             width="100px"
           />

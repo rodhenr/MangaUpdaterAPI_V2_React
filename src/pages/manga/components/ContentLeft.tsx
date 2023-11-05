@@ -66,7 +66,7 @@ function ContentLeft({
         />
       </div>
       <Sources sources={sources} />
-      <div className="flex column gap-1">
+      <div className="flex column gap-2">
         <Info description={type} header="Type" icon={"book"} />
         <Info description={"0"} header="Users Tracking" icon={"users"} />
       </div>

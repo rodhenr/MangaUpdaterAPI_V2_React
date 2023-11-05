@@ -5,7 +5,7 @@ import { truncateString } from "../../utils/string";
 import "./Card.scss";
 
 interface Props {
-  color: "text-primary" | "text-secondary";
+  color: "text-primary" | "text-secondary" | "text-light";
   height?: string;
   id: number;
   imagePath: string;

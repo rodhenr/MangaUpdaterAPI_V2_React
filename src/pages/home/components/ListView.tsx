@@ -1,4 +1,8 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+
+import ThemeContext from "../../../shared/context/ThemeContext";
 
 import Button from "../../../components/button/Button";
 import { MangaDataList } from "../../../shared/interfaces/chapters";
@@ -11,6 +15,7 @@ interface Props {
 }
 
 function ListView({ data }: Props) {
+  const { themeMode } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const handleNavigate = (id: number) => {
@@ -19,7 +24,13 @@ function ListView({ data }: Props) {
 
   return (
     <div className="flex column space-between flex-wrap">
-      <div className="header flex space-between border-secondary-light-1 pv-2 secondary-dark">
+      <div
+        className={`header flex space-between pv-2 ${
+          themeMode === "light"
+            ? "border-secondary-dark-1 secondary-dark"
+            : "border-secondary-light-1 bg-menu-dark text-secondary-light"
+        }`}
+      >
         <p className="flex-1 text-center">Manga</p>
         <p className="column-width text-center">Date</p>
         <p className="column-width text-center">Chapter</p>
@@ -30,10 +41,15 @@ function ListView({ data }: Props) {
         d.chapters.map((chapter, chapterIndex) => {
           return (
             <div
-              className={`flex align-center space-between pv-1 ${
+              key={uuidv4()}
+              className={`flex align-center space-between pv-2 ${
                 (dataIndex + chapterIndex) % 2 !== 0
-                  ? "primary-light border-secondary-dark-1"
-                  : "bg-light border-secondary-dark-left-1 border-secondary-dark-right-1"
+                  ? themeMode === "light"
+                    ? "primary-light border-secondary-dark-left-1 border-secondary-dark-right-1"
+                    : "bg-menu-dark bg-dark border-secondary-light-left-1 border-secondary-light-right-1 border-bottom-light"
+                  : themeMode === "light"
+                  ? "bg-light border-secondary-dark-left-1 border-secondary-dark-right-1 border-bottom-primary-light"
+                  : "bg-dark border-secondary-light-left-1 border-secondary-light-right-1 border-bottom-light"
               }`}
             >
               <div className="flex-1 text-center ph-1 ">
@@ -50,21 +66,23 @@ function ListView({ data }: Props) {
               <p className="column-width text-center fsize-3">
                 Chapter {chapter.number}
               </p>
-              <p className="flex-center column-width text-center fsize-3">
+              <div className="flex-center column-width text-center fsize-3">
                 <Button
                   fontSize="fsize-3"
-                  height="25px"
+                  height="20px"
                   mouseover={false}
                   onClick={() => null}
                   text={chapter.sourceName}
-                  variant="primary-dark"
+                  variant={
+                    themeMode === "light" ? "secondary-dark" : "primary-light"
+                  }
                   width="100px"
                 />
-              </p>
+              </div>
               <div className="flex-center column-width text-center">
                 <Button
                   fontSize="fsize-3"
-                  height="25px"
+                  height="20px"
                   mouseover={false}
                   onClick={() => null}
                   text={chapter.read ? "Read" : "Not Read"}

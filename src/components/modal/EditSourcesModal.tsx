@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
 
 import { useFollowSourcesMutation } from "../../api/mutations/manga/MangaMutations";
 import { useGetSourcesQuery } from "../../api/queries/manga/MangaQueries";
+import ThemeContext from "../../shared/context/ThemeContext";
 
 import Alert from "../alert/Alert";
 import Button from "../button/Button";
@@ -18,6 +19,7 @@ interface Props {
 }
 
 function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
+  const { themeMode } = useContext(ThemeContext);
   const [sourcesToFollow, setSourcesToFollow] = useState<number[]>([]);
   const [showDialog, setShowDialog] = useState<boolean>(false);
 
@@ -59,7 +61,9 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
       style={{ display: !showModal ? "none" : "flex" }}
     >
       <div
-        className="editSources-main flex column gap-2 secondary-dark radius-1 shadow-3"
+        className={`editSources-main flex column gap-2 radius-1 shadow-3 ${
+          themeMode === "light" ? "secondary-dark" : "primary-dark"
+        }`}
         style={{
           height: 180,
           width: 330,
@@ -136,7 +140,7 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
             message="Sources updated"
             onClose={() => setShowDialog(false)}
             width={"350px"}
-            variant="bg-dark"
+            variant={themeMode === "light" ? "bg-dark" : "bg-light"}
           />,
           document.getElementById("manga-page")!
         )}

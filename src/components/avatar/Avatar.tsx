@@ -1,6 +1,8 @@
 import { useContext } from "react";
-import "./Avatar.scss";
 import AuthContext from "../../shared/context/AuthContext";
+import ThemeContext from "../../shared/context/ThemeContext";
+
+import "./Avatar.scss";
 
 interface Props {
   color: "text-primary" | "text-secondary";
@@ -18,13 +20,18 @@ function Avatar({
   userName,
 }: Props) {
   const authContext = useContext(AuthContext);
+  const { themeMode } = useContext(ThemeContext);
 
   return (
     <div className="avatar-main flex-center gap-3 roboto border-box roboto">
       <div className="flex column align-end">
         {showUserName && <p className={color}>{userName}</p>}
         <span
-          className="fsize-3 cursor-pointer text-hover-secondary-dark"
+          className={`fsize-3 cursor-pointer ${
+            themeMode === "light"
+              ? "text-hover-secondary-dark"
+              : "text-hover-secondary-light"
+          }`}
           onClick={authContext.logout}
         >
           Logout

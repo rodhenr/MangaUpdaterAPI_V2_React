@@ -1,5 +1,7 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import ThemeContext from "../../shared/context/ThemeContext";
 
 import Input from "../input/Input";
 import Button from "../button/Button";
@@ -12,6 +14,7 @@ interface Props {
 }
 
 function RegisterModal({ closeModal, showModal = true }: Props) {
+  const { themeMode } = useContext(ThemeContext);
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -39,7 +42,9 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
 
   return (
     <div
-      className="registerModal-main flex column gap-4 secondary-dark radius-1 shadow-3 roboto space-around"
+      className={`registerModal-main flex column gap-4 radius-1 shadow-3 roboto space-around ${
+        themeMode === "light" ? "secondary-dark" : "primary-dark"
+      }`}
       style={{
         display: !showModal ? "none" : "flex",
         height: 400,

@@ -1,7 +1,8 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useAddMangaMutation } from "../../api/mutations/manga/MangaMutations";
+import ThemeContext from "../../shared/context/ThemeContext";
 
 import Input from "../input/Input";
 import Button from "../button/Button";
@@ -13,6 +14,7 @@ interface Props {
 }
 
 function AddMangaModal({ onClose }: Props) {
+  const { themeMode } = useContext(ThemeContext);
   const [malId, setMalId] = useState<string>("");
   const addMangaMutation = useAddMangaMutation();
 
@@ -28,7 +30,9 @@ function AddMangaModal({ onClose }: Props) {
   return (
     <div className="absolute absolute-align flex-center roboto zIndex-100 bg-modal-back h-100 w-100">
       <div
-        className="addManga-main flex column secondary-dark border-box radius-2 p-4"
+        className={`addManga-main flex column border-box radius-2 p-4 ${
+          themeMode === "light" ? "secondary-dark" : "primary-dark"
+        }`}
         style={{ height: "200px", width: "400px" }}
       >
         <div className="flex space-between">

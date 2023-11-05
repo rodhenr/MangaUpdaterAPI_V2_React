@@ -7,7 +7,9 @@ export type Variant =
   | "bg-dark"
   | "secondary-dark"
   | "secondary-light"
-  | "bg-disabled";
+  | "bg-disabled"
+  | "bg-card-dark"
+  | "bg-text-dark";
 
 export interface SizeProps {
   height?: string;

@@ -1,14 +1,18 @@
 import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { useGetHomeMangasQuery } from "../../api/queries/manga/MangaQueries";
+
 import AuthContext from "../../shared/context/AuthContext";
+import ThemeContext from "../../shared/context/ThemeContext";
+
 import PageHeader from "../../components/pageHeader/PageHeader";
 import ListView from "./components/ListView";
 import CardView from "./components/CardView";
 import SpinLoading from "../../components/loading/SpinLoading";
-import { useGetHomeMangasQuery } from "../../api/queries/manga/MangaQueries";
 
 function Home() {
+  const { themeMode } = useContext(ThemeContext);
   const [isCardView, setIsCardView] = useState<boolean>(true);
   const { userInfo } = useContext(AuthContext);
   const { data, error, isPending } = useGetHomeMangasQuery();
@@ -30,7 +34,9 @@ function Home() {
               className={`fsize-5 ${
                 isCardView
                   ? "text-disabled"
-                  : "cursor-pointer text-secondary-dark"
+                  : themeMode === "light"
+                  ? "cursor-pointer text-secondary-dark"
+                  : "cursor-pointer text-secondary-light"
               }`}
               onClick={() => setIsCardView(true)}
             />
@@ -38,7 +44,9 @@ function Home() {
               icon="list"
               className={`fsize-5 ${
                 isCardView
-                  ? "cursor-pointer text-secondary-dark"
+                  ? themeMode === "light"
+                    ? "cursor-pointer text-secondary-dark"
+                    : "cursor-pointer text-secondary-light"
                   : "text-disabled"
               }`}
               onClick={() => setIsCardView(false)}

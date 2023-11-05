@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools/production";
 
 import { useGetMangaQuery } from "../../api/queries/manga/MangaQueries";
 
@@ -9,7 +10,6 @@ import ContentRight from "./components/ContentRight";
 import SpinLoading from "../../components/loading/SpinLoading";
 
 import "./Manga.scss";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools/production";
 
 function Manga() {
   const { mangaId } = useParams();

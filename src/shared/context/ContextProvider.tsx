@@ -22,9 +22,9 @@ const ContextProvider = ({ children }: Props) => {
     token: null,
     refreshToken: null,
   };
+  const defaultTheme = useReadFromLocalStorage<ThemeMode>("theme") ?? "light";
 
-  const [theme, setTheme] = useState<ThemeMode>("dark");
-  //const [isDarkMode, setIsDarkMode] = useLocalStorage("darkTheme", true);
+  const [theme, setTheme] = useLocalStorage<ThemeMode>("theme", defaultTheme);
   const [localStorageUserInfo, setLocalStorageUserInfo] = useLocalStorage(
     "userInfo",
     defaultUserInfo
@@ -32,6 +32,7 @@ const ContextProvider = ({ children }: Props) => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  useEffect(() => {}, [defaultTheme]);
   useEffect(() => {}, [localStorageUserInfo]);
 
   const handleUserLogin = (loginInfo: IUserInfo) => {
@@ -55,6 +56,10 @@ const ContextProvider = ({ children }: Props) => {
     setLoading((prev) => !prev);
   };
 
+  const toggleThemeMode = (theme: ThemeMode) => {
+    setTheme(theme);
+  };
+
   return (
     <LoadingContext.Provider
       value={{
@@ -63,7 +68,7 @@ const ContextProvider = ({ children }: Props) => {
       }}
     >
       <ThemeContext.Provider
-        value={{ themeMode: theme, toggleThemeMode: setTheme }}
+        value={{ themeMode: theme, toggleThemeMode: toggleThemeMode }}
       >
         <AuthContext.Provider
           value={{

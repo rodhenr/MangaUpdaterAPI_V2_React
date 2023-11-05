@@ -1,4 +1,7 @@
+import { useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
+
+import ThemeContext from "../../../shared/context/ThemeContext";
 
 import { IMangaSource } from "../../../shared/interfaces/manga";
 import Button from "../../../components/button/Button";
@@ -8,6 +11,8 @@ interface Props {
 }
 
 function Sources({ sources }: Props) {
+  const { themeMode } = useContext(ThemeContext);
+
   return (
     <div className="flex gap-1 flex-wrap">
       {sources &&
@@ -20,7 +25,7 @@ function Sources({ sources }: Props) {
               mouseover={false}
               text={source.name}
               width="fit-content"
-              variant="bg-dark"
+              variant={themeMode === "light" ? "bg-text-dark" : "bg-text-dark"}
             />
           );
         })}

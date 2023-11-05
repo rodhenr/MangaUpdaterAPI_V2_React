@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import Button from "../button/Button";
 
 import "./LoginModal.scss";
 import { ILogin } from "../../shared/interfaces/auth";
+import ThemeContext from "../../shared/context/ThemeContext";
 
 interface Props {
   closeModal: () => void;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 function LoginModal({ closeModal, showModal = true }: Props) {
+  const { themeMode } = useContext(ThemeContext);
   const [loginData, setLoginData] = useState<ILogin>({
     email: "",
     password: "",
@@ -54,7 +56,9 @@ function LoginModal({ closeModal, showModal = true }: Props) {
 
   return (
     <div
-      className="loginModal-main flex column gap-4 secondary-dark radius-1 shadow-3 roboto space-around"
+      className={`loginModal-main flex column gap-4 radius-1 shadow-3 roboto space-around ${
+        themeMode === "light" ? "secondary-dark" : "primary-dark"
+      }`}
       style={{
         display: !showModal ? "none" : "flex",
         height: 350,

@@ -1,5 +1,6 @@
 import { useState, ChangeEvent } from "react";
 import { createPortal } from "react-dom";
+import { useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -17,8 +18,10 @@ import Filters from "./components/Filters";
 
 import "./Library.scss";
 import Pagination from "./components/Pagination";
+import ThemeContext from "../../shared/context/ThemeContext";
 
 function Library() {
+  const { themeMode } = useContext(ThemeContext);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [modalAddManga, setModalAddManga] = useState<boolean>(false);
@@ -75,7 +78,7 @@ function Library() {
           width="350px"
           value={search}
           onChange={handleSearch}
-          variant="bg-dark"
+          variant={themeMode === "light" ? "primary-light" : "bg-light"}
         />
         <Filters
           onChange={handleFiltersChange}
@@ -105,7 +108,10 @@ function Library() {
               onClick={() => handleChangeAddMangaModal()}
               text="Register new"
               width="100px"
-              variant="bg-dark"
+              useHover={true}
+              variant={
+                themeMode === "light" ? "primary-light" : "secondary-light"
+              }
             />
           </div>
           <div className="library-main grid">
@@ -113,7 +119,9 @@ function Library() {
               return (
                 <Card
                   key={uuidv4()}
-                  color="text-primary"
+                  color={
+                    themeMode === "light" ? "text-primary" : "text-secondary"
+                  }
                   id={manga.mangaId}
                   imagePath={manga.coverUrl}
                   text={manga.mangaName}

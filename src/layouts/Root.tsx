@@ -10,20 +10,35 @@ import {
   faCircleXmark,
   faBook,
   faUsers,
+  faSun,
+  faMoon,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faGear, faSearch, faBars, faList, faCircleXmark, faBook, faUsers);
+library.add(
+  faGear,
+  faSearch,
+  faBars,
+  faList,
+  faCircleXmark,
+  faBook,
+  faUsers,
+  faSun,
+  faMoon
+);
 
 import LoadingContext from "../shared/context/LoadingContext";
+import ThemeContext from "../shared/context/ThemeContext";
 
 import LoginModal from "../components/modal/LoginModal";
 import RegisterModal from "../components/modal/RegisterModal";
 import PageGroup from "./components/PageGroup";
 import AuthGroup from "./components/AuthGroup";
+import SpinLoading from "../components/loading/SpinLoading";
+import ThemeButton from "../components/theme/ThemeButton";
 
 import "./Root.scss";
-import SpinLoading from "../components/loading/SpinLoading";
 
 function Root() {
+  const { themeMode } = useContext(ThemeContext);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] =
     useState<boolean>(false);
@@ -41,24 +56,37 @@ function Root() {
 
   return (
     <>
-      <div className={`roboto primary-light`}>
+      <div
+        className={`roboto ${
+          themeMode === "light" ? "primary-light" : "bg-menu-dark"
+        }`}
+      >
         <div
           className={`root-main flex align-center space-between`}
           style={{ height: 50, margin: "auto", width: "65vw" }}
         >
           <h2>MANGA UPDATER</h2>
           <PageGroup />
-          <AuthGroup
-            changeLoginModalState={changeLoginModalState}
-            changeRegisterModalState={changeRegisterModalState}
-          />
+          <div className="flex-center gap-5">
+            <ThemeButton />
+            <AuthGroup
+              changeLoginModalState={changeLoginModalState}
+              changeRegisterModalState={changeRegisterModalState}
+            />
+          </div>
         </div>
       </div>
       <div
-        className="flex-1 w-100 roboto"
-        style={{ margin: "2rem auto", width: "65vw" }}
+        className={`flex-1 w-100 roboto ${
+          themeMode === "light" ? "bg-light" : "bg-dark"
+        }`}
       >
-        <Outlet />
+        <div
+          className="flex-1 w-100 roboto"
+          style={{ margin: "2rem auto", width: "65vw" }}
+        >
+          <Outlet />
+        </div>
       </div>
       {createPortal(
         <LoginModal

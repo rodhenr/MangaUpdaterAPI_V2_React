@@ -2,7 +2,7 @@ export type ThemeMode = "light" | "dark";
 
 export interface ThemeContextType {
   themeMode: ThemeMode;
-  toggleThemeMode: React.Dispatch<React.SetStateAction<ThemeMode>>;
+  toggleThemeMode: (theme: ThemeMode) => void;
 }
 
 export interface IUserInfo {

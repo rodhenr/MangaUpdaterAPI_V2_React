@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import DataTable, {
   TableColumn,
   createTheme,
 } from "react-data-table-component";
 
 import { useChapterReadStateMutation } from "../../../api/mutations/manga/MangaMutations";
+import ThemeContext from "../../../shared/context/ThemeContext";
 
 import { formatDate } from "../../../utils/date";
 import { IMangaChapter } from "../../../shared/interfaces/manga";
@@ -17,6 +19,8 @@ interface Props {
 }
 
 function ChapterList({ chapters, mangaId }: Props) {
+  const { themeMode } = useContext(ThemeContext);
+
   const chapterMutation = useChapterReadStateMutation();
 
   const handleChapterMutation = async (
@@ -53,6 +57,28 @@ function ChapterList({ chapters, mangaId }: Props) {
       button: "rgba(0,0,0,.54)",
       hover: "rgba(0,0,0,.08)",
       disabled: "rgba(0,0,0,.12)",
+    },
+  });
+
+  createTheme("dark", {
+    text: {
+      primary: "#fefefe",
+      secondary: "#fefefe",
+    },
+    background: {
+      default: "#3e3e3e",
+    },
+    context: {
+      background: "#cb4b16",
+      text: "#fefefe",
+    },
+    divider: {
+      default: "#fefefe",
+    },
+    action: {
+      button: "rgba(255,255,255,.54)",
+      hover: "rgba(255,255,255,.08)",
+      disabled: "rgba(255,255,255,.12)",
     },
   });
 
@@ -113,7 +139,7 @@ function ChapterList({ chapters, mangaId }: Props) {
       data={chapters}
       highlightOnHover
       pagination
-      theme="light"
+      theme={themeMode === "light" ? "light" : "dark"}
     />
   );
 }
