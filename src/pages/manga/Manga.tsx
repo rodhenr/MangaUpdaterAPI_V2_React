@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useGetMangaQuery } from "../../api/queries/manga/MangaQueries";
@@ -8,10 +9,15 @@ import ContentRight from "./components/ContentRight";
 import SpinLoading from "../../components/loading/SpinLoading";
 
 import "./Manga.scss";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools/production";
 
 function Manga() {
   const { mangaId } = useParams();
-  const { data, error, isPending } = useGetMangaQuery(mangaId);
+  const { data, error, isPending, refetch } = useGetMangaQuery(mangaId);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch, mangaId]);
 
   if (error) return "error...";
 
@@ -47,6 +53,7 @@ function Manga() {
         </div>
         <SeeAlso data={data.highlightedMangas} />
       </div>
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   ) : (
     <div>No data found</div>

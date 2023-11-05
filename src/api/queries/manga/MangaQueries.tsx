@@ -29,6 +29,8 @@ export const useGetSourcesQuery = (mangaId: number) => {
 export const useGetMangaQuery = (mangaId: string | undefined) => {
   const axios = AxiosClient();
 
+  console.log("MangaID", mangaId);
+
   return useQuery({
     queryKey: ["mangaData"],
     queryFn: () =>
