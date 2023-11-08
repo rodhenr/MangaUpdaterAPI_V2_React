@@ -25,7 +25,7 @@ function SelectGroup({
   width = "100%",
 }: Props) {
   return (
-    <div className="flex column">
+    <div className="flex column flex-1">
       <p className="fsize-3">{placeholder}</p>
       <select
         name={name}

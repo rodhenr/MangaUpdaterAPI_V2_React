@@ -1,6 +1,8 @@
 import { useContext } from "react";
+
 import AuthContext from "../../shared/context/AuthContext";
 import ThemeContext from "../../shared/context/ThemeContext";
+import useGetWindowWidth from "../../hooks/useGetWindowWidth";
 
 import "./Avatar.scss";
 
@@ -21,22 +23,25 @@ function Avatar({
 }: Props) {
   const authContext = useContext(AuthContext);
   const { themeMode } = useContext(ThemeContext);
+  const windowWidth = useGetWindowWidth();
 
   return (
     <div className="avatar-main flex-center gap-3 roboto border-box roboto">
-      <div className="flex column align-end">
-        {showUserName && <p className={color}>{userName}</p>}
-        <span
-          className={`fsize-3 cursor-pointer ${
-            themeMode === "light"
-              ? "text-hover-secondary-dark"
-              : "text-hover-secondary-light"
-          }`}
-          onClick={authContext.logout}
-        >
-          Logout
-        </span>
-      </div>
+      {windowWidth > 900 && (
+        <div className="flex column align-end">
+          {showUserName && <p className={color}>{userName}</p>}
+          <span
+            className={`fsize-3 cursor-pointer ${
+              themeMode === "light"
+                ? "text-hover-secondary-dark"
+                : "text-hover-secondary-light"
+            }`}
+            onClick={authContext.logout}
+          >
+            Logout
+          </span>
+        </div>
+      )}
       {imagePath ? (
         <img src={imagePath ?? ""} alt="avatar" />
       ) : (

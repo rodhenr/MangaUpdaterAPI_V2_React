@@ -11,6 +11,8 @@ import ListView from "./components/ListView";
 import CardView from "./components/CardView";
 import SpinLoading from "../../components/loading/SpinLoading";
 
+import "./Home.scss";
+
 function Home() {
   const { themeMode } = useContext(ThemeContext);
   const [isCardView, setIsCardView] = useState<boolean>(true);
@@ -26,7 +28,7 @@ function Home() {
   const pageHeader = (
     <div className="w-100">
       <PageHeader>
-        <div className="flex space-between w-100 align-end">
+        <div className="pageHeader-main flex w-100 align-end">
           <p className="fsize-5">Updates</p>
           <div className="flex gap-3">
             <FontAwesomeIcon

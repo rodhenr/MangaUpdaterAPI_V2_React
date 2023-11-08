@@ -19,6 +19,7 @@ import Filters from "./components/Filters";
 import "./Library.scss";
 import Pagination from "./components/Pagination";
 import ThemeContext from "../../shared/context/ThemeContext";
+import useGetWindowWidth from "../../hooks/useGetWindowWidth";
 
 function Library() {
   const { themeMode } = useContext(ThemeContext);
@@ -30,6 +31,7 @@ function Library() {
     sourceId: "",
     genreId: "",
   });
+  const windowWidth = useGetWindowWidth();
 
   const { data, error, isPending } = useGetMangasQuery(currentPage, {
     ...filters,
@@ -68,14 +70,18 @@ function Library() {
       <PageHeader>
         <p className="fsize-5">Library</p>
       </PageHeader>
-      <div className="flex space-between">
+      <div
+        className={`flex space-between ${
+          windowWidth < 900 && "column gap-2"
+        } w-100`}
+      >
         <Input
           placeholder="Search for a manga"
           type="search"
           iconSide="left"
           id={"searchManga"}
           icon="search"
-          width="350px"
+          width={windowWidth > 900 ? "350px" : "auto"}
           value={search}
           onChange={handleSearch}
           variant={themeMode === "light" ? "primary-light" : "bg-light"}

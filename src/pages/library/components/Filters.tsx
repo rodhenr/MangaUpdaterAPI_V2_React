@@ -1,5 +1,7 @@
 import { ChangeEvent } from "react";
 
+import useGetWindowWidth from "../../../hooks/useGetWindowWidth";
+
 import SelectGroup from "../../../components/select/SelectGroupt";
 import { IFilters, IGenre } from "../../../shared/interfaces/library";
 import { ISelectState } from "../../../shared/interfaces/components";
@@ -16,9 +18,10 @@ function Filters({ filters, genres, onChange }: Props) {
     value: String(genre.id),
     isHidden: false,
   }));
+  const windowWidth = useGetWindowWidth();
 
   return (
-    <div className="flex gap-4">
+    <div className={`flex ${windowWidth > 900 ? "gap-4" : "gap-1"}`}>
       <SelectGroup
         name={"orderById"}
         onChange={onChange}

@@ -1,5 +1,31 @@
 .root-main {
+  justify-content: space-between;
+  height: 50px;
+  margin: 0 1rem;
   padding: 0.5rem 0;
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  @media (min-width: 900px) {
+    margin: 0 auto;
+    width: 65vw;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.outlet-main {
+  margin: 2rem 1rem;
+
+  @media (min-width: 900px) {
+    justify-content: space-between;
+    margin: 2rem auto;
+    width: 65vw;
+  }
 }
 
 a:visited {

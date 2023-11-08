@@ -15,7 +15,7 @@ function CardView({ data }: Props) {
   const { themeMode } = useContext(ThemeContext);
 
   return (
-    <div className="cardView-main grid gap-2">
+    <div className="cardView-main grid">
       {data.map((data: MangaDataList) => {
         return (
           <CardWithInfo

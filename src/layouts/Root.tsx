@@ -28,6 +28,8 @@ library.add(
 import LoadingContext from "../shared/context/LoadingContext";
 import ThemeContext from "../shared/context/ThemeContext";
 
+import useGetWindowWidth from "../hooks/useGetWindowWidth";
+
 import LoginModal from "../components/modal/LoginModal";
 import RegisterModal from "../components/modal/RegisterModal";
 import PageGroup from "./components/PageGroup";
@@ -43,6 +45,7 @@ function Root() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] =
     useState<boolean>(false);
   const { isLoading } = useContext(LoadingContext);
+  const windowWidth = useGetWindowWidth();
 
   const changeLoginModalState = () => {
     if (isRegisterModalOpen) setIsRegisterModalOpen(false);
@@ -61,14 +64,11 @@ function Root() {
           themeMode === "light" ? "primary-light" : "bg-menu-dark"
         }`}
       >
-        <div
-          className={`root-main flex align-center space-between`}
-          style={{ height: 50, margin: "auto", width: "65vw" }}
-        >
+        <div className="root-main flex align-center">
           <h2>MANGA UPDATER</h2>
           <PageGroup />
           <div className="flex-center gap-5">
-            <ThemeButton />
+            {windowWidth > 900 && <ThemeButton />}
             <AuthGroup
               changeLoginModalState={changeLoginModalState}
               changeRegisterModalState={changeRegisterModalState}
@@ -81,10 +81,7 @@ function Root() {
           themeMode === "light" ? "bg-light" : "bg-dark"
         }`}
       >
-        <div
-          className="flex-1 w-100 roboto"
-          style={{ margin: "2rem auto", width: "65vw" }}
-        >
+        <div className="outlet-main flex-1 roboto">
           <Outlet />
         </div>
       </div>

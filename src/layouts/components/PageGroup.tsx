@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import { IPageList } from "../../shared/interfaces/components";
 
+import "./PageGroup.scss";
+
 const pages: IPageList[] = [
   { baseUrl: "/", title: "Home" },
   { baseUrl: "/library", title: "Library" },
@@ -15,7 +17,7 @@ function PageGroup() {
   return (
     <div className="flex gap-4">
       {pages.map((page) => (
-        <div key={uuidv4()} className="fsize-5">
+        <div key={uuidv4()} className="pageGroup-main">
           <Link
             to={`${page.baseUrl}`}
             className={

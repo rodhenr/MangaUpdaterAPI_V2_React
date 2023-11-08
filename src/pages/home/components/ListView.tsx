@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import ThemeContext from "../../../shared/context/ThemeContext";
 
+import useGetWindowWidth from "../../../hooks/useGetWindowWidth";
+
 import Button from "../../../components/button/Button";
 import { MangaDataList } from "../../../shared/interfaces/chapters";
 import { formatDate } from "../../../utils/date";
@@ -17,6 +19,7 @@ interface Props {
 function ListView({ data }: Props) {
   const { themeMode } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const windowWidth = useGetWindowWidth();
 
   const handleNavigate = (id: number) => {
     navigate(`/manga/${id}`);
@@ -69,25 +72,25 @@ function ListView({ data }: Props) {
               <div className="flex-center column-width text-center fsize-3">
                 <Button
                   fontSize="fsize-3"
-                  height="20px"
+                  height={windowWidth > 900 ? "20px" : "30px"}
                   mouseover={false}
                   onClick={() => null}
                   text={chapter.sourceName}
                   variant={
                     themeMode === "light" ? "secondary-dark" : "primary-light"
                   }
-                  width="100px"
+                  width={windowWidth > 900 ? "100px" : "50px"}
                 />
               </div>
               <div className="flex-center column-width text-center">
                 <Button
                   fontSize="fsize-3"
-                  height="20px"
+                  height={windowWidth > 900 ? "20px" : "30px"}
                   mouseover={false}
                   onClick={() => null}
                   text={chapter.read ? "Read" : "Not Read"}
                   variant={chapter.read ? "success" : "danger"}
-                  width="100px"
+                  width={windowWidth > 900 ? "100px" : "50px"}
                 />
               </div>
             </div>
