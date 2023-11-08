@@ -1,8 +1,9 @@
+import useGetWindowWidth from "../../../hooks/useGetWindowWidth";
+
 import Synopsis from "./Synopsis";
 import ChapterList from "./ChapterList";
 import { IMangaChapter } from "../../../shared/interfaces/manga";
-
-import Genres from "./Genres";
+import MangaInfo from "./MangaInfo";
 
 import "../Manga.scss";
 
@@ -27,23 +28,19 @@ function ContentRight({
   name,
   synopsis,
 }: Props) {
+  const windowWidth = useGetWindowWidth();
+
   return (
     <div className="right-side flex column gap-5">
-      <div className="flex column gap-4">
-        <div>
-          <h1 className="fsize-6">{name}</h1>
-          <h3>{alternativeName}</h3>
-        </div>
-        <div className="flex gap-6">
-          <p>
-            <span className="font-bold">Author:</span> {author}
-          </p>
-          <p>
-            <span className="font-bold">Artist:</span> {artist}
-          </p>
-        </div>
-        <Genres genres={genres} />
-      </div>
+      {windowWidth > 800 && (
+        <MangaInfo
+          alternativeName={alternativeName}
+          artist={artist}
+          author={author}
+          genres={genres}
+          name={name}
+        />
+      )}
       <Synopsis text={synopsis} />
       <div className="flex column">
         <ChapterList chapters={chapters} mangaId={mangaId} />

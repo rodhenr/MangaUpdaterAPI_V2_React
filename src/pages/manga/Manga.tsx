@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools/production";
 
 import { useGetMangaQuery } from "../../api/queries/manga/MangaQueries";
 
@@ -35,14 +34,10 @@ function Manga() {
         className="manga-main flex column gap-4 border-box relative"
         id="manga-page"
       >
-        <div className="top flex gap-4">
-          <ContentLeft
-            coverUrl={data.data.coverUrl}
-            isUserFollowing={data.data.isUserFollowing}
-            mangaId={data.data.mangaId}
-            sources={data.data.sources}
-            type={data.data.type}
-          />
+        <div
+          className={`top flex gap-4 ${windowWidth > 800 ? "row" : "column"}`}
+        >
+          <ContentLeft data={data.data} />
           <ContentRight
             alternativeName={data.data.alternativeName}
             artist={data.data.author}
@@ -56,7 +51,6 @@ function Manga() {
         </div>
         <SeeAlso data={data.highlightedMangas} />
       </div>
-      <ReactQueryDevtools initialIsOpen={false} />
     </>
   ) : (
     <div>No data found</div>
