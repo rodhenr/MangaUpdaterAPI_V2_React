@@ -47,12 +47,10 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
       }`}
       style={{
         display: !showModal ? "none" : "flex",
-        height: 400,
         left: "50%",
         position: "absolute",
         top: "50%",
         transform: "translate(-50%,-50%)",
-        width: 500,
       }}
     >
       <div className="flex align-center space-between">

@@ -10,11 +10,15 @@
 
   @media (min-width: 900px) {
     margin: 0 auto;
-    width: 65vw;
+    width: 75vw;
 
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
     }
+  }
+
+  @media (min-width: 1200px) {
+    width: 65vw;
   }
 }
 
@@ -24,6 +28,10 @@
   @media (min-width: 900px) {
     justify-content: space-between;
     margin: 2rem auto;
+    width: 75vw;
+  }
+
+  @media (min-width: 1200px) {
     width: 65vw;
   }
 }

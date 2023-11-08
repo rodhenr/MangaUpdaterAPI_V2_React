@@ -1,5 +1,11 @@
 .registerModal-main {
+  height: 400px;
   padding: 1rem 1.5rem;
+  width: 80vw;
+
+  @media (min-width: 700px) {
+    width: 500px;
+  }
 }
 
 svg {

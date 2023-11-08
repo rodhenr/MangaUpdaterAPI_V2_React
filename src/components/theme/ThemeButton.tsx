@@ -19,10 +19,10 @@ function ThemeButton() {
           themeContext.themeMode === "light" ? "dark" : "light"
         )
       }
-      style={{ height: "28px", width: "28px" }}
+      style={{ height: "22px", width: "22px" }}
     >
       <FontAwesomeIcon
-        className="fsize-4"
+        className="fsize-"
         icon={
           themeContext.themeMode === "dark"
             ? ("moon" as IconProp)

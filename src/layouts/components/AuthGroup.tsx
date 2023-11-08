@@ -4,6 +4,7 @@ import AuthContext from "../../shared/context/AuthContext";
 
 import Avatar from "../../components/avatar/Avatar";
 import Button from "../../components/button/Button";
+import useGetWindowWidth from "../../hooks/useGetWindowWidth";
 
 interface Props {
   changeLoginModalState: () => void;
@@ -12,6 +13,7 @@ interface Props {
 
 function AuthGroup({ changeLoginModalState, changeRegisterModalState }: Props) {
   const authContext = useContext(AuthContext);
+  const windowWidth = useGetWindowWidth();
 
   return (
     <>
@@ -22,20 +24,22 @@ function AuthGroup({ changeLoginModalState, changeRegisterModalState }: Props) {
           userName={authContext.userInfo.username ?? ""}
         />
       ) : (
-        <div className="flex gap-2">
+        <div className={`flex gap-2 ${windowWidth > 600 ? "row" : "column"}`}>
           <Button
+            height={windowWidth > 600 ? "30px" : "25px"}
             onClick={changeLoginModalState}
             text="Login"
             useHover={true}
             variant="secondary-light"
-            width="100px"
+            width={windowWidth > 600 ? "100px" : "70px"}
           />
           <Button
+            height={windowWidth > 600 ? "30px" : "25px"}
             onClick={changeRegisterModalState}
             text="Register"
             variant="primary-light"
             useHover={true}
-            width="100px"
+            width={windowWidth > 600 ? "100px" : "70px"}
           />
         </div>
       )}

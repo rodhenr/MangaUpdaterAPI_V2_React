@@ -11,6 +11,14 @@
     grid-template-columns: repeat(4, 1fr);
   }
 
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1050px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   @media (min-width: 1450px) {
     grid-template-columns: repeat(5, 1fr);
   }

@@ -4,6 +4,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools/production";
 
 import { useGetMangaQuery } from "../../api/queries/manga/MangaQueries";
 
+import useGetWindowWidth from "../../hooks/useGetWindowWidth";
+
 import SeeAlso from "./components/SeeAlso";
 import ContentLeft from "./components/ContentLeft";
 import ContentRight from "./components/ContentRight";
@@ -14,6 +16,7 @@ import "./Manga.scss";
 function Manga() {
   const { mangaId } = useParams();
   const { data, error, isPending, refetch } = useGetMangaQuery(mangaId);
+  const windowWidth = useGetWindowWidth();
 
   useEffect(() => {
     refetch();

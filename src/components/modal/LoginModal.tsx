@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
 import { useLoginMutation } from "../../api/mutations/user/Auth";
+import ThemeContext from "../../shared/context/ThemeContext";
 
+import { ILogin } from "../../shared/interfaces/auth";
 import Input from "../input/Input";
 import Button from "../button/Button";
 
 import "./LoginModal.scss";
-import { ILogin } from "../../shared/interfaces/auth";
-import ThemeContext from "../../shared/context/ThemeContext";
 
 interface Props {
   closeModal: () => void;
@@ -61,12 +61,10 @@ function LoginModal({ closeModal, showModal = true }: Props) {
       }`}
       style={{
         display: !showModal ? "none" : "flex",
-        height: 350,
         left: "50%",
         position: "absolute",
         top: "50%",
         transform: "translate(-50%,-50%)",
-        width: 500,
       }}
     >
       <div className="flex align-center space-between">

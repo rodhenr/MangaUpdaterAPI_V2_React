@@ -67,7 +67,7 @@ function Root() {
         <div className="root-main flex align-center">
           <h2>MANGA UPDATER</h2>
           <PageGroup />
-          <div className="flex-center gap-5">
+          <div className="flex-center gap-4">
             {windowWidth > 900 && <ThemeButton />}
             <AuthGroup
               changeLoginModalState={changeLoginModalState}

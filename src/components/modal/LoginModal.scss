@@ -1,5 +1,11 @@
 .loginModal-main {
+  height: 350px;
   padding: 0.75rem 1.5rem;
+  width: 80vw;
+
+  @media (min-width: 700px) {
+    width: 500px;
+  }
 }
 
 svg {
