@@ -10,6 +10,7 @@ export interface IUserInfo {
   username: string | null;
   token: string | null;
   refreshToken: string | null;
+  isAdmin: boolean | null;
 }
 
 export interface AuthContextType {

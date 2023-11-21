@@ -1,13 +1,18 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import { createPortal } from "react-dom";
-import { useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { useGetMangasQuery } from "../../api/queries/manga/MangaQueries";
 import { queryClient } from "../../lib/query-client";
 
+import AuthContext from "../../shared/context/AuthContext";
+import ThemeContext from "../../shared/context/ThemeContext";
+
 import { ICardData, IFilters } from "../../shared/interfaces/library";
+
+import useGetWindowWidth from "../../hooks/useGetWindowWidth";
+
 import Card from "../../components/card/Card";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Button from "../../components/button/Button";
@@ -15,17 +20,19 @@ import Input from "../../components/input/Input";
 import AddMangaModal from "../../components/modal/AddMangaModal";
 import SpinLoading from "../../components/loading/SpinLoading";
 import Filters from "./components/Filters";
+import Pagination from "./components/Pagination";
+import AddMangaSourceModal from "../../components/modal/AddMangaSourceModal";
 
 import "./Library.scss";
-import Pagination from "./components/Pagination";
-import ThemeContext from "../../shared/context/ThemeContext";
-import useGetWindowWidth from "../../hooks/useGetWindowWidth";
 
 function Library() {
   const { themeMode } = useContext(ThemeContext);
+  const authContext = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [modalAddManga, setModalAddManga] = useState<boolean>(false);
+  const [modalAddMangaSource, setModalAddMangaSource] =
+    useState<boolean>(false);
   const [filters, setFilters] = useState<IFilters>({
     orderById: "",
     sourceId: "",
@@ -55,6 +62,10 @@ function Library() {
 
   const handleChangeAddMangaModal = () => {
     setModalAddManga((prev) => !prev);
+  };
+
+  const handleChangeAddMangaSourceModal = () => {
+    setModalAddMangaSource((prev) => !prev);
   };
 
   const handlePageChange = (page: number) => {
@@ -109,16 +120,30 @@ function Library() {
             <p className="fsize-4-5">
               Showing {data.data.mangas.length} results
             </p>
-            <Button
-              fontSize="fsize-3"
-              onClick={() => handleChangeAddMangaModal()}
-              text="Register new"
-              width="100px"
-              useHover={true}
-              variant={
-                themeMode === "light" ? "primary-light" : "secondary-light"
-              }
-            />
+            {authContext.userInfo.isAdmin && (
+              <div className="flex gap-2">
+                <Button
+                  fontSize="fsize-3"
+                  onClick={() => handleChangeAddMangaModal()}
+                  text="Register Manga"
+                  width="fit-content"
+                  useHover={true}
+                  variant={
+                    themeMode === "light" ? "primary-light" : "secondary-light"
+                  }
+                />
+                <Button
+                  fontSize="fsize-3"
+                  onClick={() => handleChangeAddMangaSourceModal()}
+                  text="Register Source"
+                  width="fit-content"
+                  useHover={true}
+                  variant={
+                    themeMode === "light" ? "primary-light" : "secondary-light"
+                  }
+                />
+              </div>
+            )}
           </div>
           <div className="library-main grid">
             {data.data.mangas.map((manga: ICardData) => {
@@ -145,6 +170,11 @@ function Library() {
       {modalAddManga &&
         createPortal(
           <AddMangaModal onClose={() => setModalAddManga(false)} />,
+          document.body
+        )}
+      {modalAddMangaSource &&
+        createPortal(
+          <AddMangaSourceModal onClose={() => setModalAddMangaSource(false)} />,
           document.body
         )}
       <ReactQueryDevtools initialIsOpen={false} />

@@ -21,6 +21,7 @@ const ContextProvider = ({ children }: Props) => {
     username: null,
     token: null,
     refreshToken: null,
+    isAdmin: false,
   };
   const defaultTheme = useReadFromLocalStorage<ThemeMode>("theme") ?? "light";
 
@@ -45,6 +46,7 @@ const ContextProvider = ({ children }: Props) => {
       username: null,
       token: null,
       refreshToken: null,
+      isAdmin: null,
     });
 
     queryClient.invalidateQueries();

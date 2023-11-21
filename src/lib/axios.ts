@@ -8,7 +8,7 @@ const AxiosClient = () => {
   const authContext = useContext(AuthContext);
 
   const AxiosInstance = axios.create({
-    baseURL: "http://localhost:5030",
+    baseURL: "https://localhost:7120",
     headers: {
       "Content-Type": "application/json",
     },
@@ -33,7 +33,7 @@ const AxiosClient = () => {
 
         try {
           const result = await axios.post<AuthResponse>(
-            "http://localhost:5030/api/auth/refresh",
+            "https://localhost:7120/api/auth/refresh",
             {},
             {
               headers: {
@@ -47,6 +47,7 @@ const AxiosClient = () => {
             token: result.data.accessToken,
             refreshToken: result.data.refreshToken,
             username: result.data.userName,
+            isAdmin: result.data.isAdmin,
           });
 
           config.headers.Authorization = `Bearer ${result.data.accessToken}`;

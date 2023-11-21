@@ -13,6 +13,12 @@ interface IFollowSourcesVariables {
   sourcesToFollow: number[];
 }
 
+interface IAddMangaSource {
+  mangaId: number;
+  sourceId: number;
+  url: string;
+}
+
 export const useFollowMangaMutation = () => {
   const axios = AxiosClient();
   const { changeLoadingState } = useContext(LoadingContext);
@@ -89,6 +95,19 @@ export const useAddMangaMutation = () => {
     mutationFn: (malId: string) => axios.post(`/api/manga/?malId=${malId}`, {}),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["libraryData"] });
+    },
+  });
+};
+
+export const useAddMangaSourceMutation = () => {
+  const axios = AxiosClient();
+
+  return useMutation({
+    mutationFn: ({ mangaId, sourceId, url }: IAddMangaSource) =>
+      axios.post(`/api/manga/${mangaId}/source/${sourceId}?mangaUrl=${url}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["libraryData"] });
+      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
     },
   });
 };

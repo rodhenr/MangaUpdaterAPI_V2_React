@@ -3,6 +3,7 @@ export interface AuthResponse {
   userAvatar: string;
   accessToken: string;
   refreshToken: string;
+  isAdmin: boolean;
 }
 
 export interface ILogin {
@@ -15,4 +16,5 @@ export interface IDefaultUserInfo {
   username: string | null;
   token: string | null;
   refreshToken: string | null;
+  isAdmin: boolean;
 }

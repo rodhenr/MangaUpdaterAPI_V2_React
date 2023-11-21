@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useGetHomeMangasQuery } from "../../api/queries/manga/MangaQueries";
-
 import AuthContext from "../../shared/context/AuthContext";
 import ThemeContext from "../../shared/context/ThemeContext";
 

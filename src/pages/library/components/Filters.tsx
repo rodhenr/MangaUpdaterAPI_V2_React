@@ -64,6 +64,11 @@ function Filters({ filters, genres, onChange }: Props) {
             value: "2",
             isHidden: false,
           },
+          {
+            description: "MangaDex",
+            value: "3",
+            isHidden: false,
+          },
         ]}
         placeholder="Sources"
         value={filters.sourceId}

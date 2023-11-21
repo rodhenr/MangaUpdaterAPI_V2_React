@@ -17,7 +17,7 @@ interface Props extends SizeProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   type?: InputTypes;
-  value: string;
+  value: string | number | null;
   variant?: Variant;
 }
 
@@ -48,7 +48,7 @@ function Input({
         onChange={onChange}
         placeholder={placeholder}
         type={type}
-        value={value}
+        value={value ?? ""}
       />
       {icon && iconSide == "right" && (
         <FontAwesomeIcon icon={icon as IconProp} className="h-100 w-icon" />

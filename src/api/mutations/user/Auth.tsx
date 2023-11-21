@@ -22,6 +22,7 @@ export const useLoginMutation = () => {
         username: response.data.userName,
         token: response.data.accessToken,
         refreshToken: response.data.refreshToken,
+        isAdmin: response.data.isAdmin,
       });
 
       queryClient.invalidateQueries({ queryKey: ["homeData"] });
