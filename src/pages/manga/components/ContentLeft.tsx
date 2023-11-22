@@ -2,17 +2,19 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 
 import useGetWindowWidth from "../../../hooks/useGetWindowWidth";
+import {
+  useFollowMangaMutation,
+  useUnfollowMangaMutation,
+} from "../../../api/mutations/manga/MangaMutations";
+import { queryClient } from "../../../lib/query-client";
+
+import Sources from "./Sources";
+import MangaInfo from "./MangaInfo";
 
 import { IMangaData } from "../../../shared/interfaces/manga";
 import Button from "../../../components/button/Button";
 import Info from "../../../components/info/Info";
 import EditSourcesModal from "../../../components/modal/EditSourcesModal";
-import Sources from "./Sources";
-import {
-  useFollowMangaMutation,
-  useUnfollowMangaMutation,
-} from "../../../api/mutations/manga/MangaMutations";
-import MangaInfo from "./MangaInfo";
 
 import "../Manga.scss";
 
@@ -29,6 +31,7 @@ function ContentLeft({ data }: Props) {
 
   const handleFollowMutation = () => {
     followMutation.mutate(data.mangaId);
+    queryClient.invalidateQueries({ queryKey: ["homeData"] });
 
     setShowEditSourceModal(true);
   };

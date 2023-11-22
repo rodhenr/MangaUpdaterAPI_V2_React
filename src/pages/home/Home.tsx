@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useInView } from "react-intersection-observer";
 
 import { useGetHomeMangasQuery } from "../../api/queries/manga/MangaQueries";
 import AuthContext from "../../shared/context/AuthContext";
@@ -16,7 +17,24 @@ function Home() {
   const { themeMode } = useContext(ThemeContext);
   const [isCardView, setIsCardView] = useState<boolean>(true);
   const { userInfo } = useContext(AuthContext);
-  const { data, error, isPending } = useGetHomeMangasQuery();
+  const { ref, inView } = useInView();
+
+  const {
+    data,
+    error,
+    isPending,
+    isFetching,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useGetHomeMangasQuery(8);
+
+  console.log(data?.pages);
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
 
   const notLogged = (
     <div className="flex-center column gap-2 mt-6">
@@ -61,29 +79,32 @@ function Home() {
   if (error) return "error...";
 
   return (
-    <div className="flex column gap-4 h-100 w-100">
-      {pageHeader}
-      {!userInfo.token ? (
-        <>{notLogged}</>
-      ) : isPending ? (
-        <div className="flex-center column gap-4 h-100 w-100">
-          <SpinLoading />
-          <p className="fsize-5">Loading...</p>
-        </div>
-      ) : (
-        <>
-          {data && data.length > 0 ? (
-            isCardView ? (
-              <CardView data={data} />
+    <>
+      <div className="flex column gap-4 h-100 w-100">
+        {pageHeader}
+        {!userInfo.token ? (
+          <>{notLogged}</>
+        ) : isPending ? (
+          <div className="flex-center column gap-4 h-100 w-100">
+            <SpinLoading />
+            <p className="fsize-5">Loading...</p>
+          </div>
+        ) : (
+          <>
+            {data && data.pages.length > 0 ? (
+              isCardView ? (
+                <CardView data={data.pages} />
+              ) : (
+                <ListView data={data.pages} />
+              )
             ) : (
-              <ListView data={data} />
-            )
-          ) : (
-            <div>You are not following any manga</div>
-          )}
-        </>
-      )}
-    </div>
+              <div>You are not following any manga</div>
+            )}
+          </>
+        )}
+      </div>
+      <div ref={ref}></div>
+    </>
   );
 }
 

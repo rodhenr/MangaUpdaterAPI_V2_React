@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -8,7 +9,7 @@ import ThemeContext from "../../../shared/context/ThemeContext";
 import "./CardView.scss";
 
 interface Props {
-  data: MangaDataList[];
+  data: MangaDataList[][];
 }
 
 function CardView({ data }: Props) {
@@ -16,21 +17,27 @@ function CardView({ data }: Props) {
 
   return (
     <div className="cardView-main grid">
-      {data.map((data: MangaDataList) => {
-        return (
-          <CardWithInfo
-            buttonVariant={
-              themeMode === "light" ? "secondary-dark" : "secondary-light"
-            }
-            chapters={data.chapters}
-            cover={data.coverUrl}
-            id={data.id}
-            key={uuidv4()}
-            name={data.name}
-            variant={themeMode === "light" ? "primary-light" : "bg-card-dark"}
-          />
-        );
-      })}
+      {data.map((page: MangaDataList[]) => (
+        <Fragment key={uuidv4()}>
+          {page.map((p: MangaDataList) => {
+            return (
+              <CardWithInfo
+                buttonVariant={
+                  themeMode === "light" ? "secondary-dark" : "secondary-light"
+                }
+                chapters={p.chapters}
+                cover={p.coverUrl}
+                id={p.id}
+                key={uuidv4()}
+                name={p.name}
+                variant={
+                  themeMode === "light" ? "primary-light" : "bg-card-dark"
+                }
+              />
+            );
+          })}
+        </Fragment>
+      ))}
     </div>
   );
 }

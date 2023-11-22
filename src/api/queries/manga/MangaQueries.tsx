@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import AxiosClient from "../../../lib/axios";
 
@@ -10,7 +10,11 @@ import {
   ILibraryQueryParams,
   IMangasResponse,
 } from "../../../shared/interfaces/library";
-import { MangaDataList } from "../../../shared/interfaces/chapters";
+import {
+  IMangaDataInfiniteQuery,
+  MangaDataList,
+} from "../../../shared/interfaces/chapters";
+import { AxiosError } from "axios";
 
 export const useGetSourcesQuery = (mangaId: number) => {
   const axios = AxiosClient();
@@ -63,14 +67,25 @@ export const useGetMangasQuery = (
   });
 };
 
-export const useGetHomeMangasQuery = () => {
+export const useGetHomeMangasQuery = (limit: number) => {
   const axios = AxiosClient();
   const { userInfo } = useContext(AuthContext);
 
-  return useQuery({
-    queryKey: ["homeData"],
-    queryFn: () =>
-      axios.get<MangaDataList[]>("/api/user/mangas").then((res) => res.data),
-    enabled: !!userInfo?.token,
-  });
+  return useInfiniteQuery<MangaDataList[], AxiosError, IMangaDataInfiniteQuery>(
+    {
+      queryKey: ["homeData"],
+      queryFn: ({ pageParam = 1 }) =>
+        axios
+          .get<MangaDataList[]>(
+            `/api/user/mangas?page=${pageParam}&limit=${limit}`
+          )
+          .then((res) => res.data),
+      getNextPageParam: (prevPage, allPages) =>
+        prevPage.length > 0 && allPages.length > 0
+          ? allPages.length + 1
+          : undefined,
+      initialPageParam: 1,
+      enabled: !!userInfo?.token,
+    }
+  );
 };

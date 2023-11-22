@@ -14,6 +14,11 @@ export interface MangaDataList {
   chapters: ChapterInfo[];
 }
 
+export interface IMangaDataInfiniteQuery {
+  pages: MangaDataList[][];
+  pageParams: number[];
+}
+
 export interface IMutationData {
   chapterId: number;
   mangaId: number;
