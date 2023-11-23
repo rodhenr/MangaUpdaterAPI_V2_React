@@ -9,11 +9,16 @@ import Button from "../button/Button";
 import "./RegisterModal.scss";
 
 interface Props {
+  changeToLoginModal: () => void;
   closeModal: () => void;
   showModal: boolean;
 }
 
-function RegisterModal({ closeModal, showModal = true }: Props) {
+function RegisterModal({
+  changeToLoginModal,
+  closeModal,
+  showModal = true,
+}: Props) {
   const { themeMode } = useContext(ThemeContext);
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -113,6 +118,15 @@ function RegisterModal({ closeModal, showModal = true }: Props) {
           useHover={true}
           variant="secondary-light"
         />
+      </div>
+      <div className="flex-center gap-3 ">
+        <p>Already have an account?</p>
+        <p
+          className="cursor-pointer text-secondary-light"
+          onClick={changeToLoginModal}
+        >
+          Login
+        </p>
       </div>
     </div>
   );

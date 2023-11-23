@@ -57,6 +57,11 @@ function Root() {
     setIsRegisterModalOpen(!isRegisterModalOpen);
   };
 
+  const changeModalsState = (openLogin: boolean, openRegister: boolean) => {
+    setIsLoginModalOpen(openLogin);
+    setIsRegisterModalOpen(openRegister);
+  };
+
   return (
     <>
       <div
@@ -87,6 +92,7 @@ function Root() {
       </div>
       {createPortal(
         <LoginModal
+          changeToRegisterModal={() => changeModalsState(false, true)}
           closeModal={changeLoginModalState}
           showModal={isLoginModalOpen}
         />,
@@ -94,6 +100,7 @@ function Root() {
       )}
       {createPortal(
         <RegisterModal
+          changeToLoginModal={() => changeModalsState(true, false)}
           closeModal={changeRegisterModalState}
           showModal={isRegisterModalOpen}
         />,

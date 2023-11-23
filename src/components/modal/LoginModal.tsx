@@ -12,11 +12,16 @@ import Button from "../button/Button";
 import "./LoginModal.scss";
 
 interface Props {
+  changeToRegisterModal: () => void;
   closeModal: () => void;
   showModal: boolean;
 }
 
-function LoginModal({ closeModal, showModal = true }: Props) {
+function LoginModal({
+  changeToRegisterModal,
+  closeModal,
+  showModal = true,
+}: Props) {
   const { themeMode } = useContext(ThemeContext);
   const [loginData, setLoginData] = useState<ILogin>({
     email: "",
@@ -117,7 +122,12 @@ function LoginModal({ closeModal, showModal = true }: Props) {
       </div>
       <div className="flex-center gap-3 ">
         <p>Don't have an account?</p>
-        <p>Register</p>
+        <p
+          className="cursor-pointer text-secondary-light"
+          onClick={changeToRegisterModal}
+        >
+          Register
+        </p>
       </div>
     </div>
   );
