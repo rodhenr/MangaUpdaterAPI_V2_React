@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
@@ -16,6 +16,7 @@ interface Props extends SizeProps {
   id: string;
   minLength?: number;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
   placeholder: string;
   type?: InputTypes;
   value: string | number | null;
@@ -29,6 +30,7 @@ function Input({
   id,
   minLength = 30,
   onChange,
+  onKeyDown,
   placeholder,
   type = "text",
   value,
@@ -49,6 +51,7 @@ function Input({
         minLength={minLength}
         name={id}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         placeholder={placeholder}
         type={type}
         value={value ?? ""}

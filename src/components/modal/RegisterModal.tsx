@@ -52,6 +52,10 @@ function RegisterModal({
 
   const handleRegister = async () => {
     try {
+      const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
+        registerData.registerEmail
+      );
+
       if (!registerData.username.trim()) {
         setError("Username cannot be empty");
         return;
@@ -62,6 +66,11 @@ function RegisterModal({
         return;
       }
 
+      if (!isEmail) {
+        setError("Invalid email");
+        return;
+      }
+
       if (registerData.registerPassword.trim().length < 8) {
         setError("Password cannot be less than 8 characters");
         return;
@@ -69,6 +78,11 @@ function RegisterModal({
 
       if (registerData.confirmationPassword.trim().length < 8) {
         setError("Confirmation password cannot be less than 8 characters");
+        return;
+      }
+
+      if (registerData.confirmationPassword !== registerData.registerPassword) {
+        setError("Password and confirmation do not match");
         return;
       }
 
@@ -97,7 +111,6 @@ function RegisterModal({
     } catch (err) {
       const error = err as AxiosError;
       const errorData = error.response?.data as IApiError;
-      console.log(errorData);
 
       setError(errorData.title);
     }
@@ -185,7 +198,7 @@ function RegisterModal({
       <div className="flex-center gap-3 ">
         <p>Already have an account?</p>
         <p
-          className="cursor-pointer text-secondary-light"
+          className="cursor-pointer text-secondary-light text-hover-secondary-light"
           onClick={changeToLoginModal}
         >
           Login

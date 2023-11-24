@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useContext } from "react";
+import { useState, ChangeEvent, useContext, KeyboardEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
@@ -46,10 +46,23 @@ function LoginModal({
     }));
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") handleLogin();
+  };
+
   const handleLogin = async () => {
     try {
+      const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
+        loginData.email
+      );
+
       if (!loginData.email.trim()) {
         setError("Email cannot be empty");
+        return;
+      }
+
+      if (!isEmail) {
+        setError("Invalid email");
         return;
       }
 
@@ -106,6 +119,7 @@ function LoginModal({
           <Input
             id="email"
             onChange={handleLoginDataChange}
+            onKeyDown={handleKeyDown}
             placeholder="Enter your email"
             type="email"
             value={loginData.email}
@@ -117,6 +131,7 @@ function LoginModal({
           <Input
             id="password"
             onChange={handleLoginDataChange}
+            onKeyDown={handleKeyDown}
             placeholder="Enter your password"
             minLength={8}
             type="password"
@@ -127,10 +142,19 @@ function LoginModal({
       </div>
       <div className="flex align-center space-between">
         <div className="flex-center gap-1">
-          <input type="checkbox" id="check" className="cursor-pointer" />
-          <label htmlFor="check">Remember me</label>
+          <input
+            type="checkbox"
+            id="check"
+            className="cursor-pointer"
+            disabled
+          />
+          <label htmlFor="check" className="text-disabled">
+            Remember me
+          </label>
         </div>
-        <span className="cursor-pointer">Forget your password?</span>
+        <span className="cursor-pointer text-disabled">
+          Forget your password?
+        </span>
       </div>
       <div className="flex-center w-100">
         <Button
@@ -144,7 +168,7 @@ function LoginModal({
       <div className="flex-center gap-3 ">
         <p>Don't have an account?</p>
         <p
-          className="cursor-pointer text-secondary-light"
+          className="cursor-pointer text-secondary-light text-hover-secondary-light"
           onClick={changeToRegisterModal}
         >
           Register

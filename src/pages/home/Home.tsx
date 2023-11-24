@@ -19,13 +19,14 @@ function Home() {
   const { userInfo } = useContext(AuthContext);
   const { ref, inView } = useInView();
 
-  const { data, error, isPending, fetchNextPage } = useGetHomeMangasQuery(8);
+  const { data, error, hasNextPage, isPending, fetchNextPage } =
+    useGetHomeMangasQuery(16);
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [fetchNextPage, inView]);
+  }, [fetchNextPage, inView, hasNextPage, data]);
 
   const notLogged = (
     <div className="flex-center column gap-2 mt-6">
@@ -67,7 +68,7 @@ function Home() {
     </div>
   );
 
-  if (error) return "error...";
+  if (error) return <div>Error</div>;
 
   return (
     <>

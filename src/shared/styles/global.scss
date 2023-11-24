@@ -305,12 +305,12 @@
 
 // Text Hover
 .text-hover-secondary-light:hover {
-  color: var(--secondary-light-hover);
+  color: var(--secondary-light-hover) !important;
   transition: background-color 0.2s;
 }
 
 .text-hover-secondary-dark:hover {
-  color: var(--secondary-dark-hover);
+  color: var(--secondary-dark-hover) !important;
   transition: background-color 0.2s;
 }
 
