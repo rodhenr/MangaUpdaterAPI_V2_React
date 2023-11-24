@@ -17,6 +17,7 @@
   --text-light: #fff;
   --text-dark: #22617c;
   --text-disabled: #7b7b7b;
+  --text-danger: #ff5959;
   --modal-back: #4444448e;
   --bg-card-dark: #0f0f0f;
 }
@@ -336,6 +337,14 @@
 
 .text-disabled {
   color: var(--text-disabled);
+}
+
+.text-danger {
+  color: var(--text-danger);
+}
+
+.text-success {
+  color: var(--success);
 }
 
 .break-word {

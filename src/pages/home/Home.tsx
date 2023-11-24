@@ -19,16 +19,7 @@ function Home() {
   const { userInfo } = useContext(AuthContext);
   const { ref, inView } = useInView();
 
-  const {
-    data,
-    error,
-    isPending,
-    isFetching,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = useGetHomeMangasQuery(8);
-
-  console.log(data?.pages);
+  const { data, error, isPending, fetchNextPage } = useGetHomeMangasQuery(8);
 
   useEffect(() => {
     if (inView) {

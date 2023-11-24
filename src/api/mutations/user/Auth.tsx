@@ -37,3 +37,32 @@ export const useLoginMutation = () => {
 
   return mutation;
 };
+
+export const useRegisterMutation = () => {
+  const axios = AxiosClient();
+  const params = useParams();
+
+  const mutation = useMutation({
+    mutationFn: async (registerData: {
+      username: string;
+      email: string;
+      password: string;
+      confirmationPassword: string;
+    }) => await axios.post<AuthResponse>("/api/auth/register", registerData),
+    onSuccess: (response) => {
+      queryClient.invalidateQueries({ queryKey: ["homeData"] });
+      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+      params?.mangaId &&
+        queryClient.invalidateQueries({
+          queryKey: ["sourceData", params.mangaId],
+        });
+      queryClient.invalidateQueries({ queryKey: ["libraryData"] });
+
+      console.log(response);
+      return response;
+    },
+    onError: (error) => error,
+  });
+
+  return mutation;
+};

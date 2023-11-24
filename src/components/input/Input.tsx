@@ -14,6 +14,7 @@ interface Props extends SizeProps {
   icon?: string;
   iconSide?: "left" | "right";
   id: string;
+  minLength?: number;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   type?: InputTypes;
@@ -26,6 +27,7 @@ function Input({
   icon,
   iconSide = "left",
   id,
+  minLength = 30,
   onChange,
   placeholder,
   type = "text",
@@ -44,6 +46,7 @@ function Input({
       <input
         className={`${variant} h-100 radius-1 w-100 p-2 border-box opacity-placeholder-1 border-box`}
         id={id}
+        minLength={minLength}
         name={id}
         onChange={onChange}
         placeholder={placeholder}

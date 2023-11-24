@@ -1,11 +1,12 @@
 import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 
 import { useLoginMutation } from "../../api/mutations/user/Auth";
 import ThemeContext from "../../shared/context/ThemeContext";
 
-import { ILogin } from "../../shared/interfaces/auth";
+import { IApiError, ILogin } from "../../shared/interfaces/auth";
 import Input from "../input/Input";
 import Button from "../button/Button";
 
@@ -27,6 +28,7 @@ function LoginModal({
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
 
@@ -35,6 +37,7 @@ function LoginModal({
   };
 
   const handleLoginDataChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setError(null);
     const { name, value } = event.target;
 
     setLoginData((prev) => ({
@@ -45,6 +48,17 @@ function LoginModal({
 
   const handleLogin = async () => {
     try {
+      if (!loginData.email.trim()) {
+        setError("Email cannot be empty");
+        return;
+      }
+
+      if (loginData.password.trim().length < 8) {
+        setError("Password cannot be less than 8 characters");
+        return;
+      }
+
+      setError(null);
       await loginMutation.mutateAsync(loginData);
 
       setLoginData({
@@ -55,7 +69,10 @@ function LoginModal({
       closeModal();
       handleNavigate();
     } catch (err) {
-      console.log(err);
+      const error = err as AxiosError;
+      const errorData = error.response?.data as IApiError;
+
+      setError(errorData.title);
     }
   };
 
@@ -80,6 +97,9 @@ function LoginModal({
           onClick={closeModal}
         />
       </div>
+      <div>
+        <p className="text-danger">{error}</p>
+      </div>
       <div className="flex column gap-3">
         <div className="flex column">
           <label htmlFor="email">Email</label>
@@ -98,6 +118,7 @@ function LoginModal({
             id="password"
             onChange={handleLoginDataChange}
             placeholder="Enter your password"
+            minLength={8}
             type="password"
             value={loginData.password}
             variant="bg-light"
