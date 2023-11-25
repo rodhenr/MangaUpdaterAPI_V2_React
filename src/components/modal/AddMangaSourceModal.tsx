@@ -2,12 +2,15 @@ import { useState, ChangeEvent, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useAddMangaSourceMutation } from "../../api/mutations/manga/MangaMutations";
+import { useGetAllSourcesQuery } from "../../api/queries/source/SourceQueries";
 import ThemeContext from "../../shared/context/ThemeContext";
 
 import Input from "../input/Input";
 import Button from "../button/Button";
 
 import "./AddMangaSourceModal.scss";
+import SelectGroup from "../select/SelectGroupt";
+import SpinLoading from "../loading/SpinLoading";
 
 interface Props {
   onClose: () => void;
@@ -16,31 +19,53 @@ interface Props {
 function AddMangaSourceModal({ onClose }: Props) {
   const { themeMode } = useContext(ThemeContext);
   const [selectedMangaId, setSelectedMangaId] = useState<string>("");
-  const [selectedSourceId, setSelectedSourceId] = useState<string>("");
+  const [selectedSourceId, setSelectedSourceId] = useState<string>("1");
   const [url, setUrl] = useState<string>("");
-  const addMangaSourceMutation = useAddMangaSourceMutation();
+  const [mutationError, setMutationError] = useState<string>("");
+  const [mutationSuccess, setMutationSuccess] = useState<string>("");
+
+  const { data, isFetching, error } = useGetAllSourcesQuery();
+  const { isPending, mutateAsync } = useAddMangaSourceMutation();
 
   const handleMangaIdChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setMutationError("");
     setSelectedMangaId(event.target.value);
   };
 
-  const handleSourceIdChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSourceIdChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setMutationError("");
     setSelectedSourceId(event.target.value);
   };
 
   const handleUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setMutationError("");
     setUrl(event.target.value);
   };
 
   const handleMutation = async () => {
-    if (!selectedMangaId || !selectedSourceId) return;
+    if (
+      selectedMangaId.length === 0 ||
+      selectedSourceId.length === 0 ||
+      url.length === 0
+    )
+      return;
 
-    await addMangaSourceMutation.mutateAsync({
-      mangaId: Number(selectedMangaId),
-      sourceId: Number(selectedSourceId),
-      url: url,
-    });
-    onClose();
+    try {
+      await mutateAsync({
+        mangaId: Number(selectedMangaId),
+        sourceId: Number(selectedSourceId),
+        url: url,
+      });
+
+      setMutationSuccess("Source added");
+      setTimeout(() => {
+        setMutationSuccess("");
+        setMutationError("");
+        onClose();
+      }, 2000);
+    } catch (err) {
+      setMutationError("An error occurred");
+    }
   };
 
   return (
@@ -60,40 +85,70 @@ function AddMangaSourceModal({ onClose }: Props) {
           />
         </div>
         <div className="flex column gap-4 justify-center flex-1">
-          <div className="flex column gap-1">
-            <p>Manga</p>
-            <Input
-              id="mangaId"
-              onChange={handleMangaIdChange}
-              placeholder="Manga ID"
-              value={selectedMangaId}
-              variant="bg-light"
-            />
+          <div className="flex gap-2">
+            {mutationError && <p className="text-danger">{mutationError}</p>}
+            {mutationSuccess && (
+              <p className="text-success">{mutationSuccess}</p>
+            )}
           </div>
-          <div className="flex column gap-1">
-            <p>Source</p>
-            <Input
-              id="sourceId"
-              onChange={handleSourceIdChange}
-              placeholder="Source ID"
-              value={selectedSourceId}
-              variant="bg-light"
-            />
-          </div>
-          <div className="flex column gap-1">
-            <p>Url</p>
-            <Input
-              id="url"
-              onChange={handleUrlChange}
-              placeholder="URL"
-              value={url}
-              variant="bg-light"
-            />
-          </div>
+          {isFetching ? (
+            <SpinLoading />
+          ) : error ? (
+            <div>Error</div>
+          ) : (
+            <>
+              <div className="flex column gap-1">
+                <SelectGroup
+                  height="35px"
+                  name="sources"
+                  options={
+                    data
+                      ? data.map((el) => {
+                          return {
+                            description: el.name,
+                            isHidden: false,
+                            value: el.id.toString(),
+                          };
+                        })
+                      : []
+                  }
+                  onChange={handleSourceIdChange}
+                  placeholder="Select a source"
+                  value={selectedSourceId}
+                />
+              </div>
+              <div className="flex column gap-1">
+                <label htmlFor="mangaId">Manga ID</label>
+                <Input
+                  id="mangaId"
+                  onChange={handleMangaIdChange}
+                  placeholder="Manga ID"
+                  value={selectedMangaId}
+                  variant="bg-light"
+                />
+              </div>
+              <div className="flex column gap-1">
+                <label htmlFor="url">Url</label>
+                <Input
+                  id="url"
+                  onChange={handleUrlChange}
+                  placeholder="URL"
+                  value={url}
+                  variant="bg-light"
+                />
+              </div>
+            </>
+          )}
         </div>
         <div className="flex justify-center">
           <Button
+            disabled={
+              selectedMangaId.length === 0 ||
+              selectedSourceId.length === 0 ||
+              url.length === 0
+            }
             fontSize="fsize-3"
+            loading={isPending}
             onClick={async () => await handleMutation()}
             text="Add manga source"
             useHover={true}

@@ -44,8 +44,8 @@ function Button({
 }: Props) {
   return (
     <div
-      className={`${variant} ${
-        useHover ? `${variant}-hover` : ""
+      className={`${disabled ? `bg-disabled` : variant} ${
+        useHover && !disabled ? `${variant}-hover` : ""
       } radius-1 flex-center roboto border-box text-center ${
         disabled ? "" : !mouseover ? "" : "cursor-pointer"
       } ${!icon && padding}`}
