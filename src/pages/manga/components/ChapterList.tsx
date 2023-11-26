@@ -29,7 +29,7 @@ function ChapterList({ chapters, mangaId }: Props) {
     chapterId: number,
     sourceId: number
   ) => {
-    if (isUserAllowedToRead && !read) {
+    if (isUserAllowedToRead) {
       await chapterMutation.mutateAsync({
         chapterId: chapterId,
         mangaId: mangaId,

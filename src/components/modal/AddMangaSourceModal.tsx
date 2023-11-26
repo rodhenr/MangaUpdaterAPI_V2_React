@@ -21,6 +21,7 @@ function AddMangaSourceModal({ onClose }: Props) {
   const [selectedMangaId, setSelectedMangaId] = useState<string>("");
   const [selectedSourceId, setSelectedSourceId] = useState<string>("1");
   const [url, setUrl] = useState<string>("");
+
   const [mutationError, setMutationError] = useState<string>("");
   const [mutationSuccess, setMutationSuccess] = useState<string>("");
 

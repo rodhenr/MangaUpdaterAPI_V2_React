@@ -16,15 +16,36 @@ interface Props {
 function AddMangaModal({ onClose }: Props) {
   const { themeMode } = useContext(ThemeContext);
   const [malId, setMalId] = useState<string>("");
-  const addMangaMutation = useAddMangaMutation();
+
+  const [mutationError, setMutationError] = useState<string>("");
+  const [mutationSuccess, setMutationSuccess] = useState<string>("");
+
+  const { isPending, mutateAsync } = useAddMangaMutation();
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setMutationError("");
     setMalId(event.target.value);
   };
 
   const handleMutation = async () => {
-    await addMangaMutation.mutateAsync(malId);
-    onClose();
+    if (malId.length === 0) {
+      setMutationError("Invalid ID");
+      return;
+    }
+
+    try {
+      await mutateAsync(malId);
+
+      setMutationSuccess("Source added");
+
+      setTimeout(() => {
+        setMutationSuccess("");
+        setMutationError("");
+        onClose();
+      }, 2000);
+    } catch (err) {
+      setMutationError("An error occurred");
+    }
   };
 
   return (
@@ -32,7 +53,7 @@ function AddMangaModal({ onClose }: Props) {
       <div
         className={`addManga-main flex column border-box radius-2 p-4 ${
           themeMode === "light" ? "secondary-dark" : "primary-dark"
-        }`}
+        } gap-3`}
         style={{ height: "200px", width: "400px" }}
       >
         <div className="flex space-between">
@@ -42,6 +63,10 @@ function AddMangaModal({ onClose }: Props) {
             icon="circle-xmark"
             onClick={onClose}
           />
+        </div>
+        <div className="flex gap-2">
+          {mutationError && <p className="text-danger">{mutationError}</p>}
+          {mutationSuccess && <p className="text-success">{mutationSuccess}</p>}
         </div>
         <div className="flex-center flex-1">
           <Input
@@ -54,6 +79,7 @@ function AddMangaModal({ onClose }: Props) {
         </div>
         <div className="flex justify-center">
           <Button
+            disabled={isPending}
             fontSize="fsize-3"
             onClick={async () => await handleMutation()}
             text="Add manga"
