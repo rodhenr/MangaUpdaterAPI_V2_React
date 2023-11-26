@@ -11,6 +11,7 @@ import ContentRight from "./components/ContentRight";
 import SpinLoading from "../../components/loading/SpinLoading";
 
 import "./Manga.scss";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function Manga() {
   const { mangaId } = useParams();
@@ -51,6 +52,7 @@ function Manga() {
         </div>
         <SeeAlso data={data.highlightedMangas} />
       </div>
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   ) : (
     <div>No data found</div>

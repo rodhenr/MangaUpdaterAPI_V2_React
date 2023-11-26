@@ -35,3 +35,8 @@ export interface IMangaResponse {
   data: IMangaData;
   highlightedMangas: ICardData[];
 }
+
+export interface IMangaFollowsResponse {
+  mangaId: number;
+  totalFollows: number;
+}

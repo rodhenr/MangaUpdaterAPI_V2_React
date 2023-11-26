@@ -5,7 +5,10 @@ import AxiosClient from "../../../lib/axios";
 import { IUserSource } from "../../../shared/interfaces/source";
 import { useContext } from "react";
 import AuthContext from "../../../shared/context/AuthContext";
-import { IMangaResponse } from "../../../shared/interfaces/manga";
+import {
+  IMangaFollowsResponse,
+  IMangaResponse,
+} from "../../../shared/interfaces/manga";
 import {
   ILibraryQueryParams,
   IMangasResponse,
@@ -88,4 +91,17 @@ export const useGetHomeMangasQuery = (limit: number) => {
       enabled: !!userInfo?.token,
     }
   );
+};
+
+export const useGetUsersFollowing = (mangaId: string | number | undefined) => {
+  const axios = AxiosClient();
+
+  return useQuery({
+    queryKey: ["usersFollowing"],
+    queryFn: () =>
+      axios
+        .get<IMangaFollowsResponse>(`/api/manga/${mangaId}/follows`)
+        .then((res) => res.data),
+    enabled: !!mangaId,
+  });
 };

@@ -17,6 +17,8 @@ import Info from "../../../components/info/Info";
 import EditSourcesModal from "../../../components/modal/EditSourcesModal";
 
 import "../Manga.scss";
+import { useGetUsersFollowing } from "../../../api/queries/manga/MangaQueries";
+import SpinLoading from "../../../components/loading/SpinLoading";
 
 interface Props {
   data: IMangaData;
@@ -36,6 +38,9 @@ function ContentLeft({ data }: Props) {
     setShowEditSourceModal(true);
   };
 
+  const { data: followsData, isPending } = useGetUsersFollowing(data.mangaId);
+
+  console.log(followsData);
   const mobile = (
     <>
       <div className="flex gap-3">
@@ -74,7 +79,17 @@ function ContentLeft({ data }: Props) {
           width={windowWidth > 600 ? "285px" : "160px"}
         />
         <Info description={data.type} header="Type" icon={"book"} />
-        <Info description={"0"} header="Users Tracking" icon={"users"} />
+        {isPending ? (
+          <SpinLoading />
+        ) : (
+          followsData && (
+            <Info
+              description={followsData?.totalFollows.toString()}
+              header="Users Tracking"
+              icon={"users"}
+            />
+          )
+        )}
       </div>
     </>
   );
@@ -110,7 +125,17 @@ function ContentLeft({ data }: Props) {
       <Sources sources={data.sources} />
       <div className="flex column gap-2">
         <Info description={data.type} header="Type" icon={"book"} />
-        <Info description={"0"} header="Users Tracking" icon={"users"} />
+        {isPending ? (
+          <SpinLoading />
+        ) : (
+          followsData && (
+            <Info
+              description={followsData?.totalFollows.toString()}
+              header="Users Tracking"
+              icon={"users"}
+            />
+          )
+        )}
       </div>
     </>
   );

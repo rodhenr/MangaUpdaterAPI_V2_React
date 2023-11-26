@@ -33,6 +33,7 @@ export const useFollowMangaMutation = () => {
       queryClient.invalidateQueries({
         queryKey: ["sourceData", mangaId],
       });
+      queryClient.invalidateQueries({ queryKey: ["usersFollowing"] });
     },
     onError: () => changeLoadingState(),
   });
@@ -50,6 +51,7 @@ export const useUnfollowMangaMutation = () => {
       changeLoadingState();
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
       queryClient.invalidateQueries({ queryKey: ["sourceData", mangaId] });
+      queryClient.invalidateQueries({ queryKey: ["usersFollowing"] });
     },
     onError: () => changeLoadingState(),
   });
@@ -68,6 +70,7 @@ export const useChapterReadStateMutation = () => {
     onSuccess: () => {
       changeLoadingState();
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+      queryClient.invalidateQueries({ queryKey: ["usersFollowing"] });
     },
     onError: () => changeLoadingState(),
   });
@@ -84,6 +87,7 @@ export const useFollowSourcesMutation = () => {
         queryKey: ["sourceData", variables.mangaId],
       });
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+      queryClient.invalidateQueries({ queryKey: ["usersFollowing"] });
     },
   });
 };
@@ -108,6 +112,7 @@ export const useAddMangaSourceMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["libraryData"] });
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+      queryClient.invalidateQueries({ queryKey: ["usersFollowing"] });
     },
   });
 };

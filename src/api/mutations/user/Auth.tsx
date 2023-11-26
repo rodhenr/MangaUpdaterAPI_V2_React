@@ -27,6 +27,7 @@ export const useLoginMutation = () => {
 
       queryClient.invalidateQueries({ queryKey: ["homeData"] });
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+      queryClient.invalidateQueries({ queryKey: ["usersFollowing"] });
       params?.mangaId &&
         queryClient.invalidateQueries({
           queryKey: ["sourceData", params.mangaId],
@@ -52,6 +53,7 @@ export const useRegisterMutation = () => {
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ["homeData"] });
       queryClient.invalidateQueries({ queryKey: ["mangaData"] });
+      queryClient.invalidateQueries({ queryKey: ["usersFollowing"] });
       params?.mangaId &&
         queryClient.invalidateQueries({
           queryKey: ["sourceData", params.mangaId],
