@@ -1,0 +1,15 @@
+.profileModal-main {
+  height: 400px;
+  padding: 0.75rem 1.5rem;
+  width: 80vw;
+
+  @media (min-width: 700px) {
+    height: fit-content;
+    min-height: 280px;
+    width: 450px;
+  }
+}
+
+svg {
+  padding: 0;
+}

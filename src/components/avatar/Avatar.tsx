@@ -9,6 +9,7 @@ import "./Avatar.scss";
 interface Props {
   color: "text-primary" | "text-secondary";
   imagePath?: string;
+  onClick: () => void;
   showUserName?: boolean;
   size?: number;
   userName: string;
@@ -17,6 +18,7 @@ interface Props {
 function Avatar({
   color,
   imagePath,
+  onClick,
   showUserName = true,
   size = 40,
   userName,
@@ -43,13 +45,14 @@ function Avatar({
         </div>
       )}
       {imagePath ? (
-        <img src={imagePath ?? ""} alt="avatar" />
+        <img src={imagePath ?? ""} alt="avatar" onClick={() => onClick()} />
       ) : (
         <div
           className={`flex-center round primary-light cursor-pointer ${
             color == "text-primary" ? "bg-dark" : "bg-light"
           }`}
           style={{ height: size, width: size }}
+          onClick={() => onClick()}
         >
           {userName.charAt(0)}
         </div>

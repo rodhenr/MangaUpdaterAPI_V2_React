@@ -11,7 +11,9 @@ import {
 import "./Input.scss";
 
 interface Props extends SizeProps {
+  disabled?: boolean;
   icon?: string;
+  iconFn?: () => void;
   iconSide?: "left" | "right";
   id: string;
   minLength?: number;
@@ -24,8 +26,10 @@ interface Props extends SizeProps {
 }
 
 function Input({
+  disabled = false,
   height = "35px",
   icon,
+  iconFn,
   iconSide = "left",
   id,
   minLength = 30,
@@ -39,14 +43,23 @@ function Input({
 }: Props) {
   return (
     <div
-      className={`input-main flex align-center radius-1 ${variant} border-box p-2`}
+      className={`input-main flex align-center radius-1 ${
+        disabled ? `bg-disabled-light` : variant
+      } border-box p-2`}
       style={{ height: height, width: width }}
     >
       {icon && iconSide == "left" && (
-        <FontAwesomeIcon icon={icon as IconProp} className="h-100 w-icon" />
+        <FontAwesomeIcon
+          icon={icon as IconProp}
+          className="h-100 w-icon"
+          onClick={iconFn}
+        />
       )}
       <input
-        className={`${variant} h-100 radius-1 w-100 p-2 border-box opacity-placeholder-1 border-box`}
+        className={`${
+          disabled ? `bg-disabled-light` : variant
+        } h-100 radius-1 w-100 p-2 border-box opacity-placeholder-1 border-box`}
+        disabled={disabled}
         id={id}
         minLength={minLength}
         name={id}
@@ -57,7 +70,12 @@ function Input({
         value={value ?? ""}
       />
       {icon && iconSide == "right" && (
-        <FontAwesomeIcon icon={icon as IconProp} className="h-100 w-icon" />
+        <FontAwesomeIcon
+          icon={icon as IconProp}
+          className="h-100 w-icon"
+          onClick={iconFn}
+          cursor="pointer"
+        />
       )}
     </div>
   );

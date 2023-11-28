@@ -17,6 +17,7 @@
   --text-light: #fff;
   --text-dark: #22617c;
   --text-disabled: #7b7b7b;
+  --text-disabled-light: #b9b9b9;
   --text-danger: #ff5959;
   --modal-back: #4444448e;
   --bg-card-dark: #0f0f0f;
@@ -285,6 +286,11 @@
   color: #fff;
 }
 
+.bg-disabled-light {
+  background-color: var(--text-disabled-light);
+  color: #fff;
+}
+
 .bg-modal-back {
   background-color: var(--modal-back);
 }
@@ -384,6 +390,10 @@
 
 .justify-start {
   justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .flex-1 {

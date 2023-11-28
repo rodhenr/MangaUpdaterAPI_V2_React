@@ -51,7 +51,7 @@ function CardWithInfo({
         >
           <h1 className="text-light">{truncateString(name, 48)}</h1>
         </div>
-        <div className="flex column flex-1 gap-2">
+        <div className="flex column flex-1 gap-2" style={{ minHeight: 80 }}>
           {chapters.map((ch) => (
             <div key={uuidv4()} className="flex gap-1">
               <div className="flex-center flex-1 ">

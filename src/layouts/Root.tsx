@@ -12,6 +12,7 @@ import {
   faUsers,
   faSun,
   faMoon,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faGear,
@@ -22,7 +23,8 @@ library.add(
   faBook,
   faUsers,
   faSun,
-  faMoon
+  faMoon,
+  faPenToSquare
 );
 
 import LoadingContext from "../shared/context/LoadingContext";
@@ -38,12 +40,14 @@ import SpinLoading from "../components/loading/SpinLoading";
 import ThemeButton from "../components/theme/ThemeButton";
 
 import "./Root.scss";
+import ProfileModal from "../components/modal/ProfileModal";
 
 function Root() {
   const { themeMode } = useContext(ThemeContext);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] =
     useState<boolean>(false);
+  const [isProfileModal, setIsProfileModal] = useState<boolean>(false);
   const { isLoading } = useContext(LoadingContext);
   const windowWidth = useGetWindowWidth();
 
@@ -62,6 +66,10 @@ function Root() {
     setIsRegisterModalOpen(openRegister);
   };
 
+  const changeProfileModalState = () => {
+    setIsProfileModal(!isProfileModal);
+  };
+
   return (
     <>
       <div
@@ -77,6 +85,7 @@ function Root() {
             <AuthGroup
               changeLoginModalState={changeLoginModalState}
               changeRegisterModalState={changeRegisterModalState}
+              changeProfileModalState={changeProfileModalState}
             />
           </div>
         </div>
@@ -110,6 +119,13 @@ function Root() {
         <div className="absolute flex-center bg-modal-back h-100 w-100">
           <SpinLoading />
         </div>
+      )}
+      {createPortal(
+        <ProfileModal
+          closeModal={() => setIsProfileModal(false)}
+          showModal={isProfileModal}
+        />,
+        document.body
       )}
     </>
   );

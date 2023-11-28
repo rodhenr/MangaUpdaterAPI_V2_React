@@ -8,10 +8,15 @@ import useGetWindowWidth from "../../hooks/useGetWindowWidth";
 
 interface Props {
   changeLoginModalState: () => void;
+  changeProfileModalState: () => void;
   changeRegisterModalState: () => void;
 }
 
-function AuthGroup({ changeLoginModalState, changeRegisterModalState }: Props) {
+function AuthGroup({
+  changeLoginModalState,
+  changeProfileModalState,
+  changeRegisterModalState,
+}: Props) {
   const authContext = useContext(AuthContext);
   const windowWidth = useGetWindowWidth();
 
@@ -21,6 +26,7 @@ function AuthGroup({ changeLoginModalState, changeRegisterModalState }: Props) {
         <Avatar
           color="text-secondary"
           imagePath={authContext.userInfo.avatar ?? ""}
+          onClick={changeProfileModalState}
           userName={authContext.userInfo.username ?? ""}
         />
       ) : (
