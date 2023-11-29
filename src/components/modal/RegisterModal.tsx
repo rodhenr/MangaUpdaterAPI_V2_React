@@ -52,10 +52,6 @@ function RegisterModal({
 
   const handleRegister = async () => {
     try {
-      const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-        registerData.registerEmail
-      );
-
       if (!registerData.username.trim()) {
         setError("Username cannot be empty");
         return;
@@ -66,10 +62,24 @@ function RegisterModal({
         return;
       }
 
-      if (!isEmail) {
+      const onlyLettersRegex = /^[A-Za-z]+$/;
+
+      if (!onlyLettersRegex.test(registerData.username)) {
+        setError("Username cannot have spaces or numbers");
+        return;
+      }
+
+      const isEmailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+      if (!isEmailRegex.test(registerData.registerEmail)) {
         setError("Invalid email");
         return;
       }
+
+      const uppercaseRegex = /[A-Z]/;
+      const lowercaseRegex = /[a-z]/;
+      const digitRegex = /\d/;
+      const nonAlphanumericRegex = /[^A-Za-z0-9]/;
 
       if (registerData.registerPassword.trim().length < 8) {
         setError("Password cannot be less than 8 characters");
@@ -83,6 +93,20 @@ function RegisterModal({
 
       if (registerData.confirmationPassword !== registerData.registerPassword) {
         setError("Password and confirmation do not match");
+        return;
+      }
+
+      if (
+        !uppercaseRegex.test(registerData.registerPassword) ||
+        !lowercaseRegex.test(registerData.registerPassword) ||
+        !digitRegex.test(registerData.registerPassword) ||
+        !nonAlphanumericRegex.test(registerData.registerPassword) ||
+        !uppercaseRegex.test(registerData.confirmationPassword) ||
+        !lowercaseRegex.test(registerData.confirmationPassword) ||
+        !digitRegex.test(registerData.confirmationPassword) ||
+        !nonAlphanumericRegex.test(registerData.confirmationPassword)
+      ) {
+        setError("Invalid format for password");
         return;
       }
 
@@ -167,6 +191,8 @@ function RegisterModal({
         <div className="flex column gap-1">
           <label htmlFor="registerPassword">Password</label>
           <Input
+            icon="circle-question"
+            iconText="Must contain an uppercase character, a lowercase character, a digit, and a non-alphanumeric character and at least 8 characters"
             id="registerPassword"
             onChange={handleRegisterDataChange}
             placeholder="Enter your password"
@@ -178,6 +204,8 @@ function RegisterModal({
         <div className="flex column gap-1">
           <label htmlFor="confirmRegisterPassword">Confirm password</label>
           <Input
+            icon="circle-question"
+            iconText="Must contain an uppercase character, a lowercase character, a digit, and a non-alphanumeric character and at least 8 characters"
             id="confirmationPassword"
             onChange={handleRegisterDataChange}
             placeholder="Enter your password"

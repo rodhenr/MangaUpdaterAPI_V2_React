@@ -15,6 +15,7 @@ interface Props extends SizeProps {
   icon?: string;
   iconFn?: () => void;
   iconSide?: "left" | "right";
+  iconText?: string;
   id: string;
   minLength?: number;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -30,6 +31,7 @@ function Input({
   height = "35px",
   icon,
   iconFn,
+  iconText,
   iconSide = "left",
   id,
   minLength = 30,
@@ -53,6 +55,8 @@ function Input({
           icon={icon as IconProp}
           className="h-100 w-icon"
           onClick={iconFn}
+          title={iconText}
+          style={iconText ? { cursor: "pointer" } : {}}
         />
       )}
       <input

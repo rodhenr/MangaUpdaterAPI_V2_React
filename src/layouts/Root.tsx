@@ -13,6 +13,7 @@ import {
   faSun,
   faMoon,
   faPenToSquare,
+  faCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faGear,
@@ -24,7 +25,8 @@ library.add(
   faUsers,
   faSun,
   faMoon,
-  faPenToSquare
+  faPenToSquare,
+  faCircleQuestion
 );
 
 import LoadingContext from "../shared/context/LoadingContext";

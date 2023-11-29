@@ -141,7 +141,7 @@ function LoginModal({
         </div>
       </div>
       <div className="flex align-center space-between">
-        <div className="flex-center gap-1">
+        {/* <div className="flex-center gap-1">
           <input
             type="checkbox"
             id="check"
@@ -154,7 +154,7 @@ function LoginModal({
         </div>
         <span className="cursor-pointer text-disabled">
           Forget your password?
-        </span>
+        </span> */}
       </div>
       <div className="flex-center w-100">
         <Button
