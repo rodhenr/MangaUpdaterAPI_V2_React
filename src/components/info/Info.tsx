@@ -17,8 +17,6 @@ function Info({ description, icon, header }: Props) {
   const { themeMode } = useContext(ThemeContext);
   const windowWidth = useGetWindowWidth();
 
-  console.log(description);
-
   return (
     <div
       className={`info-main flex align-center gap-4 radius-2 border-box roboto ${

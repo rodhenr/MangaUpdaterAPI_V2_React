@@ -15,7 +15,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function Manga() {
   const { mangaId } = useParams();
-  const { data, error, isPending, refetch } = useGetMangaQuery(mangaId);
+  const { data, error, isPending, refetch, isRefetching } =
+    useGetMangaQuery(mangaId);
   const windowWidth = useGetWindowWidth();
 
   useEffect(() => {
@@ -24,7 +25,7 @@ function Manga() {
 
   if (error) return "error...";
 
-  return isPending ? (
+  return isPending || isRefetching ? (
     <div className="flex-center column gap-4 h-100 w-100">
       <SpinLoading />
       <p className="fsize-5">Loading...</p>

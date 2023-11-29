@@ -40,7 +40,6 @@ function ContentLeft({ data }: Props) {
 
   const { data: followsData, isPending } = useGetUsersFollowing(data.mangaId);
 
-  console.log(followsData);
   const mobile = (
     <>
       <div className="flex gap-3">

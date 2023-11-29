@@ -1,7 +1,7 @@
-import { useState, ChangeEvent, useContext } from "react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { useGetMangasQuery } from "../../api/queries/manga/MangaQueries";
 import { queryClient } from "../../lib/query-client";
@@ -13,21 +13,22 @@ import { ICardData, IFilters } from "../../shared/interfaces/library";
 
 import useGetWindowWidth from "../../hooks/useGetWindowWidth";
 
-import Card from "../../components/card/Card";
-import PageHeader from "../../components/pageHeader/PageHeader";
 import Button from "../../components/button/Button";
+import Card from "../../components/card/Card";
 import Input from "../../components/input/Input";
-import AddMangaModal from "../../components/modal/AddMangaModal";
 import SpinLoading from "../../components/loading/SpinLoading";
+import AddMangaModal from "../../components/modal/AddMangaModal";
+import AddMangaSourceModal from "../../components/modal/AddMangaSourceModal";
+import PageHeader from "../../components/pageHeader/PageHeader";
 import Filters from "./components/Filters";
 import Pagination from "./components/Pagination";
-import AddMangaSourceModal from "../../components/modal/AddMangaSourceModal";
 
 import "./Library.scss";
 
 function Library() {
   const { themeMode } = useContext(ThemeContext);
   const authContext = useContext(AuthContext);
+
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [modalAddManga, setModalAddManga] = useState<boolean>(false);
@@ -38,12 +39,22 @@ function Library() {
     sourceId: "",
     genreId: "",
   });
+  const [debouncedSearch, setDebouncedSearch] = useState<string>("");
+
   const windowWidth = useGetWindowWidth();
 
   const { data, error, isPending } = useGetMangasQuery(currentPage, {
     ...filters,
-    input: search,
+    input: debouncedSearch,
   });
+
+  useEffect(() => {
+    const delayTimer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 750);
+
+    return () => clearTimeout(delayTimer);
+  }, [search]);
 
   const handleFiltersChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;

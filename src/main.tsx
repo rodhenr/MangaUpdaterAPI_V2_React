@@ -8,7 +8,6 @@ import ContextProvider from "./shared/context/ContextProvider.tsx";
 import Root from "./layouts/Root.tsx";
 import Home from "./pages/home/Home.tsx";
 import Library from "./pages/library/Library.tsx";
-import MyList from "./pages/MyList.tsx";
 import Manga from "./pages/manga/Manga.tsx";
 
 import "./shared/styles/global.scss";
@@ -21,7 +20,6 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "library", Component: Library },
-      { path: "mylist", Component: MyList },
       { path: "manga/:mangaId", Component: Manga },
     ],
   },

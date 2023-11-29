@@ -60,7 +60,6 @@ export const useRegisterMutation = () => {
         });
       queryClient.invalidateQueries({ queryKey: ["libraryData"] });
 
-      console.log(response);
       return response;
     },
     onError: (error) => error,

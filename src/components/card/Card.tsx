@@ -24,6 +24,7 @@ function Card({
   const navigate = useNavigate();
 
   const handleNavigate = () => {
+    console.log("navigating....");
     navigate(`/manga/${id}`);
   };
 

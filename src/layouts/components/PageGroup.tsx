@@ -7,8 +7,7 @@ import "./PageGroup.scss";
 
 const pages: IPageList[] = [
   { baseUrl: "/", title: "Home" },
-  { baseUrl: "/library", title: "Library" },
-  { baseUrl: "/mylist", title: "My List" },
+  { baseUrl: "/library", title: "Library" }
 ];
 
 function PageGroup() {
