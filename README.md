@@ -1,27 +1,18 @@
-# React + TypeScript + Vite
+## :ledger: Manga Updater
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Track and follow your favorite manga series effortlessly with this front-end project. This application enables you to stay updated on the latest chapter releases for all your favorite mangas. This project allow you to navigate through your manga collection with ease and never miss a new chapter.
 
-Currently, two official plugins are available:
+## :man_technologist: Tecnologias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+For this project, the following technologies were used:
 
-## Expanding the ESLint configuration
+- [Axios](https://axios-http.com/ptbr/docs/intro)
+- [React](https://pt-br.reactjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [SASS](https://sass-lang.com/)
+- [UUID](https://www.uuidgenerator.net/)
+- [React Query](https://tanstack.com/query/latest/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## :dvd: How to Replicate This Project
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+To replicate this project, access this [Link](https://github.com/rodhenr/MangaUpdaterAPI_V2_CSharp), where you will find all the necessary instructions.
