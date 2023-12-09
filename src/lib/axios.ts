@@ -8,7 +8,7 @@ const AxiosClient = () => {
   const authContext = useContext(AuthContext);
 
   const AxiosInstance = axios.create({
-    baseURL: "https://localhost:7120",
+    baseURL: "http://localhost:8080",
     headers: {
       "Content-Type": "application/json",
     },
@@ -33,7 +33,7 @@ const AxiosClient = () => {
 
         try {
           const result = await axios.post<AuthResponse>(
-            "https://localhost:7120/api/auth/refresh",
+            "http://localhost:8080/api/auth/refresh",
             {},
             {
               headers: {
