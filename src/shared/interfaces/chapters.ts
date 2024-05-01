@@ -1,3 +1,5 @@
+import { IMangasResponse } from "./library";
+
 export interface ChapterInfo {
   chapterId: number;
   sourceId: number;
@@ -15,12 +17,8 @@ export interface MangaDataList {
 }
 
 export interface IMangaDataInfiniteQuery {
-  pages: MangaDataList[][];
+  pages: IMangasResponse[][];
   pageParams: number[];
 }
 
-export interface IMutationData {
-  chapterId: number;
-  mangaId: number;
-  sourceId: number;
-}
+

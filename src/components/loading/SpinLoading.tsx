@@ -1,7 +1,12 @@
-import "./SpinLoading.scss";
+import './SpinLoading.scss';
 
-function SpinLoading() {
-  return <span className="loader"></span>;
-}
+const SpinLoading = () => {
+  return (
+    <div className="flex-center column gap-4 h-100 w-100">
+      <span className="loader"></span>
+      <p className="fsize-5">Loading...</p>
+    </div>
+  );
+};
 
 export default SpinLoading;

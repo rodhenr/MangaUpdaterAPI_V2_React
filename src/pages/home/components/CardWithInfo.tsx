@@ -1,31 +1,29 @@
-import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import Button from '../../../components/button/Button';
+import { Variant } from '../../../shared/interfaces/components';
+import { formatDate } from '../../../utils/date';
+import { truncateString } from '../../../utils/string';
+import { IChapterInfo } from '../api/Queries';
+import '../styles/CardWithInfo.scss';
 
-import Button from "../button/Button";
-import { ChapterInfo } from "../../shared/interfaces/chapters";
-import { Variant } from "../../shared/interfaces/components";
-import { formatDate } from "../../utils/date";
-import { truncateString } from "../../utils/string";
-
-import "./CardWithInfo.scss";
-
-interface Props {
+type Props = {
   buttonVariant: Variant;
-  chapters: ChapterInfo[];
+  chapters: IChapterInfo[];
   cover: string;
   id: number;
   name: string;
   variant?: Variant;
-}
+};
 
-function CardWithInfo({
+const CardWithInfo = ({
   buttonVariant,
   chapters,
   cover,
   id,
   name,
-  variant = "primary-light",
-}: Props) {
+  variant = 'primary-light',
+}: Props) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -37,11 +35,7 @@ function CardWithInfo({
       className={`cardWithInfo-main flex-center gap-2 column roboto space-between radius-2 shadow-3 ${variant} border-box`}
     >
       <div className="w-100">
-        <img
-          src={cover}
-          alt={`card for ${name}`}
-          className="h-100 w-100 object-cover"
-        />
+        <img src={cover} alt={`card for ${name}`} className="h-100 w-100 object-cover" />
       </div>
       <div className="border-box flex column flex-1 gap-4 p-2 w-100">
         <div
@@ -55,10 +49,8 @@ function CardWithInfo({
           {chapters.map((ch) => (
             <div key={uuidv4()} className="flex gap-1">
               <div className="flex-center flex-1 ">
-                <p className="fsize-3">{formatDate(ch.date)}</p>
-                <p className="fsize-3 text-center flex-1">
-                  Chapter {ch.number.toString()}
-                </p>
+                <p className="fsize-3">{formatDate(new Date(ch.date))}</p>
+                <p className="fsize-3 text-center flex-1">Chapter {ch.number}</p>
               </div>
               <div className="flex-center gap-2">
                 <Button
@@ -71,8 +63,8 @@ function CardWithInfo({
                 <div
                   className="round border-box"
                   style={{
-                    backgroundColor: ch.read ? "green" : "red",
-                    border: "1px solid #FFF",
+                    backgroundColor: ch.isRead ? 'green' : 'red',
+                    border: '1px solid #FFF',
                     height: 15,
                     width: 15,
                   }}
@@ -84,6 +76,6 @@ function CardWithInfo({
       </div>
     </div>
   );
-}
+};
 
 export default CardWithInfo;

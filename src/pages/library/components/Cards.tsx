@@ -2,34 +2,30 @@ import { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Card from '../../../components/card/Card';
 import ThemeContext from '../../../shared/context/ThemeContext';
+import { IMangaInfo } from '../../home/api/Queries';
 
 type Props = {
-  data: {
-    coverUrl: string;
-    mangaId: number;
-    mangaName: string;
-  }[];
+  mangas: IMangaInfo[];
 };
 
-const SeeAlso = ({ data }: Props) => {
+const Cards = ({ mangas }: Props) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (
-    <div className="flex column gap-2">
-      <h3>See also</h3>
-      <div className="flex gap-2">
-        {data.map((manga) => (
+    <div className="library-main grid">
+      {mangas.map((manga) => {
+        return (
           <Card
-            color={themeMode === 'light' ? 'text-primary' : 'text-light'}
+            key={uuidv4()}
+            color={themeMode === 'light' ? 'text-primary' : 'text-secondary'}
             id={manga.mangaId}
             imagePath={manga.coverUrl}
-            key={uuidv4()}
             text={manga.mangaName}
           />
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 };
 
-export default SeeAlso;
+export default Cards;

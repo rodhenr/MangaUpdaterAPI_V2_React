@@ -1,14 +1,14 @@
-import { useEffect, useMemo, useState, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
-import ThemeContext from "../../../shared/context/ThemeContext";
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import ThemeContext from '../../../shared/context/ThemeContext';
 
-interface Props {
+type Props = {
   currentPage: number;
   onPageChange: (page: number) => void;
   totalPages: number;
-}
+};
 
-function Pagination({ currentPage, onPageChange, totalPages }: Props) {
+const Pagination = ({ currentPage, onPageChange, totalPages }: Props) => {
   const { themeMode } = useContext(ThemeContext);
   const [pagesToRender, setPagesToRender] = useState<number[]>([]);
 
@@ -36,10 +36,10 @@ function Pagination({ currentPage, onPageChange, totalPages }: Props) {
           key={uuidv4()}
           className={`cursor-pointer fsize-5 ${
             currentPage !== page
-              ? ""
-              : themeMode === "light"
-              ? "primary-light primary-light-hover"
-              : "bg-light bg-light-hover"
+              ? ''
+              : themeMode === 'light'
+              ? 'primary-light primary-light-hover'
+              : 'bg-light bg-light-hover'
           } p-2`}
           onClick={() => onPageChange(page)}
         >
@@ -48,6 +48,6 @@ function Pagination({ currentPage, onPageChange, totalPages }: Props) {
       ))}
     </div>
   );
-}
+};
 
 export default Pagination;

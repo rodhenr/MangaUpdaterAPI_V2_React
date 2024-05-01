@@ -1,19 +1,18 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from 'react';
+import SelectGroup from '../../../components/select/SelectGroupt';
+import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
+import { ISelectState } from '../../../shared/interfaces/components';
+import { IFilters } from '../../../shared/interfaces/library';
+import { IMangaGenre } from '../api/Queries';
 
-import useGetWindowWidth from "../../../hooks/useGetWindowWidth";
-
-import SelectGroup from "../../../components/select/SelectGroupt";
-import { IFilters, IGenre } from "../../../shared/interfaces/library";
-import { ISelectState } from "../../../shared/interfaces/components";
-
-interface Props {
+type Props = {
   filters: IFilters;
-  genres: IGenre[];
+  genres: IMangaGenre[];
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-}
+};
 
-function Filters({ filters, genres, onChange }: Props) {
-  const genreList: ISelectState[] = genres.map((genre: IGenre) => ({
+const Filters = ({ filters, genres, onChange }: Props) => {
+  const genreList: ISelectState[] = genres.map((genre) => ({
     description: genre.name,
     value: String(genre.id),
     isHidden: false,
@@ -21,24 +20,24 @@ function Filters({ filters, genres, onChange }: Props) {
   const windowWidth = useGetWindowWidth();
 
   return (
-    <div className={`flex ${windowWidth > 900 ? "gap-4" : "gap-1"}`}>
+    <div className={`flex ${windowWidth > 900 ? 'gap-4' : 'gap-1'}`}>
       <SelectGroup
-        name={"orderById"}
+        name={'orderById'}
         onChange={onChange}
         options={[
           {
-            description: "",
-            value: "",
+            description: '',
+            value: '',
             isHidden: false,
           },
           {
-            description: "A-Z",
-            value: "alphabet",
+            description: 'A-Z',
+            value: 'alphabet',
             isHidden: false,
           },
           {
-            description: "Latest",
-            value: "latest",
+            description: 'Latest',
+            value: 'latest',
             isHidden: false,
           },
         ]}
@@ -46,27 +45,22 @@ function Filters({ filters, genres, onChange }: Props) {
         value={filters.orderById}
       />
       <SelectGroup
-        name={"sourceId"}
+        name={'sourceId'}
         onChange={onChange}
         options={[
           {
-            description: "",
-            value: "",
+            description: '',
+            value: '',
             isHidden: false,
           },
           {
-            description: "MangaLivre",
-            value: "1",
+            description: 'MangaDex',
+            value: '1',
             isHidden: false,
           },
           {
-            description: "AsuraScans",
-            value: "2",
-            isHidden: false,
-          },
-          {
-            description: "MangaDex",
-            value: "3",
+            description: 'AsuraScans',
+            value: '2',
             isHidden: false,
           },
         ]}
@@ -74,12 +68,12 @@ function Filters({ filters, genres, onChange }: Props) {
         value={filters.sourceId}
       />
       <SelectGroup
-        name={"genreId"}
+        name={'genreId'}
         onChange={onChange}
         options={[
           {
-            description: "",
-            value: "",
+            description: '',
+            value: '',
             isHidden: false,
           },
           ...genreList,
@@ -89,6 +83,6 @@ function Filters({ filters, genres, onChange }: Props) {
       />
     </div>
   );
-}
+};
 
 export default Filters;

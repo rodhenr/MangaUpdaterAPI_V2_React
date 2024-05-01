@@ -1,20 +1,14 @@
-import { ChangeEvent, KeyboardEvent } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-
-import {
-  InputTypes,
-  SizeProps,
-  Variant,
-} from "../../shared/interfaces/components";
-
-import "./Input.scss";
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ChangeEvent, KeyboardEvent } from 'react';
+import { InputTypes, SizeProps, Variant } from '../../shared/interfaces/components';
+import './Input.scss';
 
 interface Props extends SizeProps {
   disabled?: boolean;
   icon?: string;
   iconFn?: () => void;
-  iconSide?: "left" | "right";
+  iconSide?: 'left' | 'right';
   iconText?: string;
   id: string;
   minLength?: number;
@@ -28,20 +22,20 @@ interface Props extends SizeProps {
 
 function Input({
   disabled = false,
-  height = "35px",
+  height = '35px',
   icon,
   iconFn,
   iconText,
-  iconSide = "left",
+  iconSide = 'left',
   id,
   minLength = 30,
   onChange,
   onKeyDown,
   placeholder,
-  type = "text",
+  type = 'text',
   value,
-  variant = "primary-light",
-  width = "100%",
+  variant = 'primary-light',
+  width = '100%',
 }: Props) {
   return (
     <div
@@ -50,13 +44,13 @@ function Input({
       } border-box p-2`}
       style={{ height: height, width: width }}
     >
-      {icon && iconSide == "left" && (
+      {icon && iconSide == 'left' && (
         <FontAwesomeIcon
           icon={icon as IconProp}
           className="h-100 w-icon"
           onClick={iconFn}
           title={iconText}
-          style={iconText ? { cursor: "pointer" } : {}}
+          style={iconText ? { cursor: 'pointer' } : {}}
         />
       )}
       <input
@@ -71,9 +65,9 @@ function Input({
         onKeyDown={onKeyDown}
         placeholder={placeholder}
         type={type}
-        value={value ?? ""}
+        value={value ?? ''}
       />
-      {icon && iconSide == "right" && (
+      {icon && iconSide == 'right' && (
         <FontAwesomeIcon
           icon={icon as IconProp}
           className="h-100 w-icon"

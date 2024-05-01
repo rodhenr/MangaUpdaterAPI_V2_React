@@ -1,52 +1,31 @@
-import useGetWindowWidth from "../../../hooks/useGetWindowWidth";
+import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
+import { IMangaChapter, IMangaSubInfo, IMangaTitle } from '../api/Queries';
+import '../styles/Manga.scss';
+import ChapterList from './ChapterList';
+import MangaInfo from './MangaInfo';
+import Synopsis from './Synopsis';
 
-import Synopsis from "./Synopsis";
-import ChapterList from "./ChapterList";
-import { IMangaChapter } from "../../../shared/interfaces/manga";
-import MangaInfo from "./MangaInfo";
-
-import "../Manga.scss";
-
-interface Props {
-  alternativeName: string;
-  artist: string;
-  author: string;
+type Props = {
+  authors: IMangaSubInfo[];
   chapters: IMangaChapter[];
-  genres: string[];
+  genres: IMangaSubInfo[];
   mangaId: number;
-  name: string;
+  titles: IMangaTitle[];
   synopsis: string;
-}
+};
 
-function ContentRight({
-  alternativeName,
-  artist,
-  author,
-  chapters,
-  genres,
-  mangaId,
-  name,
-  synopsis,
-}: Props) {
+const ContentRight = ({ authors, chapters, genres, mangaId, titles, synopsis }: Props) => {
   const windowWidth = useGetWindowWidth();
 
   return (
     <div className="right-side flex column gap-5">
-      {windowWidth > 800 && (
-        <MangaInfo
-          alternativeName={alternativeName}
-          artist={artist}
-          author={author}
-          genres={genres}
-          name={name}
-        />
-      )}
+      {windowWidth > 800 && <MangaInfo titles={titles} authors={authors} genres={genres} />}
       <Synopsis text={synopsis} />
       <div className="flex column">
         <ChapterList chapters={chapters} mangaId={mangaId} />
       </div>
     </div>
   );
-}
+};
 
 export default ContentRight;

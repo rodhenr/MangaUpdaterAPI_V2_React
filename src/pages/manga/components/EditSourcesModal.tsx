@@ -1,24 +1,21 @@
-import { useEffect, useState, useContext } from "react";
-import { createPortal } from "react-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { v4 as uuidv4 } from "uuid";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useContext, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { v4 as uuidv4 } from 'uuid';
+import Alert from '../../../components/alert/Alert';
+import Button from '../../../components/button/Button';
+import ThemeContext from '../../../shared/context/ThemeContext';
+import { useFollowSourcesMutation } from '../api/Mutations';
+import { useGetSourcesQuery } from '../api/Queries';
+import '../styles/EditSourcesModal.scss';
 
-import { useFollowSourcesMutation } from "../../api/mutations/manga/MangaMutations";
-import { useGetSourcesQuery } from "../../api/queries/manga/MangaQueries";
-import ThemeContext from "../../shared/context/ThemeContext";
-
-import Alert from "../alert/Alert";
-import Button from "../button/Button";
-
-import "./EditSourcesModal.scss";
-
-interface Props {
+type Props = {
   mangaId: number;
   onClose: () => void;
   showModal: boolean;
-}
+};
 
-function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
+const EditSourcesModal = ({ mangaId, onClose, showModal }: Props) => {
   const { themeMode } = useContext(ThemeContext);
   const [sourcesToFollow, setSourcesToFollow] = useState<number[]>([]);
   const [showDialog, setShowDialog] = useState<boolean>(false);
@@ -28,9 +25,7 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
 
   useEffect(() => {
     if (data) {
-      const sourcesIds = data
-        .filter((i) => i.isFollowing)
-        .map((r) => r.sourceId);
+      const sourcesIds = data.filter((i) => i.isFollowing).map((r) => r.sourceId);
 
       setSourcesToFollow(sourcesIds);
     }
@@ -53,16 +48,16 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
     }
   };
 
-  if (error) return "error...";
+  if (error) return 'error...';
 
   return (
     <div
       className="align-center justify-center h-100 w-100 zIndex-100 roboto bg-modal-back absolute absolute-align border-box"
-      style={{ display: !showModal ? "none" : "flex" }}
+      style={{ display: !showModal ? 'none' : 'flex' }}
     >
       <div
         className={`editSources-main flex column gap-2 radius-1 shadow-3 ${
-          themeMode === "light" ? "secondary-dark" : "primary-dark"
+          themeMode === 'light' ? 'secondary-dark' : 'primary-dark'
         }`}
         style={{
           height: 180,
@@ -92,9 +87,7 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
                       onClick={() => handleSourceChange(source.sourceId)}
                       text={source.sourceName}
                       variant={
-                        sourcesToFollow.includes(source.sourceId)
-                          ? "primary-light"
-                          : "bg-disabled"
+                        sourcesToFollow.includes(source.sourceId) ? 'primary-light' : 'bg-disabled'
                       }
                       width="fit-content"
                     />
@@ -107,25 +100,19 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
               </div>
               <div className="flex gap-4">
                 <Button
-                  disabled={
-                    data.length > 0 && !followSourcesMutation.isPending
-                      ? false
-                      : true
-                  }
+                  disabled={data.length > 0 && !followSourcesMutation.isPending ? false : true}
                   loading={followSourcesMutation.isPending ? true : false}
                   onClick={() => handleMutation()}
                   text="Update"
                   useHover={true}
-                  variant={data.length > 0 ? "success" : "bg-disabled"}
+                  variant={data.length > 0 ? 'success' : 'bg-disabled'}
                 />
                 <Button
                   disabled={followSourcesMutation.isPending ? true : false}
                   onClick={onClose}
                   text="Cancel"
                   useHover={true}
-                  variant={
-                    !followSourcesMutation.isPending ? "danger" : "bg-disabled"
-                  }
+                  variant={!followSourcesMutation.isPending ? 'danger' : 'bg-disabled'}
                 />
               </div>
             </>
@@ -139,13 +126,13 @@ function EditSourcesModal({ mangaId, onClose, showModal }: Props) {
           <Alert
             message="Sources updated"
             onClose={() => setShowDialog(false)}
-            width={"350px"}
-            variant={themeMode === "light" ? "bg-dark" : "bg-light"}
+            width={'350px'}
+            variant={themeMode === 'light' ? 'bg-dark' : 'bg-light'}
           />,
-          document.getElementById("manga-page")!
+          document.getElementById('manga-page')!
         )}
     </div>
   );
-}
+};
 
 export default EditSourcesModal;

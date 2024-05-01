@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import axios, { AxiosResponse } from "axios";
+import { useContext } from "react";
 
 import AuthContext from "../shared/context/AuthContext";
 import { AuthResponse } from "../shared/interfaces/auth";
@@ -11,6 +11,7 @@ const AxiosClient = () => {
     baseURL: "http://localhost:8080",
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
     },
   });
 

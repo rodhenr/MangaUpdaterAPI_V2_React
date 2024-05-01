@@ -1,16 +1,14 @@
-import { useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
-
-import ThemeContext from "../../../shared/context/ThemeContext";
-
-import { IMangaSource } from "../../../shared/interfaces/manga";
-import Button from "../../../components/button/Button";
+import { useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import Button from '../../../components/button/Button';
+import ThemeContext from '../../../shared/context/ThemeContext';
+import { IMangaSubInfo } from '../api/Queries';
 
 interface Props {
-  sources: IMangaSource[];
+  sources: IMangaSubInfo[];
 }
 
-function Sources({ sources }: Props) {
+const Sources = ({ sources }: Props) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (
@@ -25,12 +23,12 @@ function Sources({ sources }: Props) {
               mouseover={false}
               text={source.name}
               width="fit-content"
-              variant={themeMode === "light" ? "bg-text-dark" : "bg-text-dark"}
+              variant={themeMode === 'light' ? 'bg-text-dark' : 'bg-text-dark'}
             />
           );
         })}
     </div>
   );
-}
+};
 
 export default Sources;

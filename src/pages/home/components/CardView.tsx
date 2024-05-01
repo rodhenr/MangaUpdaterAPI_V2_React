@@ -1,45 +1,38 @@
-import { Fragment } from "react";
-import { useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { Fragment, useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import ThemeContext from '../../../shared/context/ThemeContext';
+import { IMangasResponse } from '../api/Queries';
+import './../styles/CardView.scss';
+import CardWithInfo from './CardWithInfo';
 
-import CardWithInfo from "../../../components/card/CardWithInfo";
-import { MangaDataList } from "../../../shared/interfaces/chapters";
-import ThemeContext from "../../../shared/context/ThemeContext";
+type Props = {
+  data: IMangasResponse[];
+};
 
-import "./CardView.scss";
-
-interface Props {
-  data: MangaDataList[][];
-}
-
-function CardView({ data }: Props) {
+const CardView = ({ data }: Props) => {
   const { themeMode } = useContext(ThemeContext);
+
+  console.log(data);
 
   return (
     <div className="cardView-main grid">
-      {data.map((page: MangaDataList[]) => (
+      {data.map((response) => (
         <Fragment key={uuidv4()}>
-          {page.map((p: MangaDataList) => {
-            return (
-              <CardWithInfo
-                buttonVariant={
-                  themeMode === "light" ? "secondary-dark" : "secondary-light"
-                }
-                chapters={p.chapters}
-                cover={p.coverUrl}
-                id={p.id}
-                key={uuidv4()}
-                name={p.name}
-                variant={
-                  themeMode === "light" ? "primary-light" : "bg-card-dark"
-                }
-              />
-            );
-          })}
+          {response.mangas.map((info) => (
+            <CardWithInfo
+              buttonVariant={themeMode === 'light' ? 'secondary-dark' : 'secondary-light'}
+              chapters={info.recentChapters}
+              cover={info.coverUrl}
+              id={info.mangaId}
+              key={uuidv4()}
+              name={info.mangaName}
+              variant={themeMode === 'light' ? 'primary-light' : 'bg-card-dark'}
+            />
+          ))}
         </Fragment>
       ))}
     </div>
   );
-}
+};
 
 export default CardView;

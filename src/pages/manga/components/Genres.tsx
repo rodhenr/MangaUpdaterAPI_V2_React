@@ -1,16 +1,14 @@
-import { useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import Button from '../../../components/button/Button';
+import ThemeContext from '../../../shared/context/ThemeContext';
+import '../styles/Manga.scss';
 
-import Button from "../../../components/button/Button";
-
-import "../Manga.scss";
-import ThemeContext from "../../../shared/context/ThemeContext";
-
-interface Props {
+type Props = {
   genres: string[];
-}
+};
 
-function Genres({ genres }: Props) {
+const Genres = ({ genres }: Props) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (
@@ -22,12 +20,12 @@ function Genres({ genres }: Props) {
           key={uuidv4()}
           mouseover={false}
           text={genre}
-          variant={themeMode === "light" ? "primary-light" : "secondary-light"}
+          variant={themeMode === 'light' ? 'primary-light' : 'secondary-light'}
           width="fit-content"
         />
       ))}
     </div>
   );
-}
+};
 
 export default Genres;
