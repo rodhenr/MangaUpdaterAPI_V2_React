@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import SpinLoading from '../../../components/loading/SpinLoading';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
+import { queryClient } from '../../../lib/query-client';
+import { useFollowMangaMutation } from '../api/Mutations';
 import { IMangaResponse, useGetUsersFollowing } from '../api/Queries';
 import '../styles/Manga.scss';
 import ContentLeftDesktop from './ContentLeftDesktop';
@@ -16,6 +18,14 @@ const ContentLeft = ({ data }: Props) => {
   const [showEditSourceModal, setShowEditSourceModal] = useState<boolean>(false);
   const windowWidth = useGetWindowWidth();
   const { data: followsData, isPending } = useGetUsersFollowing(data.id);
+  const followMutation = useFollowMangaMutation();
+
+  const handleFollowMutation = () => {
+    followMutation.mutate(data.id);
+    queryClient.invalidateQueries({ queryKey: ['homeData'] });
+
+    setShowEditSourceModal(true);
+  };
 
   return (
     <div className="left-side flex column gap-4">
@@ -30,6 +40,7 @@ const ContentLeft = ({ data }: Props) => {
           isUserFollowing={data.isUserFollowing}
           followers={followsData!.followers}
           setShowEditSourceModal={setShowEditSourceModal}
+          handleFollowMutation={handleFollowMutation}
         />
       ) : (
         <ContentLeftMobile
@@ -42,6 +53,7 @@ const ContentLeft = ({ data }: Props) => {
           titles={data.titles}
           followers={followsData!.followers}
           setShowEditSourceModal={setShowEditSourceModal}
+          handleFollowMutation={handleFollowMutation}
         />
       )}
       {createPortal(

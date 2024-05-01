@@ -1,9 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-
 import AxiosClient from '../../../lib/axios';
 import { queryClient } from '../../../lib/query-client';
 
-interface IAddMangaSource {
+interface IAddMangaSourceMutation {
   mangaId: number;
   sourceId: number;
   url: string;
@@ -27,8 +26,11 @@ export const useAddMangaSourceMutation = () => {
   const axios = AxiosClient();
 
   return useMutation({
-    mutationFn: ({ mangaId, sourceId, url }: IAddMangaSource) =>
-      axios.post(`/api/manga/${mangaId}/source/${sourceId}?mangaUrl=${url}`),
+    mutationFn: ({ mangaId, sourceId, url }: IAddMangaSourceMutation) =>
+      axios.post(`/api/manga/${mangaId}/source`, {
+        sourceId: sourceId,
+        mangaUrl: url,
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['libraryData'] });
       queryClient.invalidateQueries({ queryKey: ['mangaData'] });

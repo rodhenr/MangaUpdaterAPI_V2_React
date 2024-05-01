@@ -1,6 +1,5 @@
 import Button from '../../../components/button/Button';
-import { queryClient } from '../../../lib/query-client';
-import { useFollowMangaMutation, useUnfollowMangaMutation } from '../api/Mutations';
+import { useUnfollowMangaMutation } from '../api/Mutations';
 import { IMangaSubInfo } from '../api/Queries';
 import Info from './Info';
 import Sources from './Sources';
@@ -13,6 +12,7 @@ type Props = {
   type: string;
   followers: number;
   setShowEditSourceModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handleFollowMutation: () => void;
 };
 
 const ContentLeftDesktop = ({
@@ -23,16 +23,9 @@ const ContentLeftDesktop = ({
   type,
   followers,
   setShowEditSourceModal,
+  handleFollowMutation,
 }: Props) => {
   const unfollowMutation = useUnfollowMangaMutation();
-  const followMutation = useFollowMangaMutation();
-
-  const handleFollowMutation = () => {
-    followMutation.mutate(id);
-    queryClient.invalidateQueries({ queryKey: ['homeData'] });
-
-    setShowEditSourceModal(true);
-  };
 
   return (
     <>

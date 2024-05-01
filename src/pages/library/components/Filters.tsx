@@ -26,11 +26,6 @@ const Filters = ({ filters, genres, onChange }: Props) => {
         onChange={onChange}
         options={[
           {
-            description: '',
-            value: '',
-            isHidden: false,
-          },
-          {
             description: 'A-Z',
             value: 'alphabet',
             isHidden: false,
@@ -49,7 +44,7 @@ const Filters = ({ filters, genres, onChange }: Props) => {
         onChange={onChange}
         options={[
           {
-            description: '',
+            description: 'All',
             value: '',
             isHidden: false,
           },
@@ -72,7 +67,7 @@ const Filters = ({ filters, genres, onChange }: Props) => {
         onChange={onChange}
         options={[
           {
-            description: '',
+            description: 'All',
             value: '',
             isHidden: false,
           },

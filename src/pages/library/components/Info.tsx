@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import Button from '../../../components/button/Button';
 import AuthContext from '../../../shared/context/AuthContext';
 import ThemeContext from '../../../shared/context/ThemeContext';
-import { IMangaInfo } from '../../home/api/Queries';
+import { IMangaInfo } from '../api/Queries';
 
 type Props = {
   mangas: IMangaInfo[];

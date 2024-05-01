@@ -1,50 +1,47 @@
-import { useState, ChangeEvent, useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { useAddMangaMutation } from "../../api/mutations/manga/MangaMutations";
-import ThemeContext from "../../shared/context/ThemeContext";
-
-import Input from "../input/Input";
-import Button from "../button/Button";
-
-import "./AddMangaModal.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ChangeEvent, useContext, useState } from 'react';
+import Button from '../../../components/button/Button';
+import Input from '../../../components/input/Input';
+import ThemeContext from '../../../shared/context/ThemeContext';
+import { useAddMangaMutation } from '../api/Mutations';
+import '../styles/AddMangaModal.scss';
 
 interface Props {
   onClose: () => void;
 }
 
-function AddMangaModal({ onClose }: Props) {
+const AddMangaModal = ({ onClose }: Props) => {
   const { themeMode } = useContext(ThemeContext);
-  const [malId, setMalId] = useState<string>("");
+  const [malId, setMalId] = useState<string>('');
 
-  const [mutationError, setMutationError] = useState<string>("");
-  const [mutationSuccess, setMutationSuccess] = useState<string>("");
+  const [mutationError, setMutationError] = useState<string>('');
+  const [mutationSuccess, setMutationSuccess] = useState<string>('');
 
   const { isPending, mutateAsync } = useAddMangaMutation();
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setMutationError("");
+    setMutationError('');
     setMalId(event.target.value);
   };
 
   const handleMutation = async () => {
     if (malId.length === 0) {
-      setMutationError("Invalid ID");
+      setMutationError('Invalid ID');
       return;
     }
 
     try {
       await mutateAsync(malId);
 
-      setMutationSuccess("Source added");
+      setMutationSuccess('Source added');
 
       setTimeout(() => {
-        setMutationSuccess("");
-        setMutationError("");
+        setMutationSuccess('');
+        setMutationError('');
         onClose();
       }, 2000);
     } catch (err) {
-      setMutationError("An error occurred");
+      setMutationError('An error occurred');
     }
   };
 
@@ -52,9 +49,9 @@ function AddMangaModal({ onClose }: Props) {
     <div className="absolute absolute-align flex-center roboto zIndex-100 bg-modal-back h-100 w-100">
       <div
         className={`addManga-main flex column border-box radius-2 p-4 ${
-          themeMode === "light" ? "secondary-dark" : "primary-dark"
+          themeMode === 'light' ? 'secondary-dark' : 'primary-dark'
         } gap-3`}
-        style={{ height: "200px", width: "400px" }}
+        style={{ height: '200px', width: '400px' }}
       >
         <div className="flex space-between">
           <h1>Add new manga</h1>
@@ -91,6 +88,6 @@ function AddMangaModal({ onClose }: Props) {
       </div>
     </div>
   );
-}
+};
 
 export default AddMangaModal;

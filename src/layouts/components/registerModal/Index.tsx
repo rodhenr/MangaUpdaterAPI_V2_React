@@ -1,41 +1,34 @@
-import { useState, ChangeEvent, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AxiosError } from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AxiosError } from 'axios';
+import { ChangeEvent, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRegisterMutation } from '../../../api/mutations/user/Auth';
+import Button from '../../../components/button/Button';
+import Input from '../../../components/input/Input';
+import ThemeContext from '../../../shared/context/ThemeContext';
+import { IApiError, IRegister } from '../../../shared/interfaces/auth';
+import '../../styles/RegisterModal.scss';
 
-import ThemeContext from "../../shared/context/ThemeContext";
-import { IApiError, IRegister } from "../../shared/interfaces/auth";
-import { useRegisterMutation } from "../../api/mutations/user/Auth";
-
-import Input from "../input/Input";
-import Button from "../button/Button";
-
-import "./RegisterModal.scss";
-
-interface Props {
+type Props = {
   changeToLoginModal: () => void;
   closeModal: () => void;
   showModal: boolean;
-}
+};
 
-function RegisterModal({
-  changeToLoginModal,
-  closeModal,
-  showModal = true,
-}: Props) {
+const RegisterModal = ({ changeToLoginModal, closeModal, showModal = true }: Props) => {
   const { themeMode } = useContext(ThemeContext);
   const [registerData, setRegisterData] = useState<IRegister>({
-    username: "",
-    registerEmail: "",
-    registerPassword: "",
-    confirmationPassword: "",
+    username: '',
+    registerEmail: '',
+    registerPassword: '',
+    confirmationPassword: '',
   });
-  const [error, setError] = useState<string | null>("");
-  const [success, setSuccess] = useState<string | null>("");
+  const [error, setError] = useState<string | null>('');
+  const [success, setSuccess] = useState<string | null>('');
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate("/");
+    navigate('/');
   };
 
   const registerMutation = useRegisterMutation();
@@ -53,26 +46,26 @@ function RegisterModal({
   const handleRegister = async () => {
     try {
       if (!registerData.username.trim()) {
-        setError("Username cannot be empty");
+        setError('Username cannot be empty');
         return;
       }
 
       if (!registerData.registerEmail.trim()) {
-        setError("Email cannot be empty");
+        setError('Email cannot be empty');
         return;
       }
 
       const onlyLettersRegex = /^[A-Za-z]+$/;
 
       if (!onlyLettersRegex.test(registerData.username)) {
-        setError("Username cannot have spaces or numbers");
+        setError('Username cannot have spaces or numbers');
         return;
       }
 
       const isEmailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
       if (!isEmailRegex.test(registerData.registerEmail)) {
-        setError("Invalid email");
+        setError('Invalid email');
         return;
       }
 
@@ -82,17 +75,17 @@ function RegisterModal({
       const nonAlphanumericRegex = /[^A-Za-z0-9]/;
 
       if (registerData.registerPassword.trim().length < 8) {
-        setError("Password cannot be less than 8 characters");
+        setError('Password cannot be less than 8 characters');
         return;
       }
 
       if (registerData.confirmationPassword.trim().length < 8) {
-        setError("Confirmation password cannot be less than 8 characters");
+        setError('Confirmation password cannot be less than 8 characters');
         return;
       }
 
       if (registerData.confirmationPassword !== registerData.registerPassword) {
-        setError("Password and confirmation do not match");
+        setError('Password and confirmation do not match');
         return;
       }
 
@@ -106,7 +99,7 @@ function RegisterModal({
         !digitRegex.test(registerData.confirmationPassword) ||
         !nonAlphanumericRegex.test(registerData.confirmationPassword)
       ) {
-        setError("Invalid format for password");
+        setError('Invalid format for password');
         return;
       }
 
@@ -119,13 +112,13 @@ function RegisterModal({
       });
 
       setRegisterData({
-        username: "",
-        registerEmail: "",
-        registerPassword: "",
-        confirmationPassword: "",
+        username: '',
+        registerEmail: '',
+        registerPassword: '',
+        confirmationPassword: '',
       });
 
-      setSuccess("User registered!");
+      setSuccess('User registered!');
 
       setTimeout(() => {
         setSuccess(null);
@@ -143,14 +136,14 @@ function RegisterModal({
   return (
     <div
       className={`registerModal-main flex column gap-4 radius-1 shadow-3 roboto space-around ${
-        themeMode === "light" ? "secondary-dark" : "primary-dark"
+        themeMode === 'light' ? 'secondary-dark' : 'primary-dark'
       }`}
       style={{
-        display: !showModal ? "none" : "flex",
-        left: "50%",
-        position: "absolute",
-        top: "50%",
-        transform: "translate(-50%,-50%)",
+        display: !showModal ? 'none' : 'flex',
+        left: '50%',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translate(-50%,-50%)',
       }}
     >
       <div className="flex align-center space-between">
@@ -234,6 +227,6 @@ function RegisterModal({
       </div>
     </div>
   );
-}
+};
 
 export default RegisterModal;

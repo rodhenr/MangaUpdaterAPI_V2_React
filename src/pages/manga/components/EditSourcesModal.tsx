@@ -25,7 +25,7 @@ const EditSourcesModal = ({ mangaId, onClose, showModal }: Props) => {
 
   useEffect(() => {
     if (data) {
-      const sourcesIds = data.filter((i) => i.isFollowing).map((r) => r.sourceId);
+      const sourcesIds = data.filter((i) => i.isUserFollowing).map((r) => r.id);
 
       setSourcesToFollow(sourcesIds);
     }
@@ -84,10 +84,10 @@ const EditSourcesModal = ({ mangaId, onClose, showModal }: Props) => {
                       fontSize="fsize-3"
                       height="20px"
                       key={uuidv4()}
-                      onClick={() => handleSourceChange(source.sourceId)}
-                      text={source.sourceName}
+                      onClick={() => handleSourceChange(source.id)}
+                      text={source.name}
                       variant={
-                        sourcesToFollow.includes(source.sourceId) ? 'primary-light' : 'bg-disabled'
+                        sourcesToFollow.includes(source.id) ? 'primary-light' : 'bg-disabled'
                       }
                       width="fit-content"
                     />

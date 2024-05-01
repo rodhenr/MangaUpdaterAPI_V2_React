@@ -1,55 +1,47 @@
-import { useState, ChangeEvent, useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { useAddMangaSourceMutation } from "../../api/mutations/manga/MangaMutations";
-import { useGetAllSourcesQuery } from "../../api/queries/source/SourceQueries";
-import ThemeContext from "../../shared/context/ThemeContext";
-
-import Input from "../input/Input";
-import Button from "../button/Button";
-
-import "./AddMangaSourceModal.scss";
-import SelectGroup from "../select/SelectGroupt";
-import SpinLoading from "../loading/SpinLoading";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ChangeEvent, useContext, useState } from 'react';
+import Button from '../../../components/button/Button';
+import Input from '../../../components/input/Input';
+import SpinLoading from '../../../components/loading/SpinLoading';
+import SelectGroup from '../../../components/select/SelectGroupt';
+import ThemeContext from '../../../shared/context/ThemeContext';
+import { useAddMangaSourceMutation } from '../api/Mutations';
+import { useGetAllSourcesQuery } from '../api/Queries';
+import '../styles/AddMangaSourceModal.scss';
 
 interface Props {
   onClose: () => void;
 }
 
-function AddMangaSourceModal({ onClose }: Props) {
+const AddMangaSourceModal = ({ onClose }: Props) => {
   const { themeMode } = useContext(ThemeContext);
-  const [selectedMangaId, setSelectedMangaId] = useState<string>("");
-  const [selectedSourceId, setSelectedSourceId] = useState<string>("1");
-  const [url, setUrl] = useState<string>("");
+  const [selectedMangaId, setSelectedMangaId] = useState<string>('');
+  const [selectedSourceId, setSelectedSourceId] = useState<string>('1');
+  const [url, setUrl] = useState<string>('');
 
-  const [mutationError, setMutationError] = useState<string>("");
-  const [mutationSuccess, setMutationSuccess] = useState<string>("");
+  const [mutationError, setMutationError] = useState<string>('');
+  const [mutationSuccess, setMutationSuccess] = useState<string>('');
 
   const { data, isFetching, error } = useGetAllSourcesQuery();
   const { isPending, mutateAsync } = useAddMangaSourceMutation();
 
   const handleMangaIdChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setMutationError("");
+    setMutationError('');
     setSelectedMangaId(event.target.value);
   };
 
   const handleSourceIdChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setMutationError("");
+    setMutationError('');
     setSelectedSourceId(event.target.value);
   };
 
   const handleUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setMutationError("");
+    setMutationError('');
     setUrl(event.target.value);
   };
 
   const handleMutation = async () => {
-    if (
-      selectedMangaId.length === 0 ||
-      selectedSourceId.length === 0 ||
-      url.length === 0
-    )
-      return;
+    if (selectedMangaId.length === 0 || selectedSourceId.length === 0 || url.length === 0) return;
 
     try {
       await mutateAsync({
@@ -58,14 +50,14 @@ function AddMangaSourceModal({ onClose }: Props) {
         url: url,
       });
 
-      setMutationSuccess("Source added");
+      setMutationSuccess('Source added');
       setTimeout(() => {
-        setMutationSuccess("");
-        setMutationError("");
+        setMutationSuccess('');
+        setMutationError('');
         onClose();
       }, 2000);
     } catch (err) {
-      setMutationError("An error occurred");
+      setMutationError('An error occurred');
     }
   };
 
@@ -73,9 +65,9 @@ function AddMangaSourceModal({ onClose }: Props) {
     <div className="absolute absolute-align flex-center roboto zIndex-100 bg-modal-back h-100 w-100">
       <div
         className={`addManga-main flex column border-box radius-2 p-4 ${
-          themeMode === "light" ? "secondary-dark" : "primary-dark"
+          themeMode === 'light' ? 'secondary-dark' : 'primary-dark'
         }`}
-        style={{ height: "350px", width: "400px" }}
+        style={{ height: '350px', width: '400px' }}
       >
         <div className="flex space-between">
           <h1>Add new manga source</h1>
@@ -88,9 +80,7 @@ function AddMangaSourceModal({ onClose }: Props) {
         <div className="flex column gap-4 justify-center flex-1">
           <div className="flex gap-2">
             {mutationError && <p className="text-danger">{mutationError}</p>}
-            {mutationSuccess && (
-              <p className="text-success">{mutationSuccess}</p>
-            )}
+            {mutationSuccess && <p className="text-success">{mutationSuccess}</p>}
           </div>
           {isFetching ? (
             <SpinLoading />
@@ -144,9 +134,7 @@ function AddMangaSourceModal({ onClose }: Props) {
         <div className="flex justify-center">
           <Button
             disabled={
-              selectedMangaId.length === 0 ||
-              selectedSourceId.length === 0 ||
-              url.length === 0
+              selectedMangaId.length === 0 || selectedSourceId.length === 0 || url.length === 0
             }
             fontSize="fsize-3"
             loading={isPending}
@@ -160,6 +148,6 @@ function AddMangaSourceModal({ onClose }: Props) {
       </div>
     </div>
   );
-}
+};
 
 export default AddMangaSourceModal;

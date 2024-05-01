@@ -1,7 +1,6 @@
 import Button from '../../../components/button/Button';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
-import { queryClient } from '../../../lib/query-client';
-import { useFollowMangaMutation, useUnfollowMangaMutation } from '../api/Mutations';
+import { useUnfollowMangaMutation } from '../api/Mutations';
 import { IMangaSubInfo, IMangaTitle } from '../api/Queries';
 import Info from './Info';
 import MangaInfo from './MangaInfo';
@@ -16,6 +15,7 @@ type Props = {
   titles: IMangaTitle[];
   followers: number;
   setShowEditSourceModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handleFollowMutation: () => void;
 };
 
 const ContentLeftMobile = ({
@@ -28,17 +28,10 @@ const ContentLeftMobile = ({
   type,
   followers,
   setShowEditSourceModal,
+  handleFollowMutation,
 }: Props) => {
   const windowWidth = useGetWindowWidth();
-  const followMutation = useFollowMangaMutation();
   const unfollowMutation = useUnfollowMangaMutation();
-
-  const handleFollowMutation = () => {
-    followMutation.mutate(id);
-    queryClient.invalidateQueries({ queryKey: ['homeData'] });
-
-    setShowEditSourceModal(true);
-  };
 
   return (
     <>

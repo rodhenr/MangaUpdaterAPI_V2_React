@@ -1,15 +1,13 @@
 import { useContext, useState } from 'react';
+import ThemeContext from '../../../shared/context/ThemeContext';
+import '../../styles/ProfileModal.scss';
 
-import ThemeContext from '../../shared/context/ThemeContext';
-
-import './ProfileModal.scss';
-
-interface IProps {
+type IProps = {
   closeModal: () => void;
   showModal: boolean;
-}
+};
 
-function ProfileModal({ closeModal, showModal }: IProps) {
+const ProfileModal = ({ closeModal, showModal }: IProps) => {
   const { themeMode } = useContext(ThemeContext);
   const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
   const [changeEmailData, setChangeEmailData] = useState<{
@@ -231,6 +229,6 @@ function ProfileModal({ closeModal, showModal }: IProps) {
   //     </div>
   //   </div>
   // );
-}
+};
 
 export default ProfileModal;

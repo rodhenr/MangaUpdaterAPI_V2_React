@@ -1,39 +1,32 @@
-import { useState, ChangeEvent, useContext, KeyboardEvent } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AxiosError } from 'axios';
+import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../../api/mutations/user/Auth';
+import Button from '../../../components/button/Button';
+import ThemeContext from '../../../shared/context/ThemeContext';
+import { IApiError, ILogin } from '../../../shared/interfaces/auth';
+import '../../styles/LoginModal.scss';
+import Inputs from './Inputs';
 
-import { useLoginMutation } from "../../api/mutations/user/Auth";
-import ThemeContext from "../../shared/context/ThemeContext";
-
-import { IApiError, ILogin } from "../../shared/interfaces/auth";
-import Input from "../input/Input";
-import Button from "../button/Button";
-
-import "./LoginModal.scss";
-
-interface Props {
+type Props = {
   changeToRegisterModal: () => void;
   closeModal: () => void;
   showModal: boolean;
-}
+};
 
-function LoginModal({
-  changeToRegisterModal,
-  closeModal,
-  showModal = true,
-}: Props) {
+const LoginModal = ({ changeToRegisterModal, closeModal, showModal = true }: Props) => {
   const { themeMode } = useContext(ThemeContext);
   const [loginData, setLoginData] = useState<ILogin>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
 
   const handleNavigate = () => {
-    navigate("/");
+    navigate('/');
   };
 
   const handleLoginDataChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,27 +40,25 @@ function LoginModal({
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") handleLogin();
+    if (event.key === 'Enter') handleLogin();
   };
 
   const handleLogin = async () => {
     try {
-      const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-        loginData.email
-      );
+      const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(loginData.email);
 
       if (!loginData.email.trim()) {
-        setError("Email cannot be empty");
+        setError('Email cannot be empty');
         return;
       }
 
       if (!isEmail) {
-        setError("Invalid email");
+        setError('Invalid email');
         return;
       }
 
       if (loginData.password.trim().length < 8) {
-        setError("Password cannot be less than 8 characters");
+        setError('Password cannot be less than 8 characters');
         return;
       }
 
@@ -75,8 +66,8 @@ function LoginModal({
       await loginMutation.mutateAsync(loginData);
 
       setLoginData({
-        email: "",
-        password: "",
+        email: '',
+        password: '',
       });
 
       closeModal();
@@ -92,14 +83,14 @@ function LoginModal({
   return (
     <div
       className={`loginModal-main flex column gap-4 radius-1 shadow-3 roboto space-around ${
-        themeMode === "light" ? "secondary-dark" : "primary-dark"
+        themeMode === 'light' ? 'secondary-dark' : 'primary-dark'
       }`}
       style={{
-        display: !showModal ? "none" : "flex",
-        left: "50%",
-        position: "absolute",
-        top: "50%",
-        transform: "translate(-50%,-50%)",
+        display: !showModal ? 'none' : 'flex',
+        left: '50%',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translate(-50%,-50%)',
       }}
     >
       <div className="flex align-center space-between">
@@ -113,33 +104,12 @@ function LoginModal({
       <div>
         <p className="text-danger">{error}</p>
       </div>
-      <div className="flex column gap-3">
-        <div className="flex column">
-          <label htmlFor="email">Email</label>
-          <Input
-            id="email"
-            onChange={handleLoginDataChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Enter your email"
-            type="email"
-            value={loginData.email}
-            variant="bg-light"
-          />
-        </div>
-        <div className="flex column">
-          <label htmlFor="password">Password</label>
-          <Input
-            id="password"
-            onChange={handleLoginDataChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Enter your password"
-            minLength={8}
-            type="password"
-            value={loginData.password}
-            variant="bg-light"
-          />
-        </div>
-      </div>
+      <Inputs
+        handleKeyDown={handleKeyDown}
+        handleLoginDataChange={handleLoginDataChange}
+        email={loginData.email}
+        password={loginData.password}
+      />
       <div className="flex align-center space-between">
         {/* <div className="flex-center gap-1">
           <input
@@ -176,6 +146,6 @@ function LoginModal({
       </div>
     </div>
   );
-}
+};
 
 export default LoginModal;

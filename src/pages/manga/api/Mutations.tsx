@@ -21,7 +21,7 @@ export const useFollowMangaMutation = () => {
   const { changeLoadingState } = useContext(LoadingContext);
 
   return useMutation({
-    mutationFn: (mangaId: number) => axios.post(`/api/user/mangas/${mangaId}`, []),
+    mutationFn: (mangaId: number) => axios.post(`/api/user/manga/${mangaId}`, []),
     onMutate: () => changeLoadingState(),
     onSuccess: (_: AxiosResponse<void>, mangaId: number) => {
       changeLoadingState();
@@ -40,7 +40,7 @@ export const useUnfollowMangaMutation = () => {
   const { changeLoadingState } = useContext(LoadingContext);
 
   return useMutation({
-    mutationFn: (mangaId: number) => axios.delete(`/api/user/mangas/${mangaId}`),
+    mutationFn: (mangaId: number) => axios.delete(`/api/user/manga/${mangaId}`),
     onMutate: () => changeLoadingState(),
     onSuccess: (_: AxiosResponse<void>, mangaId: number) => {
       changeLoadingState();
@@ -57,7 +57,7 @@ export const useFollowSourcesMutation = () => {
 
   return useMutation({
     mutationFn: ({ mangaId, sourcesToFollow }: IFollowSourcesVariables) =>
-      axios.post(`/api/user/mangas/${mangaId}`, sourcesToFollow),
+      axios.post(`/api/user/manga/${mangaId}/source`, sourcesToFollow),
     onSuccess: (_: AxiosResponse<void>, variables: IFollowSourcesVariables) => {
       queryClient.invalidateQueries({
         queryKey: ['sourceData', variables.mangaId],
@@ -74,7 +74,7 @@ export const useChapterReadStateMutation = () => {
 
   return useMutation({
     mutationFn: ({ chapterId, mangaId, sourceId }: IChapterMutationData) =>
-      axios.patch(`api/user/mangas/${mangaId}/sources/${sourceId}?chapterId=${chapterId}`),
+      axios.patch(`api/user/manga/${mangaId}/source/${sourceId}`, { chapterId }),
     onMutate: () => changeLoadingState(),
     onSuccess: () => {
       changeLoadingState();

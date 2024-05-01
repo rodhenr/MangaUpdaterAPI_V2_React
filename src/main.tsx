@@ -3,7 +3,7 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
-import Root from './layouts/Root.tsx';
+import Root from './layouts/Index.tsx';
 import { queryClient } from './lib/query-client.ts';
 import Home from './pages/home/Index.tsx';
 import Library from './pages/library/Index.tsx';

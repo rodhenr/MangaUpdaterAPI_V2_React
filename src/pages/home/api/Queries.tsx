@@ -4,17 +4,10 @@ import { useContext } from 'react';
 import AxiosClient from '../../../lib/axios';
 import AuthContext from '../../../shared/context/AuthContext';
 
-export interface IMangasResponse {
-  currentPage: number;
-  pageSize: number;
-  totalPages: number;
-  mangas: IMangaInfo[];
-}
-
-export interface IMangaInfo {
-  mangaId: number;
+export interface IUserMangasResponse {
+  id: number;
   coverUrl: string;
-  mangaName: string;
+  name: string;
   recentChapters: IChapterInfo[];
 }
 
@@ -28,23 +21,23 @@ export interface IChapterInfo {
   isRead: boolean;
 }
 
-export interface IMangaResponseInfiniteQuery {
-  pages: IMangasResponse[];
+export interface IUserMangasResponseInfiniteQuery {
+  pages: IUserMangasResponse[][];
   pageParams: number[];
 }
 
-export const useGetMangasInfiniteQuery = (limit: number) => {
+export const useGetUserMangasInfiniteQuery = (limit: number) => {
   const axios = AxiosClient();
   const { userInfo } = useContext(AuthContext);
 
-  return useInfiniteQuery<IMangasResponse, AxiosError, IMangaResponseInfiniteQuery>({
+  return useInfiniteQuery<IUserMangasResponse[], AxiosError, IUserMangasResponseInfiniteQuery>({
     queryKey: ['homeData'],
     queryFn: ({ pageParam = 1 }) =>
       axios
-        .get<IMangasResponse>(`/api/manga?page=${pageParam}&limit=${limit}`)
+        .get<IUserMangasResponse[]>(`/api/user/manga?page=${pageParam}&limit=${limit}`)
         .then((res) => res.data),
     getNextPageParam: (prevPage, allPages) =>
-      prevPage.mangas.length > 0 && allPages.length > 0 ? allPages.length + 1 : undefined,
+      prevPage.length > 0 && allPages.length > 0 ? allPages.length + 1 : undefined,
     initialPageParam: 1,
     enabled: !!userInfo?.token,
   });

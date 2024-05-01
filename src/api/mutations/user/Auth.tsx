@@ -1,12 +1,12 @@
-import { useContext } from "react";
-import { useParams } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from '@tanstack/react-query';
+import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 
-import AxiosClient from "../../../lib/axios";
-import { queryClient } from "../../../lib/query-client";
+import AxiosClient from '../../../lib/axios';
+import { queryClient } from '../../../lib/query-client';
 
-import { AuthResponse, ILogin } from "../../../shared/interfaces/auth";
-import AuthContext from "../../../shared/context/AuthContext";
+import AuthContext from '../../../shared/context/AuthContext';
+import { AuthResponse, ILogin } from '../../../shared/interfaces/auth';
 
 export const useLoginMutation = () => {
   const authContext = useContext(AuthContext);
@@ -15,7 +15,7 @@ export const useLoginMutation = () => {
 
   const mutation = useMutation({
     mutationFn: async (loginData: ILogin) =>
-      await axios.post<AuthResponse>("/api/auth/login", loginData),
+      await axios.post<AuthResponse>('/api/auth/login', loginData),
     onSuccess: (response) => {
       authContext.login({
         avatar: response.data.userAvatar,
@@ -25,14 +25,14 @@ export const useLoginMutation = () => {
         isAdmin: response.data.isAdmin,
       });
 
-      queryClient.invalidateQueries({ queryKey: ["homeData"] });
-      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
-      queryClient.invalidateQueries({ queryKey: ["usersFollowing"] });
+      queryClient.invalidateQueries({ queryKey: ['homeData'] });
+      queryClient.invalidateQueries({ queryKey: ['mangaData'] });
+      queryClient.invalidateQueries({ queryKey: ['usersFollowing'] });
       params?.mangaId &&
         queryClient.invalidateQueries({
-          queryKey: ["sourceData", params.mangaId],
+          queryKey: ['sourceData', params.mangaId],
         });
-      queryClient.invalidateQueries({ queryKey: ["libraryData"] });
+      queryClient.invalidateQueries({ queryKey: ['libraryData'] });
     },
   });
 
@@ -49,16 +49,16 @@ export const useRegisterMutation = () => {
       email: string;
       password: string;
       confirmationPassword: string;
-    }) => await axios.post<AuthResponse>("/api/auth/register", registerData),
+    }) => await axios.post<AuthResponse>('/api/auth/register', registerData),
     onSuccess: (response) => {
-      queryClient.invalidateQueries({ queryKey: ["homeData"] });
-      queryClient.invalidateQueries({ queryKey: ["mangaData"] });
-      queryClient.invalidateQueries({ queryKey: ["usersFollowing"] });
+      queryClient.invalidateQueries({ queryKey: ['homeData'] });
+      queryClient.invalidateQueries({ queryKey: ['mangaData'] });
+      queryClient.invalidateQueries({ queryKey: ['usersFollowing'] });
       params?.mangaId &&
         queryClient.invalidateQueries({
-          queryKey: ["sourceData", params.mangaId],
+          queryKey: ['sourceData', params.mangaId],
         });
-      queryClient.invalidateQueries({ queryKey: ["libraryData"] });
+      queryClient.invalidateQueries({ queryKey: ['libraryData'] });
 
       return response;
     },

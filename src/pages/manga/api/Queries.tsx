@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import AxiosClient from '../../../lib/axios';
 import AuthContext from '../../../shared/context/AuthContext';
-import { IUserSource } from '../../../shared/interfaces/source';
 
 export interface IMangaResponse {
   id: number;
@@ -42,6 +41,12 @@ export interface IMangaFollowsResponse {
   followers: number;
 }
 
+export interface IMangaSourcesResponse {
+  id: number;
+  name: string;
+  isUserFollowing: boolean;
+}
+
 export const useGetMangaQuery = (mangaId: string | undefined) => {
   const axios = AxiosClient();
 
@@ -58,7 +63,8 @@ export const useGetSourcesQuery = (mangaId: number) => {
 
   return useQuery({
     queryKey: ['sourceData', mangaId],
-    queryFn: () => axios.get<IUserSource[]>(`/api/manga/${mangaId}/source`).then((res) => res.data),
+    queryFn: () =>
+      axios.get<IMangaSourcesResponse[]>(`/api/manga/${mangaId}/source`).then((res) => res.data),
     enabled: !!userInfo.token,
   });
 };

@@ -5,11 +5,11 @@ import Button from '../../../components/button/Button';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
 import ThemeContext from '../../../shared/context/ThemeContext';
 import { formatDate } from '../../../utils/date';
-import { IMangasResponse } from '../api/Queries';
+import { IUserMangasResponse } from '../api/Queries';
 import './../styles/ListView.scss';
 
 interface Props {
-  data: IMangasResponse[];
+  data: IUserMangasResponse[][];
 }
 
 function ListView({ data }: Props) {
@@ -38,7 +38,7 @@ function ListView({ data }: Props) {
       </div>
       {data.map((response, dataIndex) => (
         <div>
-          {response.mangas.map((manga, mangaIndex) =>
+          {response.map((manga, mangaIndex) =>
             manga.recentChapters.map((chapter) => (
               <div
                 key={uuidv4()}
@@ -53,11 +53,8 @@ function ListView({ data }: Props) {
                 }`}
               >
                 <div className="flex-1 text-center ph-1 ">
-                  <span
-                    className="fsize-3 cursor-pointer"
-                    onClick={() => handleNavigate(manga.mangaId)}
-                  >
-                    {manga.mangaName}
+                  <span className="fsize-3 cursor-pointer" onClick={() => handleNavigate(manga.id)}>
+                    {manga.name}
                   </span>
                 </div>
                 <p className="column-width text-center fsize-3">

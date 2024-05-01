@@ -1,36 +1,34 @@
 import { Fragment, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ThemeContext from '../../../shared/context/ThemeContext';
-import { IMangasResponse } from '../api/Queries';
+import { IUserMangasResponse } from '../api/Queries';
 import './../styles/CardView.scss';
 import CardWithInfo from './CardWithInfo';
 
 type Props = {
-  data: IMangasResponse[];
+  data: IUserMangasResponse[][];
 };
 
 const CardView = ({ data }: Props) => {
   const { themeMode } = useContext(ThemeContext);
 
-  console.log(data);
-
   return (
     <div className="cardView-main grid">
-      {data.map((response) => (
-        <Fragment key={uuidv4()}>
-          {response.mangas.map((info) => (
+      {data.map((response) =>
+        response.map((manga) => (
+          <Fragment key={uuidv4()}>
             <CardWithInfo
               buttonVariant={themeMode === 'light' ? 'secondary-dark' : 'secondary-light'}
-              chapters={info.recentChapters}
-              cover={info.coverUrl}
-              id={info.mangaId}
+              chapters={manga.recentChapters}
+              cover={manga.coverUrl}
+              id={manga.id}
               key={uuidv4()}
-              name={info.mangaName}
+              name={manga.name}
               variant={themeMode === 'light' ? 'primary-light' : 'bg-card-dark'}
             />
-          ))}
-        </Fragment>
-      ))}
+          </Fragment>
+        ))
+      )}
     </div>
   );
 };
