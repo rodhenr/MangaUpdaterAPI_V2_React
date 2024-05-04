@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { queryClient } from '../../../api/query-client';
 import SpinLoading from '../../../components/loading/SpinLoading';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
-import { queryClient } from '../../../lib/query-client';
 import { useFollowMangaMutation } from '../api/Mutations';
 import { IMangaResponse, useGetUsersFollowing } from '../api/Queries';
 import '../styles/Manga.scss';

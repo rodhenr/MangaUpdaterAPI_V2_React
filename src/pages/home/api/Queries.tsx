@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useContext } from 'react';
-import AxiosClient from '../../../lib/axios';
-import AuthContext from '../../../shared/context/AuthContext';
+import AxiosClient from '../../../api/axios';
+import AuthContext from '../../../context/AuthContext';
 
 export interface IUserMangasResponse {
   id: number;

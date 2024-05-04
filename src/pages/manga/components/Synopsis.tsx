@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import ThemeContext from '../../../context/ThemeContext';
 
 type Props = {
   text: string;

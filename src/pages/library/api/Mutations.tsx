@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import AxiosClient from '../../../lib/axios';
-import { queryClient } from '../../../lib/query-client';
+import AxiosClient from '../../../api/axios';
+import { queryClient } from '../../../api/query-client';
 
 interface IAddMangaSourceMutation {
   mangaId: number;

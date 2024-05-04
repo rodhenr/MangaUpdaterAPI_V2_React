@@ -1,9 +1,9 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { queryClient } from '../../api/query-client';
 import SpinLoading from '../../components/loading/SpinLoading';
-import { queryClient } from '../../lib/query-client';
-import { IFilters } from '../../shared/interfaces/library';
+import { IFilters } from '../../interfaces/library';
 import { useGetMangasGenresQuery, useGetMangasQuery } from './api/Queries';
 import AddMangaModal from './components/AddMangaModal';
 import AddMangaSourceModal from './components/AddMangaSourceModal';

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '../../../components/button/Button';
-import { Variant } from '../../../shared/interfaces/components';
+import { Variant } from '../../../interfaces/components';
 import { formatDate } from '../../../utils/date';
 import { truncateString } from '../../../utils/string';
 import { IChapterInfo } from '../api/Queries';

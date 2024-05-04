@@ -1,6 +1,6 @@
 import { Fragment, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import ThemeContext from '../../../context/ThemeContext';
 import { IUserMangasResponse } from '../api/Queries';
 import './../styles/CardView.scss';
 import CardWithInfo from './CardWithInfo';

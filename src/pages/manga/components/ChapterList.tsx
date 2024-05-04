@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import DataTable, { TableColumn, createTheme } from 'react-data-table-component';
 import Button from '../../../components/button/Button';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import ThemeContext from '../../../context/ThemeContext';
 import { formatDate } from '../../../utils/date';
 import { useChapterReadStateMutation } from '../api/Mutations';
 import { IMangaChapter } from '../api/Queries';

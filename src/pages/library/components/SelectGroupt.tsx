@@ -1,11 +1,9 @@
-import { ChangeEvent } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { ChangeEvent } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { ISelectState } from '../../../interfaces/components';
+import '../styles/SelectGroup.scss';
 
-import { ISelectState } from "../../shared/interfaces/components";
-
-import "./SelectGroup.scss";
-
-interface Props {
+type SelectGroupPropsType = {
   height?: string;
   name: string;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
@@ -13,17 +11,17 @@ interface Props {
   placeholder: string;
   value: string;
   width?: string;
-}
+};
 
-function SelectGroup({
-  height = "30px",
+const SelectGroup: React.FC<SelectGroupPropsType> = ({
+  height = '30px',
   name,
   onChange,
   options,
   placeholder,
   value,
-  width = "100%",
-}: Props) {
+  width = '100%',
+}) => {
   return (
     <div className="flex column flex-1">
       <p className="fsize-3">{placeholder}</p>
@@ -42,6 +40,6 @@ function SelectGroup({
       </select>
     </div>
   );
-}
+};
 
 export default SelectGroup;

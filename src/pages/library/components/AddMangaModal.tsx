@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ChangeEvent, useContext, useState } from 'react';
 import Button from '../../../components/button/Button';
 import Input from '../../../components/input/Input';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import ThemeContext from '../../../context/ThemeContext';
 import { useAddMangaMutation } from '../api/Mutations';
 import '../styles/AddMangaModal.scss';
 

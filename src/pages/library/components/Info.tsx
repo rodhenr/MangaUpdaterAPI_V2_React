@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import Button from '../../../components/button/Button';
-import AuthContext from '../../../shared/context/AuthContext';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import AuthContext from '../../../context/AuthContext';
+import ThemeContext from '../../../context/ThemeContext';
 import { IMangaInfo } from '../api/Queries';
 
 type Props = {

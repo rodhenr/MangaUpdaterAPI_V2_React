@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import ThemeButton from '../../../components/theme/ThemeButton';
+import ThemeContext from '../../../context/ThemeContext';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
-import ThemeContext from '../../../shared/context/ThemeContext';
 import AuthGroup from '../auth/Index';
 import PageGroup from '../pages/Index';
+import ThemeButton from './ThemeButton';
 
 type Props = {
   changeLoginModalState: () => void;

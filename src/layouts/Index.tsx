@@ -15,7 +15,7 @@ import {
 import { useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 import SpinLoading from '../components/loading/SpinLoading';
-import LoadingContext from '../shared/context/LoadingContext';
+import LoadingContext from '../context/LoadingContext';
 import Header from './components/header/Index';
 import LoginModal from './components/loginModal/Index';
 import LayoutOutlet from './components/outlet/Index';

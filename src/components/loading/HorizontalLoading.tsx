@@ -1,7 +1,7 @@
-import "./HorizontalLoading.scss";
+import './HorizontalLoading.scss';
 
-function HorizontalLoading() {
+const HorizontalLoading = () => {
   return <span className="horizontalloader border-box round relative"></span>;
-}
+};
 
 export default HorizontalLoading;

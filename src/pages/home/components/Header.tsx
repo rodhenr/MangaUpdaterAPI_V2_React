@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'react';
 import PageHeader from '../../../components/pageHeader/PageHeader';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import ThemeContext from '../../../context/ThemeContext';
 
 type Props = {
   isCardView: boolean;

@@ -1,8 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useContext } from "react";
-
-import AuthContext from "../shared/context/AuthContext";
-import { AuthResponse } from "../shared/interfaces/auth";
+import AuthContext from "../context/AuthContext";
+import { AuthResponse } from "../interfaces/auth";
 
 const AxiosClient = () => {
   const authContext = useContext(AuthContext);
@@ -59,6 +58,7 @@ const AxiosClient = () => {
         config.headers["NO_RETRY_HEADER"] = "true";
         return AxiosInstance(config);
       }
+      
       return Promise.reject(error);
     }
   );

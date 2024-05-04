@@ -2,12 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
-import Alert from '../../../components/alert/Alert';
 import Button from '../../../components/button/Button';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import ThemeContext from '../../../context/ThemeContext';
 import { useFollowSourcesMutation } from '../api/Mutations';
 import { useGetSourcesQuery } from '../api/Queries';
 import '../styles/EditSourcesModal.scss';
+import Alert from './Alert';
 
 type Props = {
   mangaId: number;

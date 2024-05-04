@@ -1,33 +1,29 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from 'react';
+import { queryClient } from '../api/query-client';
+import useLocalStorage from '../hooks/useLocalStorage';
+import useReadFromLocalStorage from '../hooks/useReadFromLocalStorage';
+import { IUserInfo, ThemeMode } from '../interfaces/context';
+import AuthContext from './AuthContext';
+import LoadingContext from './LoadingContext';
+import ThemeContext from './ThemeContext';
 
-import { queryClient } from "../../lib/query-client";
-
-import AuthContext from "./AuthContext";
-import ThemeContext from "./ThemeContext";
-
-import { IUserInfo, ThemeMode } from "../interfaces/context";
-
-import useLocalStorage from "../../hooks/useLocalStorage";
-import useReadFromLocalStorage from "../../hooks/useReadFromLocalStorage";
-import LoadingContext from "./LoadingContext";
-
-interface Props {
+type Props = {
   children: ReactNode;
-}
+};
 
 const ContextProvider = ({ children }: Props) => {
-  const defaultUserInfo = useReadFromLocalStorage<IUserInfo>("userInfo") ?? {
+  const defaultUserInfo = useReadFromLocalStorage<IUserInfo>('userInfo') ?? {
     avatar: null,
     username: null,
     token: null,
     refreshToken: null,
     isAdmin: false,
   };
-  const defaultTheme = useReadFromLocalStorage<ThemeMode>("theme") ?? "light";
+  const defaultTheme = useReadFromLocalStorage<ThemeMode>('theme') ?? 'light';
 
-  const [theme, setTheme] = useLocalStorage<ThemeMode>("theme", defaultTheme);
+  const [theme, setTheme] = useLocalStorage<ThemeMode>('theme', defaultTheme);
   const [localStorageUserInfo, setLocalStorageUserInfo] = useLocalStorage(
-    "userInfo",
+    'userInfo',
     defaultUserInfo
   );
 
@@ -69,9 +65,7 @@ const ContextProvider = ({ children }: Props) => {
         changeLoadingState: handleLoadingStateChange,
       }}
     >
-      <ThemeContext.Provider
-        value={{ themeMode: theme, toggleThemeMode: toggleThemeMode }}
-      >
+      <ThemeContext.Provider value={{ themeMode: theme, toggleThemeMode: toggleThemeMode }}>
         <AuthContext.Provider
           value={{
             userInfo: localStorageUserInfo,

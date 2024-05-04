@@ -1,10 +1,10 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ChangeEvent, KeyboardEvent } from 'react';
-import { InputTypes, SizeProps, Variant } from '../../shared/interfaces/components';
+import { InputTypes, SizeProps, Variant } from '../../interfaces/components';
 import './Input.scss';
 
-interface Props extends SizeProps {
+type Props = {
   disabled?: boolean;
   icon?: string;
   iconFn?: () => void;
@@ -18,9 +18,11 @@ interface Props extends SizeProps {
   type?: InputTypes;
   value: string | number | null;
   variant?: Variant;
-}
+};
 
-function Input({
+type InputPropsType = Props & SizeProps;
+
+const Input: React.FC<InputPropsType> = ({
   disabled = false,
   height = '35px',
   icon,
@@ -36,7 +38,7 @@ function Input({
   value,
   variant = 'primary-light',
   width = '100%',
-}: Props) {
+}) => {
   return (
     <div
       className={`input-main flex align-center radius-1 ${
@@ -77,6 +79,6 @@ function Input({
       )}
     </div>
   );
-}
+};
 
 export default Input;

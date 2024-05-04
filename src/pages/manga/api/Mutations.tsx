@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useContext } from 'react';
-import AxiosClient from '../../../lib/axios';
-import { queryClient } from '../../../lib/query-client';
-import LoadingContext from '../../../shared/context/LoadingContext';
+import AxiosClient from '../../../api/axios';
+import { queryClient } from '../../../api/query-client';
+import LoadingContext from '../../../context/LoadingContext';
 
 interface IFollowSourcesVariables {
   mangaId: number;

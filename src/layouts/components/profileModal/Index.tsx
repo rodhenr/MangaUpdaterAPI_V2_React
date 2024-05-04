@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import ThemeContext from '../../../context/ThemeContext';
 import '../../styles/ProfileModal.scss';
 
 type IProps = {

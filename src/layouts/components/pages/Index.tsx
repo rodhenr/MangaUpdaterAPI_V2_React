@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { IPageList } from '../../../shared/interfaces/components';
+import { IPageList } from '../../../interfaces/components';
 import '../../styles/PageGroup.scss';
 
 const pages: IPageList[] = [

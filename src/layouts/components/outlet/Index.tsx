@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import ThemeContext from '../../../context/ThemeContext';
 
 const LayoutOutlet = () => {
   const { themeMode } = useContext(ThemeContext);

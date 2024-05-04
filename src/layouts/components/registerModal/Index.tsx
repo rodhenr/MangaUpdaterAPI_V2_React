@@ -2,11 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AxiosError } from 'axios';
 import { ChangeEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRegisterMutation } from '../../../api/mutations/user/Auth';
 import Button from '../../../components/button/Button';
 import Input from '../../../components/input/Input';
-import ThemeContext from '../../../shared/context/ThemeContext';
-import { IApiError, IRegister } from '../../../shared/interfaces/auth';
+import ThemeContext from '../../../context/ThemeContext';
+import { IApiError, IRegister } from '../../../interfaces/auth';
+import { useRegisterMutation } from '../../api/Mutations';
 import '../../styles/RegisterModal.scss';
 
 type Props = {

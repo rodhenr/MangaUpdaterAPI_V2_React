@@ -1,10 +1,10 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FontSize, IPadding, SizeProps, Variant } from '../../shared/interfaces/components';
+import { FontSize, IPadding, SizeProps, Variant } from '../../interfaces/components';
 import HorizontalLoading from '../loading/HorizontalLoading';
 import './Button.scss';
 
-interface Props extends SizeProps {
+type Props = {
   disabled?: boolean;
   fontSize?: FontSize;
   icon?: string | null;
@@ -17,9 +17,11 @@ interface Props extends SizeProps {
   text: string;
   useHover?: boolean;
   variant?: Variant;
-}
+};
 
-const Button = ({
+type ButtonPropsType = Props & SizeProps;
+
+const Button: React.FC<ButtonPropsType> = ({
   disabled = false,
   fontSize = 'fsize-4',
   height = '30px',
@@ -34,7 +36,7 @@ const Button = ({
   useHover = false,
   variant = 'primary-light',
   width = '100%',
-}: Props) => {
+}) => {
   return (
     <div
       className={`${disabled ? `bg-disabled` : variant} ${

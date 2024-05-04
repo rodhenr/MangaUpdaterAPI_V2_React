@@ -2,10 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AxiosError } from 'axios';
 import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../../api/mutations/user/Auth';
 import Button from '../../../components/button/Button';
-import ThemeContext from '../../../shared/context/ThemeContext';
-import { IApiError, ILogin } from '../../../shared/interfaces/auth';
+import ThemeContext from '../../../context/ThemeContext';
+import { IApiError, ILogin } from '../../../interfaces/auth';
+import { useLoginMutation } from '../../api/Queries';
 import '../../styles/LoginModal.scss';
 import Inputs from './Inputs';
 

@@ -1,9 +1,9 @@
 import { ChangeEvent } from 'react';
-import SelectGroup from '../../../components/select/SelectGroupt';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
-import { ISelectState } from '../../../shared/interfaces/components';
-import { IFilters } from '../../../shared/interfaces/library';
+import { ISelectState } from '../../../interfaces/components';
+import { IFilters } from '../../../interfaces/library';
 import { IMangaGenre } from '../api/Queries';
+import SelectGroup from './SelectGroupt';
 
 type Props = {
   filters: IFilters;

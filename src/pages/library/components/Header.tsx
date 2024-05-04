@@ -1,10 +1,10 @@
 import { ChangeEvent, useContext } from 'react';
+import { queryClient } from '../../../api/query-client';
 import Input from '../../../components/input/Input';
 import PageHeader from '../../../components/pageHeader/PageHeader';
+import ThemeContext from '../../../context/ThemeContext';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
-import { queryClient } from '../../../lib/query-client';
-import ThemeContext from '../../../shared/context/ThemeContext';
-import { IFilters } from '../../../shared/interfaces/library';
+import { IFilters } from '../../../interfaces/library';
 import { IMangaGenre } from '../api/Queries';
 import Filters from './Filters';
 

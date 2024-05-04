@@ -2,14 +2,14 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { queryClient } from './api/query-client.ts';
+import ContextProvider from './context/ContextProvider.tsx';
+import './global.scss';
 import './index.css';
 import Root from './layouts/Index.tsx';
-import { queryClient } from './lib/query-client.ts';
 import Home from './pages/home/Index.tsx';
 import Library from './pages/library/Index.tsx';
 import Manga from './pages/manga/Index.tsx';
-import ContextProvider from './shared/context/ContextProvider.tsx';
-import './shared/styles/global.scss';
 
 const router = createBrowserRouter([
   {

@@ -3,11 +3,11 @@ import { ChangeEvent, useContext, useState } from 'react';
 import Button from '../../../components/button/Button';
 import Input from '../../../components/input/Input';
 import SpinLoading from '../../../components/loading/SpinLoading';
-import SelectGroup from '../../../components/select/SelectGroupt';
-import ThemeContext from '../../../shared/context/ThemeContext';
+import ThemeContext from '../../../context/ThemeContext';
 import { useAddMangaSourceMutation } from '../api/Mutations';
 import { useGetAllSourcesQuery } from '../api/Queries';
 import '../styles/AddMangaSourceModal.scss';
+import SelectGroup from './SelectGroupt';
 
 interface Props {
   onClose: () => void;

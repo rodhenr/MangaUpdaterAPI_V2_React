@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import SpinLoading from '../../components/loading/SpinLoading';
-import AuthContext from '../../shared/context/AuthContext';
+import AuthContext from '../../context/AuthContext';
 import { useGetUserMangasInfiniteQuery } from './api/Queries';
 import CardView from './components/CardView';
 import Header from './components/Header';

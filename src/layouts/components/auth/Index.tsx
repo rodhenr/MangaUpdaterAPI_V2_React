@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import Avatar from '../../../components/avatar/Avatar';
-import AuthContext from '../../../shared/context/AuthContext';
+import AuthContext from '../../../context/AuthContext';
+import Avatar from './Avatar';
 import Buttons from './Buttons';
 
 type Props = {

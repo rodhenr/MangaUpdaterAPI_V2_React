@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { truncateString } from '../../utils/string';
 import './Card.scss';
 
-type Props = {
+type CardPropsType = {
   color: 'text-primary' | 'text-secondary' | 'text-light';
   height?: string;
   id: number;
@@ -11,7 +11,14 @@ type Props = {
   width?: string;
 };
 
-const Card = ({ color, height = '300px', id, imagePath, text, width = '100%' }: Props) => {
+const Card: React.FC<CardPropsType> = ({
+  color,
+  height = '300px',
+  id,
+  imagePath,
+  text,
+  width = '100%',
+}) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
