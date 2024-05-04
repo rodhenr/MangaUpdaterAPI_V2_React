@@ -28,7 +28,7 @@ const SelectGroup: React.FC<SelectGroupPropsType> = ({
       <select
         name={name}
         className="select-main text-primary radius-2 roboto border-box"
-        style={{ height: height, width: width }}
+        style={{ height: height, width: width, border: 'none' }}
         value={value}
         onChange={onChange}
       >

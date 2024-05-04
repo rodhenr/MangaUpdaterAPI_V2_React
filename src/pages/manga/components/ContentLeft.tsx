@@ -18,6 +18,7 @@ type ContentLeftPropsType = {
 const ContentLeft: React.FC<ContentLeftPropsType> = ({ data }) => {
   const [showEditSourceModal, setShowEditSourceModal] = useState<boolean>(false);
   const windowWidth = useGetWindowWidth();
+
   const { data: followsData, isPending } = useGetUsersFollowing(data.id);
   const followMutation = useFollowMangaMutation();
 

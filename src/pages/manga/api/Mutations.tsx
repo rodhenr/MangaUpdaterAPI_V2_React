@@ -15,7 +15,6 @@ export const useFollowMangaMutation = () => {
     onMutate: () => changeLoadingState(),
     onSuccess: (_: AxiosResponse<void>, mangaId: number) => {
       changeLoadingState();
-      queryClient.invalidateQueries({ queryKey: ['mangaData'] });
       queryClient.invalidateQueries({
         queryKey: ['sourceData', mangaId],
       });

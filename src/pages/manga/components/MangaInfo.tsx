@@ -19,10 +19,7 @@ const MangaInfo: React.FC<MangaInfoPropsType> = ({ titles, authors, genres }) =>
       </div>
       <div className="flex gap-6">
         <p>
-          <span className="font-bold">Author:</span> {authors[0].name}
-        </p>
-        <p>
-          <span className="font-bold">Artist:</span> {authors[0].name}
+          <span className="font-bold">Authors:</span> {authors.map((x) => x.name).join(', ')}
         </p>
       </div>
       <Genres genres={genres.map((x) => x.name)} />

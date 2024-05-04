@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { queryClient } from '../../../api/query-client';
 import Button from '../../../components/button/Button';
 import ThemeContext from '../../../context/ThemeContext';
 import { useFollowSourcesMutation } from '../api/Mutations';
@@ -44,8 +45,13 @@ const EditSourcesModal: React.FC<EditSourcesModalPropsType> = ({ mangaId, onClos
       await followSourcesMutation.mutateAsync({ mangaId, sourcesToFollow });
 
       setShowDialog(true);
-      onClose();
+      closeModal();
     }
+  };
+
+  const closeModal = () => {
+    queryClient.invalidateQueries({ queryKey: ['mangaData'] });
+    onClose();
   };
 
   if (error) return 'error...';
@@ -69,7 +75,7 @@ const EditSourcesModal: React.FC<EditSourcesModalPropsType> = ({ mangaId, onClos
           <FontAwesomeIcon
             className="fsize-5 cursor-pointer hover-opacity-1"
             icon="circle-xmark"
-            onClick={onClose}
+            onClick={closeModal}
           />
         </div>
         <div className="flex column flex-1">
@@ -109,7 +115,7 @@ const EditSourcesModal: React.FC<EditSourcesModalPropsType> = ({ mangaId, onClos
                 />
                 <Button
                   disabled={followSourcesMutation.isPending ? true : false}
-                  onClick={onClose}
+                  onClick={closeModal}
                   text="Cancel"
                   useHover={true}
                   variant={!followSourcesMutation.isPending ? 'danger' : 'bg-disabled'}
