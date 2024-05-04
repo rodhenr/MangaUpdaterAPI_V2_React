@@ -3,18 +3,19 @@ import { createPortal } from 'react-dom';
 import { queryClient } from '../../../api/query-client';
 import SpinLoading from '../../../components/loading/SpinLoading';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
+import { MangaResponseType } from '../Manga.types';
 import { useFollowMangaMutation } from '../api/Mutations';
-import { IMangaResponse, useGetUsersFollowing } from '../api/Queries';
+import { useGetUsersFollowing } from '../api/Queries';
 import '../styles/Manga.scss';
 import ContentLeftDesktop from './ContentLeftDesktop';
 import ContentLeftMobile from './ContentLeftMobile';
 import EditSourcesModal from './EditSourcesModal';
 
-type Props = {
-  data: IMangaResponse;
+type ContentLeftPropsType = {
+  data: MangaResponseType;
 };
 
-const ContentLeft = ({ data }: Props) => {
+const ContentLeft: React.FC<ContentLeftPropsType> = ({ data }) => {
   const [showEditSourceModal, setShowEditSourceModal] = useState<boolean>(false);
   const windowWidth = useGetWindowWidth();
   const { data: followsData, isPending } = useGetUsersFollowing(data.id);

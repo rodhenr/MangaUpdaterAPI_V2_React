@@ -1,8 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import AxiosClient from '../../api/axios';
+import AxiosClient, { AuthResponseType } from '../../api/axios';
 import { queryClient } from '../../api/query-client';
-import { AuthResponse } from '../../interfaces/auth';
 
 export const useRegisterMutation = () => {
   const axios = AxiosClient();
@@ -14,7 +13,7 @@ export const useRegisterMutation = () => {
       email: string;
       password: string;
       confirmationPassword: string;
-    }) => await axios.post<AuthResponse>('/api/auth/register', registerData),
+    }) => await axios.post<AuthResponseType>('/api/auth/register', registerData),
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['homeData'] });
       queryClient.invalidateQueries({ queryKey: ['mangaData'] });

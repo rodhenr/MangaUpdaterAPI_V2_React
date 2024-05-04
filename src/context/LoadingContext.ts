@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { LoadingContextType } from "../interfaces/context";
+import { LoadingContextType } from "./Context.types";
 
 const LoadingContext = createContext<LoadingContextType>({
   isLoading: false,

@@ -2,13 +2,13 @@ import { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Card from '../../../components/card/Card';
 import ThemeContext from '../../../context/ThemeContext';
-import { IMangaInfo } from '../api/Queries';
+import { MangaInfoType } from '../Library.types';
 
-type Props = {
-  mangas: IMangaInfo[];
+type CardsPropsType = {
+  mangas: MangaInfoType[];
 };
 
-const Cards = ({ mangas }: Props) => {
+const Cards: React.FC<CardsPropsType> = ({ mangas }) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (

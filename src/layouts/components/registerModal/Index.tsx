@@ -5,19 +5,30 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 import Input from '../../../components/input/Input';
 import ThemeContext from '../../../context/ThemeContext';
-import { IApiError, IRegister } from '../../../interfaces/auth';
+import { ApiErrorType } from '../../Layouts.types';
 import { useRegisterMutation } from '../../api/Mutations';
 import '../../styles/RegisterModal.scss';
 
-type Props = {
+type RegisterDataType = {
+  username: string;
+  registerEmail: string;
+  registerPassword: string;
+  confirmationPassword: string;
+};
+
+type RegisterModalPropsType = {
   changeToLoginModal: () => void;
   closeModal: () => void;
   showModal: boolean;
 };
 
-const RegisterModal = ({ changeToLoginModal, closeModal, showModal = true }: Props) => {
+const RegisterModal: React.FC<RegisterModalPropsType> = ({
+  changeToLoginModal,
+  closeModal,
+  showModal = true,
+}) => {
   const { themeMode } = useContext(ThemeContext);
-  const [registerData, setRegisterData] = useState<IRegister>({
+  const [registerData, setRegisterData] = useState<RegisterDataType>({
     username: '',
     registerEmail: '',
     registerPassword: '',
@@ -127,7 +138,7 @@ const RegisterModal = ({ changeToLoginModal, closeModal, showModal = true }: Pro
       }, 2000);
     } catch (err) {
       const error = err as AxiosError;
-      const errorData = error.response?.data as IApiError;
+      const errorData = error.response?.data as ApiErrorType;
 
       setError(errorData.title);
     }

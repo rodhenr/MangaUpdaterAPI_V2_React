@@ -1,9 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { IPageList } from '../../../interfaces/components';
 import '../../styles/PageGroup.scss';
 
-const pages: IPageList[] = [
+type PageListType = {
+  baseUrl: string;
+  title: string;
+};
+
+const pages: PageListType[] = [
   { baseUrl: '/', title: 'Home' },
   { baseUrl: '/library', title: 'Library' },
 ];

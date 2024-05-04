@@ -3,17 +3,17 @@ import AuthContext from '../../../context/AuthContext';
 import Avatar from './Avatar';
 import Buttons from './Buttons';
 
-type Props = {
+type AuthGroupPropsType = {
   changeLoginModalState: () => void;
   changeProfileModalState: () => void;
   changeRegisterModalState: () => void;
 };
 
-const AuthGroup = ({
+const AuthGroup: React.FC<AuthGroupPropsType> = ({
   changeLoginModalState,
   changeProfileModalState,
   changeRegisterModalState,
-}: Props) => {
+}) => {
   const authContext = useContext(AuthContext);
 
   return (

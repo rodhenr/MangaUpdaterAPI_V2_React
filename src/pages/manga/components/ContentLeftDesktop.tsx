@@ -1,21 +1,21 @@
 import Button from '../../../components/button/Button';
+import { MangaSubInfoType } from '../Manga.types';
 import { useUnfollowMangaMutation } from '../api/Mutations';
-import { IMangaSubInfo } from '../api/Queries';
 import Info from './Info';
 import Sources from './Sources';
 
-type Props = {
+type ContentLeftDesktopPropsType = {
   id: number;
   coverUrl: string;
   isUserFollowing: boolean;
-  sources: IMangaSubInfo[];
+  sources: MangaSubInfoType[];
   type: string;
   followers: number;
   setShowEditSourceModal: React.Dispatch<React.SetStateAction<boolean>>;
   handleFollowMutation: () => void;
 };
 
-const ContentLeftDesktop = ({
+const ContentLeftDesktop: React.FC<ContentLeftDesktopPropsType> = ({
   id,
   coverUrl,
   isUserFollowing,
@@ -24,7 +24,7 @@ const ContentLeftDesktop = ({
   followers,
   setShowEditSourceModal,
   handleFollowMutation,
-}: Props) => {
+}) => {
   const unfollowMutation = useUnfollowMangaMutation();
 
   return (

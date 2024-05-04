@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Variant } from '../../../interfaces/components';
+import { VariantType } from '../../../components/Components.types';
 
 type AlertPropsType = {
   height?: string;
   message: string;
   onClose: () => void;
   width?: string;
-  variant?: Variant;
+  variant?: VariantType;
 };
 
 const Alert: React.FC<AlertPropsType> = (props) => {

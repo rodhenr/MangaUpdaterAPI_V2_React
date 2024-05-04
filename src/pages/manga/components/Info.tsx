@@ -5,13 +5,13 @@ import ThemeContext from '../../../context/ThemeContext';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
 import '../styles/Info.scss';
 
-type Props = {
+type InfoPropsType = {
   description: string;
   header: string;
   icon: IconProp;
 };
 
-const Info = ({ description, icon, header }: Props) => {
+const Info: React.FC<InfoPropsType> = ({ description, icon, header }) => {
   const { themeMode } = useContext(ThemeContext);
   const windowWidth = useGetWindowWidth();
 

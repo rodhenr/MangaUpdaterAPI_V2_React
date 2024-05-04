@@ -1,29 +1,29 @@
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { VariantType } from '../../../components/Components.types';
 import Button from '../../../components/button/Button';
-import { Variant } from '../../../interfaces/components';
 import { formatDate } from '../../../utils/date';
 import { truncateString } from '../../../utils/string';
-import { IChapterInfo } from '../api/Queries';
+import { ChapterInfoType } from '../Home.types';
 import '../styles/CardWithInfo.scss';
 
-type Props = {
-  buttonVariant: Variant;
-  chapters: IChapterInfo[];
+type CardWithInfoPropsType = {
+  buttonVariant: VariantType;
+  chapters: ChapterInfoType[];
   cover: string;
   id: number;
   name: string;
-  variant?: Variant;
+  variant?: VariantType;
 };
 
-const CardWithInfo = ({
+const CardWithInfo: React.FC<CardWithInfoPropsType> = ({
   buttonVariant,
   chapters,
   cover,
   id,
   name,
   variant = 'primary-light',
-}: Props) => {
+}) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {

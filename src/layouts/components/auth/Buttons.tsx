@@ -1,12 +1,15 @@
 import Button from '../../../components/button/Button';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
 
-type Props = {
+type ButtonsPropsType = {
   changeLoginModalState: () => void;
   changeRegisterModalState: () => void;
 };
 
-const Buttons = ({ changeLoginModalState, changeRegisterModalState }: Props) => {
+const Buttons: React.FC<ButtonsPropsType> = ({
+  changeLoginModalState,
+  changeRegisterModalState,
+}) => {
   const windowWidth = useGetWindowWidth();
 
   return (

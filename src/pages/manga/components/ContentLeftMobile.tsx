@@ -1,24 +1,24 @@
 import Button from '../../../components/button/Button';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
+import { MangaSubInfoType, MangaTitleType } from '../Manga.types';
 import { useUnfollowMangaMutation } from '../api/Mutations';
-import { IMangaSubInfo, IMangaTitle } from '../api/Queries';
 import Info from './Info';
 import MangaInfo from './MangaInfo';
 
-type Props = {
+type ContentLeftMobilePropsType = {
   id: number;
   coverUrl: string;
   type: string;
   isUserFollowing: boolean;
-  genres: IMangaSubInfo[];
-  authors: IMangaSubInfo[];
-  titles: IMangaTitle[];
+  genres: MangaSubInfoType[];
+  authors: MangaSubInfoType[];
+  titles: MangaTitleType[];
   followers: number;
   setShowEditSourceModal: React.Dispatch<React.SetStateAction<boolean>>;
   handleFollowMutation: () => void;
 };
 
-const ContentLeftMobile = ({
+const ContentLeftMobile: React.FC<ContentLeftMobilePropsType> = ({
   id,
   coverUrl,
   titles,
@@ -29,7 +29,7 @@ const ContentLeftMobile = ({
   followers,
   setShowEditSourceModal,
   handleFollowMutation,
-}: Props) => {
+}) => {
   const windowWidth = useGetWindowWidth();
   const unfollowMutation = useUnfollowMangaMutation();
 

@@ -1,18 +1,17 @@
 import { ChangeEvent } from 'react';
+import { SelectStateType } from '../../../components/Components.types';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
-import { ISelectState } from '../../../interfaces/components';
-import { IFilters } from '../../../interfaces/library';
-import { IMangaGenre } from '../api/Queries';
+import { FiltersType, MangaGenreType } from '../Library.types';
 import SelectGroup from './SelectGroupt';
 
-type Props = {
-  filters: IFilters;
-  genres: IMangaGenre[];
+type FiltersPropsType = {
+  filters: FiltersType;
+  genres: MangaGenreType[];
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 };
 
-const Filters = ({ filters, genres, onChange }: Props) => {
-  const genreList: ISelectState[] = genres.map((genre) => ({
+const Filters: React.FC<FiltersPropsType> = ({ filters, genres, onChange }) => {
+  const genreList: SelectStateType[] = genres.map((genre) => ({
     description: genre.name,
     value: String(genre.id),
     isHidden: false,

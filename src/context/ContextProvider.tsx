@@ -2,26 +2,26 @@ import { ReactNode, useEffect, useState } from 'react';
 import { queryClient } from '../api/query-client';
 import useLocalStorage from '../hooks/useLocalStorage';
 import useReadFromLocalStorage from '../hooks/useReadFromLocalStorage';
-import { IUserInfo, ThemeMode } from '../interfaces/context';
 import AuthContext from './AuthContext';
+import { ThemeModeType, UserInfoType } from './Context.types';
 import LoadingContext from './LoadingContext';
 import ThemeContext from './ThemeContext';
 
-type Props = {
+type ContextProviderPropsType = {
   children: ReactNode;
 };
 
-const ContextProvider = ({ children }: Props) => {
-  const defaultUserInfo = useReadFromLocalStorage<IUserInfo>('userInfo') ?? {
+const ContextProvider: React.FC<ContextProviderPropsType> = ({ children }) => {
+  const defaultUserInfo = useReadFromLocalStorage<UserInfoType>('userInfo') ?? {
     avatar: null,
     username: null,
     token: null,
     refreshToken: null,
     isAdmin: false,
   };
-  const defaultTheme = useReadFromLocalStorage<ThemeMode>('theme') ?? 'light';
+  const defaultTheme = useReadFromLocalStorage<ThemeModeType>('theme') ?? 'light';
 
-  const [theme, setTheme] = useLocalStorage<ThemeMode>('theme', defaultTheme);
+  const [theme, setTheme] = useLocalStorage<ThemeModeType>('theme', defaultTheme);
   const [localStorageUserInfo, setLocalStorageUserInfo] = useLocalStorage(
     'userInfo',
     defaultUserInfo
@@ -32,7 +32,7 @@ const ContextProvider = ({ children }: Props) => {
   useEffect(() => {}, [defaultTheme]);
   useEffect(() => {}, [localStorageUserInfo]);
 
-  const handleUserLogin = (loginInfo: IUserInfo) => {
+  const handleUserLogin = (loginInfo: UserInfoType) => {
     setLocalStorageUserInfo(loginInfo);
   };
 
@@ -54,7 +54,7 @@ const ContextProvider = ({ children }: Props) => {
     setLoading((prev) => !prev);
   };
 
-  const toggleThemeMode = (theme: ThemeMode) => {
+  const toggleThemeMode = (theme: ThemeModeType) => {
     setTheme(theme);
   };
 

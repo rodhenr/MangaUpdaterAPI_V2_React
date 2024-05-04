@@ -2,13 +2,13 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ThemeContext from '../../../context/ThemeContext';
 
-type Props = {
+type PaginationPropsType = {
   currentPage: number;
   onPageChange: (page: number) => void;
   totalPages: number;
 };
 
-const Pagination = ({ currentPage, onPageChange, totalPages }: Props) => {
+const Pagination: React.FC<PaginationPropsType> = ({ currentPage, onPageChange, totalPages }) => {
   const { themeMode } = useContext(ThemeContext);
   const [pagesToRender, setPagesToRender] = useState<number[]>([]);
 

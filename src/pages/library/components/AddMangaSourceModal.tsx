@@ -9,11 +9,11 @@ import { useGetAllSourcesQuery } from '../api/Queries';
 import '../styles/AddMangaSourceModal.scss';
 import SelectGroup from './SelectGroupt';
 
-interface Props {
+type AddMangaSourceModalPropsType = {
   onClose: () => void;
-}
+};
 
-const AddMangaSourceModal = ({ onClose }: Props) => {
+const AddMangaSourceModal: React.FC<AddMangaSourceModalPropsType> = ({ onClose }) => {
   const { themeMode } = useContext(ThemeContext);
   const [selectedMangaId, setSelectedMangaId] = useState<string>('');
   const [selectedSourceId, setSelectedSourceId] = useState<string>('1');

@@ -2,15 +2,15 @@ import { useContext } from 'react';
 import Button from '../../../components/button/Button';
 import AuthContext from '../../../context/AuthContext';
 import ThemeContext from '../../../context/ThemeContext';
-import { IMangaInfo } from '../api/Queries';
+import { MangaInfoType } from '../Library.types';
 
-type Props = {
-  mangas: IMangaInfo[];
+type InfoPropsType = {
+  mangas: MangaInfoType[];
   setModalAddManga: React.Dispatch<React.SetStateAction<boolean>>;
   setModalAddMangaSource: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Info = ({ mangas, setModalAddManga, setModalAddMangaSource }: Props) => {
+const Info: React.FC<InfoPropsType> = ({ mangas, setModalAddManga, setModalAddMangaSource }) => {
   const { themeMode } = useContext(ThemeContext);
   const authContext = useContext(AuthContext);
 

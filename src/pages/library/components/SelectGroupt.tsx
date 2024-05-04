@@ -1,13 +1,13 @@
 import { ChangeEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { ISelectState } from '../../../interfaces/components';
+import { SelectStateType } from '../../../components/Components.types';
 import '../styles/SelectGroup.scss';
 
 type SelectGroupPropsType = {
   height?: string;
   name: string;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-  options: ISelectState[];
+  options: SelectStateType[];
   placeholder: string;
   value: string;
   width?: string;

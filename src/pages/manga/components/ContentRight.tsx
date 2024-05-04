@@ -1,20 +1,27 @@
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
-import { IMangaChapter, IMangaSubInfo, IMangaTitle } from '../api/Queries';
+import { MangaChapterType, MangaSubInfoType, MangaTitleType } from '../Manga.types';
 import '../styles/Manga.scss';
 import ChapterList from './ChapterList';
 import MangaInfo from './MangaInfo';
 import Synopsis from './Synopsis';
 
-type Props = {
-  authors: IMangaSubInfo[];
-  chapters: IMangaChapter[];
-  genres: IMangaSubInfo[];
+type ContentRightPropsType = {
+  authors: MangaSubInfoType[];
+  chapters: MangaChapterType[];
+  genres: MangaSubInfoType[];
   mangaId: number;
-  titles: IMangaTitle[];
+  titles: MangaTitleType[];
   synopsis: string;
 };
 
-const ContentRight = ({ authors, chapters, genres, mangaId, titles, synopsis }: Props) => {
+const ContentRight: React.FC<ContentRightPropsType> = ({
+  authors,
+  chapters,
+  genres,
+  mangaId,
+  titles,
+  synopsis,
+}) => {
   const windowWidth = useGetWindowWidth();
 
   return (

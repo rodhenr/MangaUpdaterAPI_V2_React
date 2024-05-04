@@ -4,17 +4,7 @@ import { useContext } from 'react';
 import AxiosClient from '../../../api/axios';
 import { queryClient } from '../../../api/query-client';
 import LoadingContext from '../../../context/LoadingContext';
-
-interface IFollowSourcesVariables {
-  mangaId: number;
-  sourcesToFollow: number[];
-}
-
-export interface IChapterMutationData {
-  chapterId: number;
-  mangaId: number;
-  sourceId: number;
-}
+import { ChapterMutationDataType, FollowSourcesVariablesType } from '../Manga.types';
 
 export const useFollowMangaMutation = () => {
   const axios = AxiosClient();
@@ -56,9 +46,9 @@ export const useFollowSourcesMutation = () => {
   const axios = AxiosClient();
 
   return useMutation({
-    mutationFn: ({ mangaId, sourcesToFollow }: IFollowSourcesVariables) =>
+    mutationFn: ({ mangaId, sourcesToFollow }: FollowSourcesVariablesType) =>
       axios.post(`/api/user/manga/${mangaId}/source`, sourcesToFollow),
-    onSuccess: (_: AxiosResponse<void>, variables: IFollowSourcesVariables) => {
+    onSuccess: (_: AxiosResponse<void>, variables: FollowSourcesVariablesType) => {
       queryClient.invalidateQueries({
         queryKey: ['sourceData', variables.mangaId],
       });
@@ -73,7 +63,7 @@ export const useChapterReadStateMutation = () => {
   const { changeLoadingState } = useContext(LoadingContext);
 
   return useMutation({
-    mutationFn: ({ chapterId, mangaId, sourceId }: IChapterMutationData) =>
+    mutationFn: ({ chapterId, mangaId, sourceId }: ChapterMutationDataType) =>
       axios.patch(`api/user/manga/${mangaId}/source/${sourceId}`, { chapterId }),
     onMutate: () => changeLoadingState(),
     onSuccess: () => {

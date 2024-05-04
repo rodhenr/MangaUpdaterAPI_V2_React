@@ -4,19 +4,18 @@ import Input from '../../../components/input/Input';
 import PageHeader from '../../../components/pageHeader/PageHeader';
 import ThemeContext from '../../../context/ThemeContext';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
-import { IFilters } from '../../../interfaces/library';
-import { IMangaGenre } from '../api/Queries';
+import { FiltersType, MangaGenreType } from '../Library.types';
 import Filters from './Filters';
 
-type Props = {
+type HeaderPropsType = {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-  filters: IFilters;
-  setFilters: React.Dispatch<React.SetStateAction<IFilters>>;
-  genres: IMangaGenre[];
+  filters: FiltersType;
+  setFilters: React.Dispatch<React.SetStateAction<FiltersType>>;
+  genres: MangaGenreType[];
 };
 
-const Header = ({ search, setSearch, filters, setFilters, genres }: Props) => {
+const Header: React.FC<HeaderPropsType> = ({ search, setSearch, filters, setFilters, genres }) => {
   const windowWidth = useGetWindowWidth();
   const { themeMode } = useContext(ThemeContext);
 

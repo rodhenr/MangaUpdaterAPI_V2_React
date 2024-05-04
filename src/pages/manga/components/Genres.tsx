@@ -4,11 +4,11 @@ import Button from '../../../components/button/Button';
 import ThemeContext from '../../../context/ThemeContext';
 import '../styles/Manga.scss';
 
-type Props = {
+type GenresPropsType = {
   genres: string[];
 };
 
-const Genres = ({ genres }: Props) => {
+const Genres: React.FC<GenresPropsType> = ({ genres }) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (

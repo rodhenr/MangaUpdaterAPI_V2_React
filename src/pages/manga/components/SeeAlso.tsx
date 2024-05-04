@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Card from '../../../components/card/Card';
 import ThemeContext from '../../../context/ThemeContext';
 
-type Props = {
+type SeeAlsoPropsType = {
   data: {
     coverUrl: string;
     mangaId: number;
@@ -11,7 +11,7 @@ type Props = {
   }[];
 };
 
-const SeeAlso = ({ data }: Props) => {
+const SeeAlso: React.FC<SeeAlsoPropsType> = ({ data }) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (

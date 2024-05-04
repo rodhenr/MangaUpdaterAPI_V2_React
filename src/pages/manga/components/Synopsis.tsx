@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import ThemeContext from '../../../context/ThemeContext';
 
-type Props = {
+type SynopsisPropsType = {
   text: string;
 };
 
-const Synopsis = ({ text }: Props) => {
+const Synopsis: React.FC<SynopsisPropsType> = ({ text }) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (

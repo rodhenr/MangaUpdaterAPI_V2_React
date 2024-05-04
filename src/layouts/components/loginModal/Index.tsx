@@ -4,20 +4,24 @@ import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 import ThemeContext from '../../../context/ThemeContext';
-import { IApiError, ILogin } from '../../../interfaces/auth';
+import { ApiErrorType, LoginDataType } from '../../Layouts.types';
 import { useLoginMutation } from '../../api/Queries';
 import '../../styles/LoginModal.scss';
 import Inputs from './Inputs';
 
-type Props = {
+type LoginModalPropsType = {
   changeToRegisterModal: () => void;
   closeModal: () => void;
   showModal: boolean;
 };
 
-const LoginModal = ({ changeToRegisterModal, closeModal, showModal = true }: Props) => {
+const LoginModal: React.FC<LoginModalPropsType> = ({
+  changeToRegisterModal,
+  closeModal,
+  showModal = true,
+}) => {
   const { themeMode } = useContext(ThemeContext);
-  const [loginData, setLoginData] = useState<ILogin>({
+  const [loginData, setLoginData] = useState<LoginDataType>({
     email: '',
     password: '',
   });
@@ -74,7 +78,7 @@ const LoginModal = ({ changeToRegisterModal, closeModal, showModal = true }: Pro
       handleNavigate();
     } catch (err) {
       const error = err as AxiosError;
-      const errorData = error.response?.data as IApiError;
+      const errorData = error.response?.data as ApiErrorType;
 
       setError(errorData.title);
     }

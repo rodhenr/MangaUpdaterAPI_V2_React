@@ -6,11 +6,11 @@ import ThemeContext from '../../../context/ThemeContext';
 import { useAddMangaMutation } from '../api/Mutations';
 import '../styles/AddMangaModal.scss';
 
-interface Props {
+type AddMangaModalPropsType = {
   onClose: () => void;
-}
+};
 
-const AddMangaModal = ({ onClose }: Props) => {
+const AddMangaModal: React.FC<AddMangaModalPropsType> = ({ onClose }) => {
   const { themeMode } = useContext(ThemeContext);
   const [malId, setMalId] = useState<string>('');
 

@@ -5,14 +5,14 @@ import Button from '../../../components/button/Button';
 import ThemeContext from '../../../context/ThemeContext';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
 import { formatDate } from '../../../utils/date';
-import { IUserMangasResponse } from '../api/Queries';
+import { UserMangasResponseType } from '../Home.types';
 import './../styles/ListView.scss';
 
-interface Props {
-  data: IUserMangasResponse[][];
+interface ListViewPropsType {
+  data: UserMangasResponseType[][];
 }
 
-function ListView({ data }: Props) {
+const ListView: React.FC<ListViewPropsType> = ({ data }) => {
   const { themeMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const windowWidth = useGetWindowWidth();
@@ -90,6 +90,6 @@ function ListView({ data }: Props) {
       ))}
     </div>
   );
-}
+};
 
 export default ListView;

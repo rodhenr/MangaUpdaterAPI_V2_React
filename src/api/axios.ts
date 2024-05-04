@@ -1,7 +1,14 @@
 import axios, { AxiosResponse } from "axios";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import { AuthResponse } from "../interfaces/auth";
+
+export type AuthResponseType = {
+  userName: string;
+  userAvatar: string;
+  accessToken: string;
+  refreshToken: string;
+  isAdmin: boolean;
+}
 
 const AxiosClient = () => {
   const authContext = useContext(AuthContext);
@@ -32,7 +39,7 @@ const AxiosClient = () => {
         const config = error?.config;
 
         try {
-          const result = await axios.post<AuthResponse>(
+          const result = await axios.post<AuthResponseType>(
             "http://localhost:8080/api/auth/refresh",
             {},
             {

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { queryClient } from '../../api/query-client';
 import SpinLoading from '../../components/loading/SpinLoading';
-import { IFilters } from '../../interfaces/library';
+import { FiltersType } from './Library.types';
 import { useGetMangasGenresQuery, useGetMangasQuery } from './api/Queries';
 import AddMangaModal from './components/AddMangaModal';
 import AddMangaSourceModal from './components/AddMangaSourceModal';
@@ -18,7 +18,7 @@ const Library = () => {
   const [search, setSearch] = useState<string>('');
   const [modalAddManga, setModalAddManga] = useState<boolean>(false);
   const [modalAddMangaSource, setModalAddMangaSource] = useState<boolean>(false);
-  const [filters, setFilters] = useState<IFilters>({
+  const [filters, setFilters] = useState<FiltersType>({
     orderById: '',
     sourceId: '',
     genreId: '',

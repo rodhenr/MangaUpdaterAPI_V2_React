@@ -2,49 +2,21 @@ import { useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import AxiosClient from '../../../api/axios';
 import AuthContext from '../../../context/AuthContext';
+import {
+  LibraryQueryParamsType,
+  MangaGenreType,
+  MangasResponseType,
+  SourceType,
+} from '../Library.types';
 
-export interface IFilters {
-  orderById: string;
-  sourceId: string;
-  genreId: string;
-}
-
-export interface ILibraryQueryParams extends IFilters {
-  input: string;
-}
-
-export interface IMangaGenre {
-  id: number;
-  name: string;
-}
-
-export interface IMangasResponse {
-  currentPage: number;
-  pageSize: number;
-  totalPages: number;
-  mangas: IMangaInfo[];
-}
-
-export interface IMangaInfo {
-  mangaId: number;
-  coverUrl: string;
-  mangaName: string;
-}
-
-export interface ISource {
-  id: number;
-  name: string;
-  baseUrl: string;
-}
-
-export const useGetMangasQuery = (page: number, params: ILibraryQueryParams) => {
+export const useGetMangasQuery = (page: number, params: LibraryQueryParamsType) => {
   const axios = AxiosClient();
 
   return useQuery({
     queryKey: ['libraryData', page, params],
     queryFn: () =>
       axios
-        .get<IMangasResponse>('/api/manga', {
+        .get<MangasResponseType>('/api/manga', {
           params: {
             input: params.input === '' ? null : params.input,
             page,
@@ -63,7 +35,7 @@ export const useGetMangasGenresQuery = () => {
 
   return useQuery({
     queryKey: ['genres'],
-    queryFn: () => axios.get<IMangaGenre[]>('/api/manga/genre').then((res) => res.data),
+    queryFn: () => axios.get<MangaGenreType[]>('/api/manga/genre').then((res) => res.data),
   });
 };
 
@@ -73,7 +45,7 @@ export const useGetAllSourcesQuery = () => {
 
   return useQuery({
     queryKey: ['sources'],
-    queryFn: () => axios.get<ISource[]>(`/api/source`).then((res) => res.data),
+    queryFn: () => axios.get<SourceType[]>(`/api/source`).then((res) => res.data),
     enabled: !!userInfo.token,
   });
 };

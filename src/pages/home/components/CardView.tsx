@@ -1,15 +1,15 @@
 import { Fragment, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ThemeContext from '../../../context/ThemeContext';
-import { IUserMangasResponse } from '../api/Queries';
+import { UserMangasResponseType } from '../Home.types';
 import './../styles/CardView.scss';
 import CardWithInfo from './CardWithInfo';
 
-type Props = {
-  data: IUserMangasResponse[][];
+type CardViewPropsType = {
+  data: UserMangasResponseType[][];
 };
 
-const CardView = ({ data }: Props) => {
+const CardView: React.FC<CardViewPropsType> = ({ data }) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (

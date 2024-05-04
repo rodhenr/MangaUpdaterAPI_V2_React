@@ -1,7 +1,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ChangeEvent, KeyboardEvent } from 'react';
-import { InputTypes, SizeProps, Variant } from '../../interfaces/components';
+import { InputType, SizePropsType, VariantType } from '../Components.types';
 import './Input.scss';
 
 type Props = {
@@ -15,12 +15,12 @@ type Props = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
   placeholder: string;
-  type?: InputTypes;
+  type?: InputType;
   value: string | number | null;
-  variant?: Variant;
+  variant?: VariantType;
 };
 
-type InputPropsType = Props & SizeProps;
+type InputPropsType = Props & SizePropsType;
 
 const Input: React.FC<InputPropsType> = ({
   disabled = false,

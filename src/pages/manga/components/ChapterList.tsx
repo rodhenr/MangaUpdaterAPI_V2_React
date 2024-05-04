@@ -3,16 +3,16 @@ import DataTable, { TableColumn, createTheme } from 'react-data-table-component'
 import Button from '../../../components/button/Button';
 import ThemeContext from '../../../context/ThemeContext';
 import { formatDate } from '../../../utils/date';
+import { MangaChapterType } from '../Manga.types';
 import { useChapterReadStateMutation } from '../api/Mutations';
-import { IMangaChapter } from '../api/Queries';
 import '../styles/Manga.scss';
 
-type Props = {
-  chapters: IMangaChapter[];
+type ChapterListPropsType = {
+  chapters: MangaChapterType[];
   mangaId: number;
 };
 
-const ChapterList = ({ chapters, mangaId }: Props) => {
+const ChapterList: React.FC<ChapterListPropsType> = ({ chapters, mangaId }) => {
   const { themeMode } = useContext(ThemeContext);
 
   const chapterMutation = useChapterReadStateMutation();
@@ -75,7 +75,7 @@ const ChapterList = ({ chapters, mangaId }: Props) => {
     },
   });
 
-  const columns: TableColumn<IMangaChapter>[] = [
+  const columns: TableColumn<MangaChapterType>[] = [
     {
       name: 'Date',
       selector: (row) => formatDate(new Date(row.date)),

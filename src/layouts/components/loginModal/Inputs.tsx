@@ -1,14 +1,19 @@
 import { ChangeEvent, KeyboardEvent } from 'react';
 import Input from '../../../components/input/Input';
 
-type Props = {
+type InputsPropsType = {
   handleLoginDataChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
   email: string;
   password: string;
 };
 
-const Inputs = ({ handleLoginDataChange, handleKeyDown, email, password }: Props) => {
+const Inputs: React.FC<InputsPropsType> = ({
+  handleLoginDataChange,
+  handleKeyDown,
+  email,
+  password,
+}) => {
   return (
     <div className="flex column gap-3">
       <div className="flex column">

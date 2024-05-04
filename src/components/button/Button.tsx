@@ -1,25 +1,25 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FontSize, IPadding, SizeProps, Variant } from '../../interfaces/components';
+import { FontSizeType, PaddingType, SizePropsType, VariantType } from '../Components.types';
 import HorizontalLoading from '../loading/HorizontalLoading';
 import './Button.scss';
 
 type Props = {
   disabled?: boolean;
-  fontSize?: FontSize;
+  fontSize?: FontSizeType;
   icon?: string | null;
   iconWidth?: string;
   loading?: boolean;
   mouseover?: boolean;
   onClick?: () => void;
   onClickIcon?: () => void;
-  padding?: IPadding;
+  padding?: PaddingType;
   text: string;
   useHover?: boolean;
-  variant?: Variant;
+  variant?: VariantType;
 };
 
-type ButtonPropsType = Props & SizeProps;
+type ButtonPropsType = Props & SizePropsType;
 
 const Button: React.FC<ButtonPropsType> = ({
   disabled = false,

@@ -5,17 +5,17 @@ import AuthGroup from '../auth/Index';
 import PageGroup from '../pages/Index';
 import ThemeButton from './ThemeButton';
 
-type Props = {
+type HeaderPropsType = {
   changeLoginModalState: () => void;
   changeProfileModalState: () => void;
   changeRegisterModalState: () => void;
 };
 
-const Header = ({
+const Header: React.FC<HeaderPropsType> = ({
   changeLoginModalState,
   changeProfileModalState,
   changeRegisterModalState,
-}: Props) => {
+}) => {
   const { themeMode } = useContext(ThemeContext);
   const windowWidth = useGetWindowWidth();
 

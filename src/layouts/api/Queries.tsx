@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import AxiosClient from '../../api/axios';
+import AxiosClient, { AuthResponseType } from '../../api/axios';
 import { queryClient } from '../../api/query-client';
 import AuthContext from '../../context/AuthContext';
-import { AuthResponse, ILogin } from '../../interfaces/auth';
+import { LoginDataType } from '../Layouts.types';
 
 export const useLoginMutation = () => {
   const authContext = useContext(AuthContext);
@@ -12,8 +12,8 @@ export const useLoginMutation = () => {
   const params = useParams();
 
   const mutation = useMutation({
-    mutationFn: async (loginData: ILogin) =>
-      await axios.post<AuthResponse>('/api/auth/login', loginData),
+    mutationFn: async (loginData: LoginDataType) =>
+      await axios.post<AuthResponseType>('/api/auth/login', loginData),
     onSuccess: (response) => {
       authContext.login({
         avatar: response.data.userAvatar,

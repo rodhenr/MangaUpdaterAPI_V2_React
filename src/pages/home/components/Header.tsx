@@ -3,12 +3,12 @@ import { useContext } from 'react';
 import PageHeader from '../../../components/pageHeader/PageHeader';
 import ThemeContext from '../../../context/ThemeContext';
 
-type Props = {
+type HeaderPropsType = {
   isCardView: boolean;
   setIsCardView: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Header = ({ isCardView, setIsCardView }: Props) => {
+const Header: React.FC<HeaderPropsType> = ({ isCardView, setIsCardView }) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (

@@ -9,13 +9,13 @@ import { useGetSourcesQuery } from '../api/Queries';
 import '../styles/EditSourcesModal.scss';
 import Alert from './Alert';
 
-type Props = {
+type EditSourcesModalPropsType = {
   mangaId: number;
   onClose: () => void;
   showModal: boolean;
 };
 
-const EditSourcesModal = ({ mangaId, onClose, showModal }: Props) => {
+const EditSourcesModal: React.FC<EditSourcesModalPropsType> = ({ mangaId, onClose, showModal }) => {
   const { themeMode } = useContext(ThemeContext);
   const [sourcesToFollow, setSourcesToFollow] = useState<number[]>([]);
   const [showDialog, setShowDialog] = useState<boolean>(false);

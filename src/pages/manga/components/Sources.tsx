@@ -2,13 +2,13 @@ import { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '../../../components/button/Button';
 import ThemeContext from '../../../context/ThemeContext';
-import { IMangaSubInfo } from '../api/Queries';
+import { MangaSubInfoType } from '../Manga.types';
 
-interface Props {
-  sources: IMangaSubInfo[];
+interface SourcesPropsType {
+  sources: MangaSubInfoType[];
 }
 
-const Sources = ({ sources }: Props) => {
+const Sources: React.FC<SourcesPropsType> = ({ sources }) => {
   const { themeMode } = useContext(ThemeContext);
 
   return (

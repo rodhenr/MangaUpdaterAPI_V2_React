@@ -1,13 +1,13 @@
-import { IMangaSubInfo, IMangaTitle } from '../api/Queries';
+import { MangaSubInfoType, MangaTitleType } from '../Manga.types';
 import Genres from './Genres';
 
-type Props = {
-  titles: IMangaTitle[];
-  authors: IMangaSubInfo[];
-  genres: IMangaSubInfo[];
+type MangaInfoPropsType = {
+  titles: MangaTitleType[];
+  authors: MangaSubInfoType[];
+  genres: MangaSubInfoType[];
 };
 
-const MangaInfo = ({ titles, authors, genres }: Props) => {
+const MangaInfo: React.FC<MangaInfoPropsType> = ({ titles, authors, genres }) => {
   const mainTitle = titles.filter((x) => x.isMainTitle);
   const alternativeTitle = titles.filter((x) => !x.isMainTitle);
 
