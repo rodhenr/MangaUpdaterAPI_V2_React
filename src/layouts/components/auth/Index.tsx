@@ -22,7 +22,7 @@ const AuthGroup: React.FC<AuthGroupPropsType> = ({
         <Avatar
           color="text-secondary"
           imagePath={authContext.userInfo.avatar ?? ''}
-          onClick={changeProfileModalState}
+          changeProfileModalState={changeProfileModalState}
           userName={authContext.userInfo.username ?? ''}
         />
       ) : (

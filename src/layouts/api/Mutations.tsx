@@ -31,3 +31,20 @@ export const useRegisterMutation = () => {
 
   return mutation;
 };
+
+export const useChangeEmailMutation = () => {
+  const axios = AxiosClient();
+
+  const mutation = useMutation({
+    mutationFn: async (data: { email: string; password: string; confirmationPassword: string }) =>
+      await axios.post<void>('/api/user/account/email', data),
+    onSuccess: (response) => {
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+
+      return response;
+    },
+    onError: (error) => error,
+  });
+
+  return mutation;
+};

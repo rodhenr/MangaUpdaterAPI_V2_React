@@ -54,7 +54,7 @@ const Button: React.FC<ButtonPropsType> = ({
         <>
           <p
             className={`flex-center w-100 h-100 ${fontSize} ${icon && 'p-2'}  border-box`}
-            onClick={onClick}
+            onClick={() => !disabled && onClick()}
           >
             {text}
           </p>

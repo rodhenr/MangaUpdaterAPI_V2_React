@@ -1,10 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import AxiosClient, { AuthResponseType } from '../../api/axios';
 import { queryClient } from '../../api/query-client';
 import AuthContext from '../../context/AuthContext';
-import { LoginDataType } from '../Layouts.types';
+import { LoginDataType, UserProfileType } from '../Layouts.types';
 
 export const useLoginMutation = () => {
   const authContext = useContext(AuthContext);
@@ -22,7 +22,6 @@ export const useLoginMutation = () => {
         refreshToken: response.data.refreshToken,
         isAdmin: response.data.isAdmin,
       });
-
       queryClient.invalidateQueries({ queryKey: ['homeData'] });
       queryClient.invalidateQueries({ queryKey: ['mangaData'] });
       queryClient.invalidateQueries({ queryKey: ['usersFollowing'] });
@@ -35,4 +34,13 @@ export const useLoginMutation = () => {
   });
 
   return mutation;
+};
+
+export const useGetProfileData = () => {
+  const axios = AxiosClient();
+
+  return useQuery({
+    queryKey: ['profile'],
+    queryFn: () => axios.get<UserProfileType>(`/api/user/account/profile`).then((res) => res.data),
+  });
 };

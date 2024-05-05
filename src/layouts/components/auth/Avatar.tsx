@@ -6,13 +6,20 @@ import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
 type AvatarPropsType = {
   color: 'text-primary' | 'text-secondary';
   imagePath?: string;
-  onClick: () => void;
+  changeProfileModalState: () => void;
   showUserName?: boolean;
   size?: number;
   userName: string;
 };
 
-const Avatar: React.FC<AvatarPropsType> = (props) => {
+const Avatar: React.FC<AvatarPropsType> = ({
+  color,
+  imagePath,
+  changeProfileModalState,
+  showUserName = true,
+  size = 40,
+  userName,
+}) => {
   const authContext = useContext(AuthContext);
   const { themeMode } = useContext(ThemeContext);
   const windowWidth = useGetWindowWidth();
@@ -21,7 +28,7 @@ const Avatar: React.FC<AvatarPropsType> = (props) => {
     <div className="avatar-main flex-center gap-3 roboto border-box roboto">
       {windowWidth > 900 && (
         <div className="flex column align-end">
-          {props.showUserName && <p className={props.color}>{props.userName}</p>}
+          {showUserName && <p className={color}>{userName}</p>}
           <span
             className={`fsize-3 cursor-pointer ${
               themeMode === 'light' ? 'text-hover-secondary-dark' : 'text-hover-secondary-light'
@@ -32,17 +39,17 @@ const Avatar: React.FC<AvatarPropsType> = (props) => {
           </span>
         </div>
       )}
-      {props.imagePath ? (
-        <img src={props.imagePath ?? ''} alt="avatar" onClick={() => props.onClick()} />
+      {imagePath ? (
+        <img src={imagePath ?? ''} alt="avatar" onClick={() => changeProfileModalState()} />
       ) : (
         <div
           className={`flex-center round primary-light cursor-pointer ${
-            props.color == 'text-primary' ? 'bg-dark' : 'bg-light'
+            color == 'text-primary' ? 'bg-dark' : 'bg-light'
           }`}
-          style={{ height: props.size, width: props.size }}
-          onClick={() => props.onClick()}
+          style={{ height: size, width: size }}
+          onClick={() => changeProfileModalState()}
         >
-          {props.userName.charAt(0)}
+          {userName.charAt(0)}
         </div>
       )}
     </div>
