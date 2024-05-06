@@ -4,7 +4,6 @@ import Button from '../../../components/button/Button';
 import Input from '../../../components/input/Input';
 import ThemeContext from '../../../context/ThemeContext';
 import { useAddMangaMutation } from '../api/Mutations';
-import '../styles/AddMangaModal.scss';
 
 type AddMangaModalPropsType = {
   onClose: () => void;
@@ -46,7 +45,15 @@ const AddMangaModal: React.FC<AddMangaModalPropsType> = ({ onClose }) => {
   };
 
   return (
-    <div className="absolute absolute-align flex-center roboto zIndex-100 bg-modal-back h-100 w-100">
+    <div
+      className="roboto"
+      style={{
+        left: '50%',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translate(-50%,-50%)',
+      }}
+    >
       <div
         className={`addManga-main flex column border-box radius-2 p-4 ${
           themeMode === 'light' ? 'secondary-dark' : 'primary-dark'

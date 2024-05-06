@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { queryClient } from '../../../api/query-client';
 import SpinLoading from '../../../components/loading/SpinLoading';
+import Backdrop from '../../../components/modal/Backdrop';
 import useGetWindowWidth from '../../../hooks/useGetWindowWidth';
 import { MangaResponseType } from '../Manga.types';
 import { useFollowMangaMutation } from '../api/Mutations';
@@ -58,14 +59,17 @@ const ContentLeft: React.FC<ContentLeftPropsType> = ({ data }) => {
           handleFollowMutation={handleFollowMutation}
         />
       )}
-      {createPortal(
-        <EditSourcesModal
-          mangaId={data.id}
-          onClose={() => setShowEditSourceModal(false)}
-          showModal={showEditSourceModal}
-        />,
-        document.body
-      )}
+      {showEditSourceModal &&
+        createPortal(
+          <Backdrop>
+            <EditSourcesModal
+              mangaId={data.id}
+              onClose={() => setShowEditSourceModal(false)}
+              showModal={showEditSourceModal}
+            />
+          </Backdrop>,
+          document.body
+        )}
     </div>
   );
 };

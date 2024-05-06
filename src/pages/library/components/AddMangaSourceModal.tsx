@@ -6,7 +6,6 @@ import SpinLoading from '../../../components/loading/SpinLoading';
 import ThemeContext from '../../../context/ThemeContext';
 import { useAddMangaSourceMutation } from '../api/Mutations';
 import { useGetAllSourcesQuery } from '../api/Queries';
-import '../styles/AddMangaSourceModal.scss';
 import SelectGroup from './SelectGroupt';
 
 type AddMangaSourceModalPropsType = {
@@ -62,7 +61,15 @@ const AddMangaSourceModal: React.FC<AddMangaSourceModalPropsType> = ({ onClose }
   };
 
   return (
-    <div className="absolute absolute-align flex-center roboto zIndex-100 bg-modal-back h-100 w-100">
+    <div
+      className="roboto"
+      style={{
+        left: '50%',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translate(-50%,-50%)',
+      }}
+    >
       <div
         className={`addManga-main flex column border-box radius-2 p-4 ${
           themeMode === 'light' ? 'secondary-dark' : 'primary-dark'

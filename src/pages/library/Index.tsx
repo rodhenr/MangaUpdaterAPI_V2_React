@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { queryClient } from '../../api/query-client';
 import SpinLoading from '../../components/loading/SpinLoading';
+import Backdrop from '../../components/modal/Backdrop';
 import { FiltersType } from './Library.types';
 import { useGetMangasGenresQuery, useGetMangasQuery } from './api/Queries';
 import AddMangaModal from './components/AddMangaModal';
@@ -75,10 +76,17 @@ const Library = () => {
         </div>
       )}
       {modalAddManga &&
-        createPortal(<AddMangaModal onClose={() => setModalAddManga(false)} />, document.body)}
+        createPortal(
+          <Backdrop>
+            <AddMangaModal onClose={() => setModalAddManga(false)} />
+          </Backdrop>,
+          document.body
+        )}
       {modalAddMangaSource &&
         createPortal(
-          <AddMangaSourceModal onClose={() => setModalAddMangaSource(false)} />,
+          <Backdrop>
+            <AddMangaSourceModal onClose={() => setModalAddMangaSource(false)} />
+          </Backdrop>,
           document.body
         )}
       <ReactQueryDevtools initialIsOpen={false} />

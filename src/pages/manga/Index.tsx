@@ -1,4 +1,3 @@
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import SpinLoading from '../../components/loading/SpinLoading';
@@ -38,7 +37,6 @@ const Manga = () => {
         </div>
         <SeeAlso data={[]} />
       </div>
-      <ReactQueryDevtools initialIsOpen={false} />
     </>
   ) : (
     <div>No data found!</div>

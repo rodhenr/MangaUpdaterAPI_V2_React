@@ -15,6 +15,7 @@ import {
 import { useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 import SpinLoading from '../components/loading/SpinLoading';
+import Backdrop from '../components/modal/Backdrop';
 import LoadingContext from '../context/LoadingContext';
 import Header from './components/header/Index';
 import LoginModal from './components/loginModal/Index';
@@ -70,26 +71,35 @@ const Root = () => {
       />
       <LayoutOutlet />
       {isLoading && <SpinLoading />}
-      {createPortal(
-        <LoginModal
-          changeToRegisterModal={() => changeModalsState(false, true)}
-          closeModal={changeLoginModalState}
-          showModal={isLoginModalOpen}
-        />,
-        document.body
-      )}
-      {createPortal(
-        <RegisterModal
-          changeToLoginModal={() => changeModalsState(true, false)}
-          closeModal={changeRegisterModalState}
-          showModal={isRegisterModalOpen}
-        />,
-        document.body
-      )}
-      {createPortal(
-        <ProfileModal closeModal={() => setIsProfileModal(false)} showModal={isProfileModal} />,
-        document.body
-      )}
+      {isLoginModalOpen &&
+        createPortal(
+          <Backdrop>
+            <LoginModal
+              changeToRegisterModal={() => changeModalsState(false, true)}
+              closeModal={changeLoginModalState}
+              showModal={isLoginModalOpen}
+            />
+          </Backdrop>,
+          document.body
+        )}
+      {isRegisterModalOpen &&
+        createPortal(
+          <Backdrop>
+            <RegisterModal
+              changeToLoginModal={() => changeModalsState(true, false)}
+              closeModal={changeRegisterModalState}
+              showModal={isRegisterModalOpen}
+            />
+          </Backdrop>,
+          document.body
+        )}
+      {isProfileModal &&
+        createPortal(
+          <Backdrop>
+            <ProfileModal closeModal={() => setIsProfileModal(false)} showModal={isProfileModal} />
+          </Backdrop>,
+          document.body
+        )}
     </>
   );
 };

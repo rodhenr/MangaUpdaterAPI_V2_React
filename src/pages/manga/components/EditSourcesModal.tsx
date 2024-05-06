@@ -58,8 +58,14 @@ const EditSourcesModal: React.FC<EditSourcesModalPropsType> = ({ mangaId, onClos
 
   return (
     <div
-      className="align-center justify-center h-100 w-100 zIndex-100 roboto bg-modal-back absolute absolute-align border-box"
-      style={{ display: !showModal ? 'none' : 'flex' }}
+      className="roboto bg-modal-back absolute absolute-align border-box"
+      style={{
+        display: !showModal ? 'none' : 'flex',
+        left: '50%',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translate(-50%,-50%)',
+      }}
     >
       <div
         className={`editSources-main flex column gap-2 radius-1 shadow-3 ${
