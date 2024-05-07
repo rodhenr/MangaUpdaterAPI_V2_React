@@ -10,6 +10,7 @@ import Root from './layouts/Index.tsx';
 import Home from './pages/home/Index.tsx';
 import Library from './pages/library/Index.tsx';
 import Manga from './pages/manga/Index.tsx';
+import PageNotFound from './pages/notFound/Index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       { path: 'library', Component: Library },
       { path: 'manga/:mangaId', Component: Manga },
     ],
+  },
+  {
+    path: '*',
+    Component: PageNotFound,
   },
 ]);
 
