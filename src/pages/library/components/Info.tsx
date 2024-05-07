@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import Button from '../../../components/button/Button';
 import AuthContext from '../../../context/AuthContext';
 import ThemeContext from '../../../context/ThemeContext';
+import { getTokenAdminClaim } from '../../../utils/token';
 import { MangaInfoType } from '../Library.types';
 
 type InfoPropsType = {
@@ -13,6 +14,7 @@ type InfoPropsType = {
 const Info: React.FC<InfoPropsType> = ({ mangas, setModalAddManga, setModalAddMangaSource }) => {
   const { themeMode } = useContext(ThemeContext);
   const authContext = useContext(AuthContext);
+  const isUserAdmin = authContext.userInfo.token && getTokenAdminClaim(authContext.userInfo.token);
 
   const handleChangeAddMangaModal = () => {
     setModalAddManga((prev) => !prev);
@@ -25,7 +27,7 @@ const Info: React.FC<InfoPropsType> = ({ mangas, setModalAddManga, setModalAddMa
   return (
     <div className="flex space-between">
       <p className="fsize-4-5">Showing {mangas.length} results</p>
-      {authContext.userInfo.isAdmin && (
+      {isUserAdmin && (
         <div className="flex gap-2">
           <Button
             fontSize="fsize-3"

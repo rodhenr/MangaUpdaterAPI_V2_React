@@ -17,7 +17,6 @@ const ContextProvider: React.FC<ContextProviderPropsType> = ({ children }) => {
     username: null,
     token: null,
     refreshToken: null,
-    isAdmin: false,
   };
   const defaultTheme = useReadFromLocalStorage<ThemeModeType>('theme') ?? 'light';
 
@@ -42,7 +41,6 @@ const ContextProvider: React.FC<ContextProviderPropsType> = ({ children }) => {
       username: null,
       token: null,
       refreshToken: null,
-      isAdmin: null,
     });
 
     queryClient.invalidateQueries();

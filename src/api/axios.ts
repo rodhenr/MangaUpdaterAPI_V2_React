@@ -7,7 +7,6 @@ export type AuthResponseType = {
   userAvatar: string;
   accessToken: string;
   refreshToken: string;
-  isAdmin: boolean;
 }
 
 const AxiosClient = () => {
@@ -53,8 +52,7 @@ const AxiosClient = () => {
             avatar: result.data.userAvatar,
             token: result.data.accessToken,
             refreshToken: result.data.refreshToken,
-            username: result.data.userName,
-            isAdmin: result.data.isAdmin,
+            username: result.data.userName
           });
 
           config.headers.Authorization = `Bearer ${result.data.accessToken}`;

@@ -15,8 +15,7 @@ export type UserProfileType = {
   avatar: string;
   email: string;
   id: string;
-  name: string;
-  isAdmin: boolean
+  name: string
 }
 
 export type ProblemDetailsType = {
