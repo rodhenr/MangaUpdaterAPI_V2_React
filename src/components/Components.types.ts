@@ -1,4 +1,4 @@
-export type VariantType = "primary-light" | "primary-dark" | "success" | "danger" | "bg-light" | "bg-dark" | "secondary-dark" | "secondary-light" | "bg-disabled" | "bg-card-dark" | "bg-text-dark";
+export type VariantType = "primary-light" | "primary-dark" | "success" | "danger" | "bg-light" | "bg-dark" | "secondary-dark" | "secondary-light" | "bg-disabled" | "bg-card-dark" | "bg-text-dark" | "bg-myanimelist";
 
 export interface SizePropsType {
   height?: string;

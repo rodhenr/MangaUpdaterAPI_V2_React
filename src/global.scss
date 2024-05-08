@@ -16,11 +16,14 @@
   --success-hover: #4d9a2f;
   --text-light: #fff;
   --text-dark: #22617c;
+  --text-dark-hover: #194b61;
   --text-disabled: #7b7b7b;
   --text-disabled-light: #b9b9b9;
   --text-danger: #ff5959;
   --modal-back: #4444448e;
   --bg-card-dark: #0f0f0f;
+  --myanimelist: #2e51a2;
+  --myanimelist-hover: #203972;
 }
 
 // Position
@@ -257,6 +260,12 @@
   color: var(--text-light);
 }
 
+.bg-text-dark-hover:hover {
+  background-color: var(--text-dark-hover);
+  color: var(--text-light);
+  transition: background-color 0.2s;
+}
+
 .secondary-dark {
   background-color: var(--secondary-dark);
   color: var(--text-light);
@@ -307,6 +316,14 @@
 
 .bg-card-dark {
   background-color: var(--bg-card-dark);
+}
+
+.bg-myanimelist {
+  background-color: var(--myanimelist);
+}
+
+.bg-myanimelist-hover:hover {
+  background-color: var(--myanimelist-hover);
 }
 
 // Text Hover

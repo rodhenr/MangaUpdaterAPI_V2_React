@@ -1,5 +1,5 @@
 import Button from '../../../components/button/Button';
-import { MangaSubInfoType } from '../Manga.types';
+import { MangaSourceType } from '../Manga.types';
 import { useUnfollowMangaMutation } from '../api/Mutations';
 import Info from './Info';
 import Sources from './Sources';
@@ -8,7 +8,7 @@ type ContentLeftDesktopPropsType = {
   id: number;
   coverUrl: string;
   isUserFollowing: boolean;
-  sources: MangaSubInfoType[];
+  sources: MangaSourceType[];
   type: string;
   followers: number;
   setShowEditSourceModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,7 +44,7 @@ const ContentLeftDesktop: React.FC<ContentLeftDesktopPropsType> = ({
           variant={isUserFollowing ? 'success' : 'danger'}
         />
       </div>
-      <Sources sources={sources} />
+      <Sources sources={sources} mangaId={id} />
       <div className="flex column gap-2">
         <Info description={type} header="Type" icon={'book'} />
         <Info description={followers.toString()} header="Users Tracking" icon={'users'} />

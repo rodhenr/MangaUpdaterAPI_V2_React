@@ -18,7 +18,7 @@ export type MangaResponseType = {
     isUserFollowing: boolean;
     chapters: MangaChapterType[];
     genres: MangaSubInfoType[];
-    sources: MangaSubInfoType[];
+    sources: MangaSourceType[];
     authors: MangaSubInfoType[];
     titles: MangaTitleType[];
 }
@@ -42,7 +42,13 @@ type MangaTitle = {
     isMainTitle: boolean;
 }
 
+type MangaSource = {
+    url: string
+}
+
 export type MangaTitleType = MangaTitle & MangaSubInfoType;
+
+export type MangaSourceType = MangaSource & MangaSubInfoType;
 
 export type MangaFollowsResponseType = {
     mangaId: number;
