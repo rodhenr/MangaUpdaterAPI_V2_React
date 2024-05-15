@@ -28,3 +28,9 @@ export type ProblemDetailsType = {
   detail?: string,
   traceId?: string
 }
+
+export type ProfileDataType = {
+  profileEmail: string;
+  profilePassword: string;
+  profileConfirmPassword: string;
+}

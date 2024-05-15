@@ -15,7 +15,7 @@ const Header: React.FC<HeaderPropsType> = ({ isCardView, setIsCardView }) => {
     <div className="w-100">
       <PageHeader>
         <div className="pageHeader-main flex w-100 align-end">
-          <p className="fsize-5">Updates</p>
+          <p className="fsize-5">Latest releases</p>
           <div className="flex gap-3">
             <FontAwesomeIcon
               icon="bars"

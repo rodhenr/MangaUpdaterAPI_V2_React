@@ -5,7 +5,6 @@ import useGetWindowWidth from '../../hooks/useGetWindowWidth';
 import { useGetMangaQuery } from './api/Queries';
 import ContentLeft from './components/ContentLeft';
 import ContentRight from './components/ContentRight';
-import SeeAlso from './components/SeeAlso';
 import './styles/Manga.scss';
 
 const Manga = () => {
@@ -35,7 +34,6 @@ const Manga = () => {
             synopsis={data.synopsis}
           />
         </div>
-        <SeeAlso data={[]} />
       </div>
     </>
   ) : (

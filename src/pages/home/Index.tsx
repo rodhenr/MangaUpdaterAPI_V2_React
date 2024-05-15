@@ -1,3 +1,4 @@
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useContext, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import SpinLoading from '../../components/loading/SpinLoading';
@@ -32,7 +33,9 @@ const Home = () => {
             <p className="fsize-6">Login to start following mangas</p>
           </div>
         ) : isPending ? (
-          <SpinLoading />
+          <div className="flex flex-1">
+            <SpinLoading />
+          </div>
         ) : (
           <>
             {data && data.pages.length > 0 ? (
@@ -48,6 +51,7 @@ const Home = () => {
         )}
       </div>
       <div ref={ref}></div>
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 };
