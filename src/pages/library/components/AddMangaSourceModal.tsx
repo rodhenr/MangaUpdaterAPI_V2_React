@@ -113,6 +113,7 @@ const AddMangaSourceModal: React.FC<AddMangaSourceModalPropsType> = ({ onClose }
                   onChange={handleSourceIdChange}
                   placeholder="Select a source"
                   value={selectedSourceId}
+                  lightVariant="bg-light"
                 />
               </div>
               <div className="flex column gap-1">

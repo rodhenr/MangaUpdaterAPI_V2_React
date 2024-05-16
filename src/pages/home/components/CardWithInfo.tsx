@@ -34,8 +34,8 @@ const CardWithInfo: React.FC<CardWithInfoPropsType> = ({
     <div
       className={`cardWithInfo-main flex-center gap-2 column roboto space-between radius-2 shadow-3 ${variant} border-box`}
     >
-      <div className="w-100">
-        <img src={cover} alt={`card for ${name}`} className="h-100 w-100 object-cover" />
+      <div className="w-100" style={{ minHeight: 150 }}>
+        <img src={cover} alt={`image for ${name}`} className="h-100 w-100 object-cover" />
       </div>
       <div className="border-box flex column flex-1 gap-4 p-2 w-100">
         <div
@@ -49,8 +49,8 @@ const CardWithInfo: React.FC<CardWithInfoPropsType> = ({
           {chapters.map((ch) => (
             <div key={uuidv4()} className="flex gap-1">
               <div className="flex-center flex-1 ">
-                <p className="fsize-3">{formatDate(new Date(ch.date))}</p>
-                <p className="fsize-3 text-center flex-1">Chapter {ch.number}</p>
+                <p className="fsize-3-5">{formatDate(new Date(ch.date))}</p>
+                <p className="fsize-3-5 text-center flex-1">Chapter {ch.number}</p>
               </div>
               <div className="flex-center gap-2">
                 <Button

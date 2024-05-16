@@ -58,7 +58,7 @@ const Input: React.FC<InputPropsType> = ({
       <input
         className={`${
           disabled ? `bg-disabled-light` : variant
-        } h-100 radius-1 w-100 p-2 border-box opacity-placeholder-1 border-box`}
+        } h-100 radius-1 w-100 p-2 border-box border-box`}
         disabled={disabled}
         id={id}
         minLength={minLength}

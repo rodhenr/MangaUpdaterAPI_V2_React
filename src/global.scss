@@ -71,6 +71,10 @@
   font-size: 0.75rem;
 }
 
+.fsize-3-5 {
+  font-size: 0.875rem;
+}
+
 .fsize-4 {
   font-size: 1rem;
 }
@@ -320,6 +324,7 @@
 
 .bg-myanimelist {
   background-color: var(--myanimelist);
+  color: var(--bg-light);
 }
 
 .bg-myanimelist-hover:hover {
@@ -359,15 +364,19 @@
 }
 
 .text-disabled {
-  color: var(--text-disabled);
+  color: var(--text-disabled) !important;
 }
 
 .text-danger {
-  color: var(--text-danger);
+  color: var(--text-danger) !important;
 }
 
 .text-success {
-  color: var(--success);
+  color: var(--success) !important;
+}
+
+.text-myanimelist {
+  color: var(--myanimelist) !important;
 }
 
 .break-word {

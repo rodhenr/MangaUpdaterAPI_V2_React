@@ -22,7 +22,10 @@ const Header: React.FC<HeaderPropsType> = ({
   return (
     <div className={`roboto ${themeMode === 'light' ? 'primary-light' : 'bg-menu-dark'}`}>
       <div className="root-main flex align-center">
-        <h2>MANGA UPDATER</h2>
+        <div className="flex column fsize-4-5 fweight-3">
+          <p>MANGA</p>
+          <p>UPDATER</p>
+        </div>
         <PageGroup />
         <div className="flex-center gap-4">
           {windowWidth > 900 && <ThemeButton />}

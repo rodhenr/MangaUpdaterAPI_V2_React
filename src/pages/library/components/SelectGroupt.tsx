@@ -1,6 +1,7 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { SelectStateType } from '../../../components/Components.types';
+import { SelectStateType, VariantType } from '../../../components/Components.types';
+import ThemeContext from '../../../context/ThemeContext';
 import '../styles/SelectGroup.scss';
 
 type SelectGroupPropsType = {
@@ -11,6 +12,7 @@ type SelectGroupPropsType = {
   placeholder: string;
   value: string;
   width?: string;
+  lightVariant?: VariantType;
 };
 
 const SelectGroup: React.FC<SelectGroupPropsType> = ({
@@ -21,13 +23,18 @@ const SelectGroup: React.FC<SelectGroupPropsType> = ({
   placeholder,
   value,
   width = '100%',
+  lightVariant,
 }) => {
+  const { themeMode } = useContext(ThemeContext);
+
   return (
-    <div className="flex column flex-1">
-      <p className="fsize-3">{placeholder}</p>
+    <div className="flex column flex-1 roboto gap-1">
+      <p className="fsize-4">{placeholder}</p>
       <select
         name={name}
-        className="select-main text-primary radius-2 roboto border-box"
+        className={`select-main radius-2 roboto border-box ${
+          themeMode === 'light' ? lightVariant ?? 'primary-light' : 'bg-light'
+        }`}
         style={{ height: height, width: width, border: 'none' }}
         value={value}
         onChange={onChange}

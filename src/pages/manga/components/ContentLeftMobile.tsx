@@ -40,7 +40,10 @@ const ContentLeftMobile: React.FC<ContentLeftMobilePropsType> = ({
           className="radius-2"
           src={coverUrl}
           alt="cover"
-          style={{ maxHeight: windowWidth > 600 ? 450 : 250 }}
+          style={{
+            minHeight: windowWidth > 600 ? 450 : 250,
+            maxHeight: windowWidth > 600 ? 450 : 250,
+          }}
         />
         <MangaInfo titles={titles} authors={authors} genres={genres} />
       </div>

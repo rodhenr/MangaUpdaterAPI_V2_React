@@ -30,7 +30,12 @@ const ContentLeftDesktop: React.FC<ContentLeftDesktopPropsType> = ({
   return (
     <>
       <div className="flex column gap-2">
-        <img className="radius-2" src={coverUrl} alt="cover" style={{ maxHeight: 450 }} />
+        <img
+          className="radius-2"
+          src={coverUrl}
+          alt="cover"
+          style={{ minHeight: 450, maxHeight: 450 }}
+        />
         <Button
           fontSize="fsize-5"
           height="40px"
