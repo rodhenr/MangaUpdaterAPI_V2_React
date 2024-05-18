@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 import ThemeContext from '../../../context/ThemeContext';
 import { ApiErrorType, LoginDataType } from '../../Layouts.types';
-import { useLoginMutation } from '../../api/Queries';
+import { useLoginMutation } from '../../api/Mutations';
 import '../../styles/LoginModal.scss';
 import Inputs from './Inputs';
 
@@ -80,7 +80,7 @@ const LoginModal: React.FC<LoginModalPropsType> = ({
       const error = err as AxiosError;
       const errorData = error.response?.data as ApiErrorType;
 
-      setError(errorData.title);
+      setError(errorData?.detail ?? errorData.title);
     }
   };
 
@@ -105,9 +105,7 @@ const LoginModal: React.FC<LoginModalPropsType> = ({
           onClick={closeModal}
         />
       </div>
-      <div>
-        <p className="text-danger">{error}</p>
-      </div>
+      <div>{error && <p className="text-danger font-bold fsize-4-5">{error}</p>}</div>
       <Inputs
         handleKeyDown={handleKeyDown}
         handleLoginDataChange={handleLoginDataChange}

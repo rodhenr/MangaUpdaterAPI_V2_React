@@ -14,15 +14,13 @@ const Home = () => {
   const { userInfo } = useContext(AuthContext);
   const { ref, inView } = useInView();
 
-  const { data, error, hasNextPage, isPending, fetchNextPage } = useGetUserMangasInfiniteQuery(16);
+  const { data, hasNextPage, isPending, fetchNextPage } = useGetUserMangasInfiniteQuery(16);
 
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [fetchNextPage, inView, hasNextPage, data]);
-
-  if (error) return <div>Error</div>;
 
   return (
     <>

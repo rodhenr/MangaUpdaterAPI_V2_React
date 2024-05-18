@@ -15,8 +15,8 @@ const Inputs: React.FC<InputsPropsType> = ({
   password,
 }) => {
   return (
-    <div className="flex column gap-3">
-      <div className="flex column">
+    <div className="flex column gap-4">
+      <div className="flex column gap-1">
         <label htmlFor="email">Email</label>
         <Input
           id="email"
@@ -28,7 +28,7 @@ const Inputs: React.FC<InputsPropsType> = ({
           variant="bg-light"
         />
       </div>
-      <div className="flex column">
+      <div className="flex column gap-1">
         <label htmlFor="password">Password</label>
         <Input
           id="password"

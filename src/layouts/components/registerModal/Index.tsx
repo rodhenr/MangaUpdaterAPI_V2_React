@@ -3,18 +3,11 @@ import { AxiosError } from 'axios';
 import { ChangeEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
-import Input from '../../../components/input/Input';
 import ThemeContext from '../../../context/ThemeContext';
-import { ApiErrorType } from '../../Layouts.types';
+import { ApiErrorType, RegisterDataType } from '../../Layouts.types';
 import { useRegisterMutation } from '../../api/Mutations';
 import '../../styles/RegisterModal.scss';
-
-type RegisterDataType = {
-  username: string;
-  registerEmail: string;
-  registerPassword: string;
-  confirmationPassword: string;
-};
+import Inputs from './Inputs';
 
 type RegisterModalPropsType = {
   changeToLoginModal: () => void;
@@ -140,7 +133,7 @@ const RegisterModal: React.FC<RegisterModalPropsType> = ({
       const error = err as AxiosError;
       const errorData = error.response?.data as ApiErrorType;
 
-      setError(errorData.title);
+      setError(errorData.detail ?? errorData.title);
     }
   };
 
@@ -167,58 +160,9 @@ const RegisterModal: React.FC<RegisterModalPropsType> = ({
       </div>
       <div>
         {success && <p className="text-success">{success}</p>}
-        {error && <p className="text-danger">{error}</p>}
+        {error && <p className="text-danger font-bold fsize-4-5">{error}</p>}
       </div>
-      <div className="flex column gap-3">
-        <div className="flex column gap-1">
-          <label htmlFor="registerUsername">Username</label>
-          <Input
-            id="username"
-            onChange={handleRegisterDataChange}
-            placeholder="Enter your username"
-            value={registerData.username}
-            type="text"
-            variant="bg-light"
-          />
-        </div>
-        <div className="flex column gap-1">
-          <label htmlFor="registerEmail">Email</label>
-          <Input
-            id="registerEmail"
-            onChange={handleRegisterDataChange}
-            placeholder="Enter your email"
-            type="email"
-            value={registerData.registerEmail}
-            variant="bg-light"
-          />
-        </div>
-        <div className="flex column gap-1">
-          <label htmlFor="registerPassword">Password</label>
-          <Input
-            icon="circle-question"
-            iconText="Must contain an uppercase character, a lowercase character, a digit, and a non-alphanumeric character and at least 8 characters"
-            id="registerPassword"
-            onChange={handleRegisterDataChange}
-            placeholder="Enter your password"
-            type="password"
-            value={registerData.registerPassword}
-            variant="bg-light"
-          />
-        </div>
-        <div className="flex column gap-1">
-          <label htmlFor="confirmRegisterPassword">Confirm password</label>
-          <Input
-            icon="circle-question"
-            iconText="Must contain an uppercase character, a lowercase character, a digit, and a non-alphanumeric character and at least 8 characters"
-            id="confirmationPassword"
-            onChange={handleRegisterDataChange}
-            placeholder="Enter your password"
-            type="password"
-            value={registerData.confirmationPassword}
-            variant="bg-light"
-          />
-        </div>
-      </div>
+      <Inputs handleRegisterDataChange={handleRegisterDataChange} registerData={registerData} />
       <div className="flex-center w-100">
         <Button
           onClick={handleRegister}

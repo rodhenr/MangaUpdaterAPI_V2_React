@@ -3,6 +3,7 @@ export type ApiErrorType = {
   status: number;
   title: string;
   traceId: string;
+  detail?: string;
   type: string;
 };
 
@@ -34,3 +35,10 @@ export type ProfileDataType = {
   profilePassword: string;
   profileConfirmPassword: string;
 }
+
+export type RegisterDataType = {
+  username: string;
+  registerEmail: string;
+  registerPassword: string;
+  confirmationPassword: string;
+};

@@ -92,7 +92,7 @@ const AddMangaSourceModal: React.FC<AddMangaSourceModalPropsType> = ({ onClose }
           {isFetching ? (
             <SpinLoading />
           ) : error ? (
-            <div>Error</div>
+            <div>Something went wrong...</div>
           ) : (
             <>
               <div className="flex column gap-1">

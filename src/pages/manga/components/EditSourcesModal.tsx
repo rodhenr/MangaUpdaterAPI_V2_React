@@ -129,7 +129,7 @@ const EditSourcesModal: React.FC<EditSourcesModalPropsType> = ({ mangaId, onClos
               </div>
             </>
           ) : (
-            <div>Error...</div>
+            <div>Something went wrong...</div>
           )}
         </div>
       </div>
